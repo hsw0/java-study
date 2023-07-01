@@ -1,4 +1,6 @@
 plugins {
+    `project-report`
+    `build-dashboard`
     alias(libs.plugins.spotless)
 }
 
