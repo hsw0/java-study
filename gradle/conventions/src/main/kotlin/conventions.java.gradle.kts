@@ -2,6 +2,7 @@ import io.syscall.gradle.conventions.CustomJavaExtension
 import org.gradle.api.internal.tasks.compile.HasCompileOptions
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import java.util.jar.Attributes.Name as JarAttribute
 
 /**
  * Gradle java plugin config
@@ -42,6 +43,23 @@ tasks.withType<JavaCompile>().configureEach {
     }
 }
 
+tasks.named<Jar>("jar") {
+    manifest {
+        attributes(
+            JarAttribute.IMPLEMENTATION_TITLE.toString() to project.name,
+            JarAttribute.IMPLEMENTATION_VERSION.toString() to project.version,
+        )
+    }
+}
+
+// https://docs.gradle.org/current/userguide/build_cache_concepts.html#normalization
+normalization {
+    runtimeClasspath {
+        metaInf {
+            ignoreAttribute("Implementation-Version")
+        }
+    }
+}
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
