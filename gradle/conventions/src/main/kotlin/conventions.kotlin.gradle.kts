@@ -1,5 +1,4 @@
 import io.syscall.gradle.conventions.CustomJavaExtension
-import io.syscall.gradle.util.ifPresent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
@@ -23,24 +22,6 @@ val DEFAULT_JAVA_VERSION: JavaVersion by project.ext
 kotlin {
     jvmToolchain(DEFAULT_JAVA_VERSION.majorVersion.toInt())
 }
-
-tasks.withType<JavaCompile>().configureEach {
-    customJavaExt.javaModuleName.ifPresent { javaModuleName ->
-        inputs.property("javaModuleName", javaModuleName)
-        val modulePath = sourceSets.main.get().output.asPath
-
-        options.compilerArgs.addAll(listOf("--patch-module", "$javaModuleName=$modulePath"))
-    }
-}
-
-//tasks.withType<Test>().configureEach {
-//    customJavaExt.javaModuleName.ifPresent { javaModuleName ->
-//        inputs.property("javaModuleName", javaModuleName)
-//        val modulePath = sourceSets.main.get().output.asPath
-//
-//        jvmArgs(listOf("--patch-module", "$javaModuleName=$modulePath"))
-//    }
-//}
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = DEFAULT_JAVA_VERSION.majorVersion

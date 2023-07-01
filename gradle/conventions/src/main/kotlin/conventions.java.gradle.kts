@@ -42,6 +42,7 @@ tasks.withType<JavaCompile>().configureEach {
     }
 }
 
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     testLogging {
