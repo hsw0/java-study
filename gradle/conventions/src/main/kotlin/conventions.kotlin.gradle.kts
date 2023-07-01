@@ -21,6 +21,7 @@ val DEFAULT_JAVA_VERSION: JavaVersion by project.ext
 
 kotlin {
     jvmToolchain(DEFAULT_JAVA_VERSION.majorVersion.toInt())
+    explicitApi()
 }
 
 tasks.withType<KotlinCompile>().configureEach {
