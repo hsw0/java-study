@@ -1,7 +1,5 @@
 import io.syscall.gradle.conventions.CustomJavaExtension
 import org.gradle.api.internal.tasks.compile.HasCompileOptions
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.api.tasks.testing.logging.TestLogEvent
 import java.util.jar.Attributes.Name as JarAttribute
 
 /**
@@ -12,8 +10,9 @@ import java.util.jar.Attributes.Name as JarAttribute
 interface Comments
 
 plugins {
-    id("conventions.java-base")
     java
+    id("conventions.java-base")
+    id("conventions.jvm-test")
 }
 
 val customJavaExt = extensions.create<CustomJavaExtension>("customJava")
@@ -43,6 +42,15 @@ tasks.withType<JavaCompile>().configureEach {
     }
 }
 
+tasks.withType<JavaCompile>().configureEach {
+    if (!name.contains("Test")) {
+        return@configureEach
+    }
+
+    // serialVersionUID is basically guaranteed to be useless in tests
+    options.compilerArgs.add("-Xlint:-serial")
+}
+
 tasks.named<Jar>("jar") {
     manifest {
         attributes(
@@ -57,26 +65,6 @@ normalization {
     runtimeClasspath {
         metaInf {
             ignoreAttribute("Implementation-Version")
-        }
-    }
-}
-
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
-    testLogging {
-        events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
-        showStandardStreams = true
-        exceptionFormat = TestExceptionFormat.FULL
-    }
-}
-
-testing {
-    @Suppress("UnstableApiUsage")
-    suites.withType<JvmTestSuite>().configureEach {
-        dependencies {
-            implementation("org.junit.jupiter:junit-jupiter-api")
-            implementation("org.junit.jupiter:junit-jupiter-params")
-            runtimeOnly("org.junit.jupiter:junit-jupiter-engine")
         }
     }
 }
