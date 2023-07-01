@@ -1,3 +1,4 @@
+import io.syscall.gradle.conventions.CustomJavaExtension
 import org.gradle.api.internal.tasks.compile.HasCompileOptions
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
@@ -12,6 +13,8 @@ plugins {
     id("conventions.java-base")
     java
 }
+
+val customJavaExt = extensions.create<CustomJavaExtension>("customJava")
 
 val DEFAULT_JAVA_VERSION: JavaVersion by project.ext
 
@@ -34,6 +37,7 @@ tasks.withType<JavaCompile>().configureEach {
         release.set(DEFAULT_JAVA_VERSION.majorVersion.toInt())
 
         compilerArgs.add("-parameters")
+        compilerArgs.addAll(customJavaExt.buildCompilerArgs())
     }
 }
 
