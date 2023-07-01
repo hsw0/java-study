@@ -10,4 +10,5 @@ dependencies {
     implementation(gradleApi())
 
     implementation(libs.gradlePlugin.kotlin)
+    implementation(libs.gradlePlugin.springBoot)
 }

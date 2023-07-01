@@ -5,7 +5,7 @@
 interface Comments
 
 plugins {
-    id("conventions.project.base")
+    id("conventions.project.java")
     id("conventions.kotlin")
     kotlin("jvm")
 }
