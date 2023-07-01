@@ -7,17 +7,23 @@ kotlin = "1.8.22"
 junit = "5.9.2"
 spring-boot = "3.1.1"
 spotless = "6.19.0"
+errorprone = "2.20.0"
 
 [libraries]
 gradlePlugin-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 gradlePlugin-springBoot = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
 gradlePlugin-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
+gradlePlugin-errorprone = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version = "3.1.0" }
 
 bom-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
 bom-junit = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
 bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 
 assertj = { group = "org.assertj", name = "assertj-core", version = "3.24.2" }
+
+errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
+errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "errorprone" }
+errorprone-test_helpers = { module = "com.google.errorprone:error_prone_test_helpers", version.ref = "errorprone" }
 
 [bundles]
 bomDependencies = [
@@ -28,6 +34,7 @@ bomDependencies = [
 
 dependencies = [
   "assertj",
+  "errorprone-core", "errorprone-annotations", "errorprone-test_helpers",
 ]
 
 [plugins]

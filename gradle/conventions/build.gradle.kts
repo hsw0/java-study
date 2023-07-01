@@ -16,6 +16,7 @@ dependencies {
 
     implementation(libs.gradlePlugin.spotless)
     implementation(libs.gradlePlugin.springBoot)
+    implementation(libs.gradlePlugin.errorprone)
 }
 
 spotless {
