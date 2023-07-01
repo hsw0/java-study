@@ -5,4 +5,5 @@ includeBuild("gradle/conventions")
 include(":dependencyManagement")
 project(":dependencyManagement").buildFileName = "../gradle/dependency.gradle.kts"
 
-include(":study-place")
+include(":dummy-library")
+include(":dummy-app")

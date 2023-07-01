@@ -1,10 +1,14 @@
 package io.syscall.gradle.conventions
 
+import org.gradle.api.provider.Property
+
 abstract class CustomJavaExtension {
 
     companion object {
         const val LINT_ARG_PREFIX = "-Xlint:"
     }
+
+    abstract val javaModuleName: Property<String>
 
     private val lintOptions: MutableMap<String, Boolean> = HashMap()
 
