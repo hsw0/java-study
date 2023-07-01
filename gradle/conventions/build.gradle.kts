@@ -12,8 +12,9 @@ dependencies {
     implementation(gradleApi())
 
     implementation(platform(libs.bom.kotlin))
-    implementation(libs.gradlePlugin.spotless)
     implementation(libs.gradlePlugin.kotlin)
+
+    implementation(libs.gradlePlugin.spotless)
     implementation(libs.gradlePlugin.springBoot)
 }
 
