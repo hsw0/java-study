@@ -2,12 +2,11 @@ package io.syscall.hsw.study.dummylib
 
 import io.syscall.hsw.study.dummylib.impl.DummyImpl
 
-interface Dummy {
+public interface Dummy {
 
-    fun hello()
+    public fun hello()
 
-    companion object {
-        fun get(): Dummy = DummyImpl()
+    public companion object {
+        public fun get(): Dummy = DummyImpl()
     }
-
 }

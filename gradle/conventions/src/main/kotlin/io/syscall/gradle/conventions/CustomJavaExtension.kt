@@ -1,6 +1,5 @@
 package io.syscall.gradle.conventions
 
-
 abstract class CustomJavaExtension {
 
     companion object {
@@ -15,11 +14,13 @@ abstract class CustomJavaExtension {
 
     fun buildCompilerArgs(): List<String> {
         return lintOptions.map {
-            LINT_ARG_PREFIX + (if (it.value) {
-                ""
-            } else {
-                "-"
-            }) + it.key
+            LINT_ARG_PREFIX + (
+                if (it.value) {
+                    ""
+                } else {
+                    "-"
+                }
+                ) + it.key
         }
     }
 

@@ -8,5 +8,4 @@ class DummyTest {
     fun testHello() {
         assertTrue(true)
     }
-
 }
