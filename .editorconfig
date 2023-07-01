@@ -1,0 +1,36 @@
+# https://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+indent_style = space
+indent_size = 2
+
+[*.{java,kt,kts}]
+indent_size = 4
+max_line_length = 120
+
+[*.{kt,kts}]
+ktlint_code_style = ktlint_official
+ktlint_standard = enabled
+
+# Disable wildcard import
+ij_kotlin_packages_to_use_import_on_demand = unset
+ij_kotlin_name_count_to_use_star_import = 999
+ij_kotlin_name_count_to_use_star_import_for_members = 999
+
+# https://pinterest.github.io/ktlint/0.49.1/rules/configuration-ktlint/#trailing-comma-on-call-site
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = unset
