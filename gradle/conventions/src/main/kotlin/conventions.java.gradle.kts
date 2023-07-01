@@ -1,6 +1,7 @@
 import io.syscall.gradle.conventions.CustomJavaExtension
 import org.gradle.api.internal.tasks.compile.HasCompileOptions
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 /**
  * Gradle java plugin config
@@ -44,6 +45,8 @@ tasks.withType<JavaCompile>().configureEach {
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
     testLogging {
+        events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
+        showStandardStreams = true
         exceptionFormat = TestExceptionFormat.FULL
     }
 }
