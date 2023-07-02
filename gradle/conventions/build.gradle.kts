@@ -16,8 +16,10 @@ dependencies {
     implementation(libs.gradlePlugin.kotlin.noarg)
 
     implementation(libs.gradlePlugin.spotless)
-    implementation(libs.gradlePlugin.springBoot)
     implementation(libs.gradlePlugin.errorprone)
+    implementation(libs.gradlePlugin.checkerframework)
+
+    implementation(libs.gradlePlugin.springBoot)
 }
 
 spotless {

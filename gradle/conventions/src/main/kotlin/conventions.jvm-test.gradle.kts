@@ -20,7 +20,7 @@ plugins {
 val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 testing {
-    val jUnitVersion = versionCatalog.findVersion("junit").get().preferredVersion
+    val jUnitVersion = versionCatalog.findVersion("junit").get().toString()
 
     suites.withType<JvmTestSuite>().configureEach {
         useJUnitJupiter(jUnitVersion)

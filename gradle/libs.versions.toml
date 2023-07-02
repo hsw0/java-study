@@ -8,10 +8,12 @@ junit = "5.9.2"
 spring-boot = "3.1.1"
 spotless = "6.19.0"
 errorprone = "2.20.0"
+checkerframework = "3.35.0"
 
 [libraries]
 bom-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
 gradlePlugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+gradlePlugin-checkerframework = { module = "org.checkerframework:checkerframework-gradle-plugin", version = "0.6.28" }
 
 # https://kotlinlang.org/docs/all-open-plugin.html
 # spring variant 등도 포함
@@ -33,6 +35,9 @@ errorprone-core = { module = "com.google.errorprone:error_prone_core", version.r
 errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "errorprone" }
 errorprone-test_helpers = { module = "com.google.errorprone:error_prone_test_helpers", version.ref = "errorprone" }
 
+checkerframework = { module = "org.checkerframework:checker", version.ref = "checkerframework" }
+checkerframework-qual = { module = "org.checkerframework:checker-qual", version.ref = "checkerframework" }
+
 [bundles]
 bomDependencies = [
   # kotlin은 별도 지정
@@ -43,6 +48,8 @@ bomDependencies = [
 dependencies = [
   "assertj",
   "errorprone-core", "errorprone-annotations", "errorprone-test_helpers",
+  "checkerframework",
+  "checkerframework-qual",
 ]
 
 [plugins]
