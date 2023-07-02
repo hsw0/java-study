@@ -10,12 +10,20 @@ spotless = "6.19.0"
 errorprone = "2.20.0"
 
 [libraries]
-gradlePlugin-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+bom-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
+gradlePlugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+# https://kotlinlang.org/docs/all-open-plugin.html
+# spring variant 등도 포함
+gradlePlugin-kotlin-allopen = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin" }
+# https://kotlinlang.org/docs/no-arg-plugin.html
+# jpa
+gradlePlugin-kotlin-noarg = { module = "org.jetbrains.kotlin:kotlin-noarg", version.ref = "kotlin" }
+
 gradlePlugin-springBoot = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
 gradlePlugin-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
 gradlePlugin-errorprone = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version = "3.1.0" }
 
-bom-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
 bom-junit = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
 bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 

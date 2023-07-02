@@ -13,6 +13,8 @@ dependencies {
 
     implementation(platform(libs.bom.kotlin))
     implementation(libs.gradlePlugin.kotlin)
+    implementation(libs.gradlePlugin.kotlin.allopen)
+    implementation(libs.gradlePlugin.kotlin.noarg)
 
     implementation(libs.gradlePlugin.spotless)
     implementation(libs.gradlePlugin.springBoot)

@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-public open class DummyApplication
+public class DummyApplication
 
 public fun main(args: Array<String>) {
     runApplication<DummyApplication>(*args)
