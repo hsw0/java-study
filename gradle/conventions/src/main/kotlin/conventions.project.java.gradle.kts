@@ -17,6 +17,7 @@ plugins {
 
 dependencies {
     add("errorprone", "com.google.errorprone:error_prone_core")
+    compileOnly("com.google.errorprone:error_prone_annotations")
 
     add("checkerFramework", platform(project(":dependencyManagement")))
     add("checkerFramework", "org.checkerframework:checker")
@@ -37,7 +38,9 @@ configurations {
         }
     }
     all {
-        if (name.endsWith("CompileClasspath", ignoreCase = true)) {
+        if (name.endsWith("Classpath", ignoreCase = true)
+            || name.contains("AnnotationProcessor", ignoreCase = true)
+        ) {
             resolutionStrategy.dependencySubstitution {
                 substitute(module("org.checkerframework:checker-qual"))
                     .using(module(checkerQualDep))
@@ -50,6 +53,21 @@ tasks.withType<JavaCompile>().configureEach {
     options.errorprone {
         disableWarningsInGeneratedCode.set(true)
         allDisabledChecksAsWarnings.set(true)
+
+        warn("CollectionIncompatibleType")
+
+        disable("MethodCanBeStatic")
+
+        // https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/cd13fd40189d7297e953e68a8d2a4be1c68f56d9/conventions/src/main/kotlin/otel.errorprone-conventions.gradle.kts
+
+        // checkerframework's NullnessChecker
+        disable("FieldMissingNullable")
+        disable("ParameterMissingNullable")
+        disable("ReturnMissingNullable")
+        disable("VoidMissingNullable")
+
+        // MemberName
+
     }
 }
 
@@ -62,4 +80,7 @@ configure<CheckerFrameworkExtension> {
     )
 
     excludeTests = true
+
+    // error: [type.checking.not.run] ${NAME}Checker did not run because of a previous error issued by javac
+    extraJavacArgs.add("-AsuppressWarnings=type.checking.not.run")
 }

@@ -10,5 +10,7 @@ project(":test-report").buildFileName = "../gradle/test-report.gradle.kts"
 
 ///////////////////////////////////////////////////////////////////////////////
 
+include(":analysis-example") // errorprone, checker 등
+
 include(":dummy-library")
 include(":dummy-app")

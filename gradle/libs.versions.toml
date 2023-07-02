@@ -33,7 +33,6 @@ assertj = { group = "org.assertj", name = "assertj-core", version = "3.24.2" }
 
 errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
 errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "errorprone" }
-errorprone-test_helpers = { module = "com.google.errorprone:error_prone_test_helpers", version.ref = "errorprone" }
 
 checkerframework = { module = "io.github.eisop:checker", version.ref = "checkerframework" }
 checkerframework-qual = { module = "io.github.eisop:checker-qual", version.ref = "checkerframework" }
@@ -47,9 +46,8 @@ bomDependencies = [
 
 dependencies = [
   "assertj",
-  "errorprone-core", "errorprone-annotations", "errorprone-test_helpers",
-  "checkerframework",
-  "checkerframework-qual",
+  "errorprone-core", "errorprone-annotations",
+  "checkerframework", "checkerframework-qual",
 ]
 
 [plugins]
