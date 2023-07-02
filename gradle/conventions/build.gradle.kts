@@ -1,4 +1,3 @@
-
 plugins {
     `kotlin-dsl`
     alias(libs.plugins.spotless)
@@ -28,5 +27,14 @@ spotless {
     }
     kotlinGradle {
         ktlint()
+    }
+}
+
+gradlePlugin {
+    plugins {
+        create("MapStructPlugin") {
+            id = "io.syscall.gradle.plugin.mapstruct"
+            implementationClass = "io.syscall.gradle.plugin.mapstruct.MapStructPlugin"
+        }
     }
 }
