@@ -285,6 +285,9 @@ ij_kotlin_allow_trailing_comma_on_call_site = true
 [*.{yml,yaml}]
 indent_size = 2
 
+[*.xml]
+max_line_length = 10000
+
 [*.md]
 trim_trailing_whitespace = false
 max_line_length = unset

@@ -1,0 +1,9 @@
+---
+spring.application.name: apiserver
+
+spring.main.banner-mode: OFF
+
+logging.config: classpath:logback-main.xml
+logging.level:
+  ROOT: INFO
+  io.syscall: DEBUG

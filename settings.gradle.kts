@@ -16,3 +16,5 @@ include(
     ":dummy:lib",
     ":dummy:app",
 )
+
+include(":spring-webflux-api")
