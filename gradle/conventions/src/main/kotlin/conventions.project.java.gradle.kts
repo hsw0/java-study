@@ -24,6 +24,28 @@ dependencies {
     testCompileOnly("org.checkerframework:checker-qual")
 }
 
+val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+val checkerFrameworkDep = versionCatalog.findLibrary("checkerframework").get().get().toString()
+val checkerQualDep = versionCatalog.findLibrary("checkerframework-qual").get().get().toString()
+
+configurations {
+    "checkerFramework" {
+        resolutionStrategy.dependencySubstitution {
+            substitute(module("org.checkerframework:checker"))
+                .using(module(checkerFrameworkDep))
+        }
+    }
+    all {
+        if (name.endsWith("CompileClasspath", ignoreCase = true)) {
+            resolutionStrategy.dependencySubstitution {
+                substitute(module("org.checkerframework:checker-qual"))
+                    .using(module(checkerQualDep))
+            }
+        }
+    }
+}
+
 tasks.withType<JavaCompile>().configureEach {
     options.errorprone {
         disableWarningsInGeneratedCode.set(true)

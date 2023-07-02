@@ -8,7 +8,7 @@ junit = "5.9.2"
 spring-boot = "3.1.1"
 spotless = "6.19.0"
 errorprone = "2.20.0"
-checkerframework = "3.35.0"
+checkerframework = "3.34.0-eisop1"
 
 [libraries]
 bom-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
@@ -35,8 +35,8 @@ errorprone-core = { module = "com.google.errorprone:error_prone_core", version.r
 errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "errorprone" }
 errorprone-test_helpers = { module = "com.google.errorprone:error_prone_test_helpers", version.ref = "errorprone" }
 
-checkerframework = { module = "org.checkerframework:checker", version.ref = "checkerframework" }
-checkerframework-qual = { module = "org.checkerframework:checker-qual", version.ref = "checkerframework" }
+checkerframework = { module = "io.github.eisop:checker", version.ref = "checkerframework" }
+checkerframework-qual = { module = "io.github.eisop:checker-qual", version.ref = "checkerframework" }
 
 [bundles]
 bomDependencies = [
