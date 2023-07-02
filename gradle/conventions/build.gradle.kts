@@ -37,4 +37,11 @@ gradlePlugin {
             implementationClass = "io.syscall.gradle.plugin.mapstruct.MapStructPlugin"
         }
     }
+
+    plugins {
+        create("DevelopmentOnlyPlugin") {
+            id = "io.syscall.gradle.plugin.devonly"
+            implementationClass = "io.syscall.gradle.plugin.devonly.DevelopmentOnlyPlugin"
+        }
+    }
 }
