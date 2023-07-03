@@ -27,6 +27,7 @@ gradlePlugin-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle
 gradlePlugin-errorprone = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version = "3.1.0" }
 
 bom-junit = { module = "org.junit:junit-bom", version.ref = "junit" }
+bom-kotest = { module = "io.kotest:kotest-bom", version = "5.6.2" }
 bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 
 guava = { module = "com.google.guava:guava", version = "32.1.1-jre" }
@@ -43,6 +44,7 @@ checkerframework-qual = { module = "io.github.eisop:checker-qual", version.ref =
 bomDependencies = [
   # kotlin은 별도 지정
   "bom-junit",
+  "bom-kotest",
   "bom-springBoot",
 ]
 

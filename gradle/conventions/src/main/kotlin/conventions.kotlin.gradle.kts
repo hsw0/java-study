@@ -28,12 +28,14 @@ tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = DEFAULT_JAVA_VERSION.majorVersion
 }
 
-testing {
-    @Suppress("UnstableApiUsage")
-    suites.withType<JvmTestSuite>().configureEach {
-        dependencies {
-            implementation("org.jetbrains.kotlin:kotlin-test-junit5")
-        }
+@Suppress("UnstableApiUsage")
+testing.suites.withType<JvmTestSuite>().configureEach {
+    dependencies {
+        implementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+        runtimeOnly("io.kotest:kotest-runner-junit5")
+        implementation("io.kotest:kotest-assertions-core")
+        implementation("io.kotest:kotest-property")
     }
 }
 
