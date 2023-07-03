@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin.Companion.getKaptConfigurationName
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 
 /**
@@ -21,18 +22,21 @@ if (pluginManager.hasPlugin("org.jetbrains.kotlin.jvm")) {
     }
 }
 
-val aptConfiguration = if (configurations.get("kapt") != null) {
-    "kapt"
-} else {
-    "annotationProcessor"
-}
+val applyAptToSourceSets = listOf("main", "test")
 
 dependencies {
     implementation(platform("org.springframework.boot:spring-boot-dependencies"))
 
-    add(aptConfiguration, "org.springframework:spring-context-indexer")
-    add(aptConfiguration, "org.springframework.boot:spring-boot-configuration-processor")
-    add(aptConfiguration, "org.springframework.boot:spring-boot-autoconfigure-processor")
+    val aptConfigurations: List<String> = if (configurations.get("kapt") != null) {
+        applyAptToSourceSets.map(::getKaptConfigurationName)
+    } else {
+        applyAptToSourceSets.map { sourceSets[it].annotationProcessorConfigurationName }
+    }
+    for (configurationName in aptConfigurations) {
+        add(configurationName, "org.springframework:spring-context-indexer")
+        add(configurationName, "org.springframework.boot:spring-boot-configuration-processor")
+        add(configurationName, "org.springframework.boot:spring-boot-autoconfigure-processor")
+    }
 
     compileOnly("org.springframework:spring-core")
     compileOnly("org.springframework:spring-context")
