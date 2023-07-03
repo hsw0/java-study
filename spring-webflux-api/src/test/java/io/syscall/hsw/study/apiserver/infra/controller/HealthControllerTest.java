@@ -1,15 +1,11 @@
 package io.syscall.hsw.study.apiserver.infra.controller;
 
+import io.syscall.hsw.study.apiserver.infra.ApiInfraLayerTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.autoconfigure.availability.ApplicationAvailabilityAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-@WebFluxTest
-@ImportAutoConfiguration(ApplicationAvailabilityAutoConfiguration.class)
-class HealthControllerTest {
+class HealthControllerTest extends ApiInfraLayerTest {
 
     @Autowired
     WebTestClient webClient;
