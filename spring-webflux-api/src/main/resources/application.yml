@@ -7,3 +7,26 @@ logging.config: classpath:logback-main.xml
 logging.level:
   ROOT: INFO
   io.syscall: DEBUG
+
+management:
+  endpoints.enabled-by-default: false
+  endpoints.web:
+    base-path: /internal
+    discovery.enabled: false
+    exposure.include: "*"
+    path-mapping:
+      prometheus: metrics
+      beans: /actuator/beans
+      configprops: /actuator/configprops
+      mappings: /actuator/mappings
+  endpoint:
+    prometheus.enabled: true
+
+---
+spring.config.activate.on-profile: local
+
+management.endpoint:
+  beans.enabled: true
+  mappings.enabled: true
+  configprops.enabled: true
+  configprops.show-values: ALWAYS

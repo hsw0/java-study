@@ -12,6 +12,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.google.guava:guava")
 
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.micrometer:micrometer-registry-prometheus")
+
     testImplementation("io.projectreactor:reactor-test")
     devRuntimeOnly("io.projectreactor:reactor-tools")
     testRuntimeOnly("io.projectreactor:reactor-tools")
