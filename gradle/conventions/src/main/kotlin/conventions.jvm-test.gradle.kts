@@ -17,28 +17,12 @@ plugins {
     jacoco
 }
 
-val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
-
 testing {
+    val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
     val jUnitVersion = versionCatalog.findVersion("junit").get().toString()
 
     suites.withType<JvmTestSuite>().configureEach {
         useJUnitJupiter(jUnitVersion)
-    }
-}
-
-val integrationTest = testing.suites.create<JvmTestSuite>("integrationTest") {
-    dependencies {
-        implementation(project())
-    }
-}
-
-configurations {
-    val itSourceSet = sourceSets.get(integrationTest.name)
-    val testImplementation by configurations
-
-    named(itSourceSet.implementationConfigurationName) {
-        extendsFrom(testImplementation)
     }
 }
 
@@ -47,11 +31,5 @@ tasks.withType<Test>().configureEach {
         events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
         showStandardStreams = true
         exceptionFormat = TestExceptionFormat.FULL
-    }
-}
-
-tasks {
-    named<JacocoReport>("jacocoTestReport") {
-        dependsOn("test")
     }
 }

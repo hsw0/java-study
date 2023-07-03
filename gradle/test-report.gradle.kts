@@ -34,10 +34,6 @@ reporting {
             testType.set(TestSuiteType.UNIT_TEST)
         }
 
-        create<AggregateTestReport>("integrationTest") {
-            testType.set(TestSuiteType.INTEGRATION_TEST)
-        }
-
         create<JacocoCoverageReport>("jacocoTestReport") {
             testType.set(TestSuiteType.UNIT_TEST)
 
@@ -48,17 +44,5 @@ reporting {
                 }
             }
         }
-
-        create<JacocoCoverageReport>("jacocoIntegrationTestReport") {
-            testType.set(TestSuiteType.INTEGRATION_TEST)
-
-            reportTask {
-                reports {
-                    html.required.set(true)
-                    xml.required.set(true)
-                }
-            }
-        }
-
     }
 }
