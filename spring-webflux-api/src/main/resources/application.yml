@@ -8,6 +8,16 @@ logging.level:
   ROOT: INFO
   io.syscall: DEBUG
 
+server:
+  shutdown: GRACEFUL
+  forward-headers-strategy: NATIVE
+
+  # Based on AWS ALB's
+  # https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html
+  netty.max-initial-line-length: 16KB
+  max-http-request-header-size: 64KB # The maximum length of all headers.
+
+
 management:
   endpoints.enabled-by-default: false
   endpoints.web:
