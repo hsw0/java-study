@@ -29,6 +29,8 @@ gradlePlugin-errorprone = { module = "net.ltgt.gradle:gradle-errorprone-plugin",
 bom-junit = { module = "org.junit:junit-bom", version.ref = "junit" }
 bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 
+guava = { module = "com.google.guava:guava", version = "32.1.1-jre" }
+
 assertj = { module = "org.assertj:assertj-core", version = "3.24.2" }
 
 errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
@@ -44,6 +46,7 @@ bomDependencies = [
 ]
 
 dependencies = [
+  "guava",
   "assertj",
   "errorprone-core", "errorprone-annotations",
   "checkerframework", "checkerframework-qual",
