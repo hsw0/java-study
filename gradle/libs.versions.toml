@@ -29,6 +29,7 @@ gradlePlugin-errorprone = { module = "net.ltgt.gradle:gradle-errorprone-plugin",
 bom-junit = { module = "org.junit:junit-bom", version.ref = "junit" }
 bom-kotest = { module = "io.kotest:kotest-bom", version = "5.6.2" }
 bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+bom-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version = "1.7.2" }
 
 guava = { module = "com.google.guava:guava", version = "32.1.1-jre" }
 
@@ -46,6 +47,7 @@ bomDependencies = [
   "bom-junit",
   "bom-kotest",
   "bom-springBoot",
+  "bom-kotlinx-coroutines",
 ]
 
 dependencies = [

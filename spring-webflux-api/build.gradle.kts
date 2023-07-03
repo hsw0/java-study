@@ -12,6 +12,13 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.google.guava:guava")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+    devRuntimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
+    testRuntimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
+
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
 
@@ -22,3 +29,4 @@ dependencies {
     devRuntimeOnly("io.projectreactor.tools:blockhound")
     testRuntimeOnly("io.projectreactor.tools:blockhound")
 }
+

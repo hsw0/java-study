@@ -11,6 +11,11 @@ version = "1.0-SNAPSHOT"
 
 dependencies {
     devRuntimeOnly("software.amazon.awssdk:arns:2.20.97")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
+    devRuntimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
+    testRuntimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 }
 
 mapstruct {
