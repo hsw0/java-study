@@ -7,6 +7,19 @@ repositories {
     gradlePluginPortal()
 }
 
+// Kotlin plugin fails on JDK 21
+// Execution failed for task ':conventions:compileKotlin'.
+//> Error while evaluating property 'compilerOptions.jvmTarget' of task ':conventions:compileKotlin'.
+//   > Failed to calculate the value of property 'jvmTarget'.
+//      > Unknown Kotlin JVM target: 21
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+
+    disableAutoTargetJvm()
+}
+
 dependencies {
     implementation(gradleApi())
 

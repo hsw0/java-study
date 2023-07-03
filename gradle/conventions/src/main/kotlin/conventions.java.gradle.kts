@@ -21,6 +21,7 @@ val DEFAULT_JAVA_VERSION: JavaVersion by project.ext
 
 java {
     toolchain {
+        // Kotlin plugin fails on JDK 21
         languageVersion.set(JavaLanguageVersion.of(DEFAULT_JAVA_VERSION.majorVersion))
     }
 
