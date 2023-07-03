@@ -32,6 +32,7 @@ bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies",
 guava = { module = "com.google.guava:guava", version = "32.1.1-jre" }
 
 assertj = { module = "org.assertj:assertj-core", version = "3.24.2" }
+reactor-blockhound = { module = "io.projectreactor.tools:blockhound", version = "1.0.8.RELEASE" }
 
 errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
 errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "errorprone" }
@@ -48,6 +49,7 @@ bomDependencies = [
 dependencies = [
   "guava",
   "assertj",
+  "reactor-blockhound",
   "errorprone-core", "errorprone-annotations",
   "checkerframework", "checkerframework-qual",
 ]
