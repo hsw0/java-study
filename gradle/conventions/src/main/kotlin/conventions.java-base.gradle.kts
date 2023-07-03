@@ -8,5 +8,3 @@ interface ConventionJavaBase
 plugins {
     `java-base`
 }
-
-project.ext["DEFAULT_JAVA_VERSION"] = JavaVersion.VERSION_17

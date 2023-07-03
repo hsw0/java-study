@@ -17,8 +17,13 @@ plugins {
     jacoco
 }
 
+val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+jacoco {
+    toolVersion = versionCatalog.findVersion("jacoco").get().toString()
+}
+
 testing {
-    val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
     val jUnitVersion = versionCatalog.findVersion("junit").get().toString()
 
     suites.withType<JvmTestSuite>().configureEach {

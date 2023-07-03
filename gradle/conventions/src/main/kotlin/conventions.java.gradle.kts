@@ -1,4 +1,6 @@
 import io.syscall.gradle.conventions.CustomJavaExtension
+import io.syscall.gradle.conventions.CustomJvmExtension
+import io.syscall.gradle.conventions.DefaultCustomJvmExtension
 import org.gradle.api.internal.tasks.compile.HasCompileOptions
 import java.util.jar.Attributes.Name as JarAttribute
 
@@ -16,15 +18,11 @@ plugins {
 }
 
 val customJavaExt = extensions.create<CustomJavaExtension>("customJava")
-
-val DEFAULT_JAVA_VERSION: JavaVersion by project.ext
+val customJvmExt = extensions.create(CustomJvmExtension::class, "customJvm", DefaultCustomJvmExtension::class)
 
 java {
-    toolchain {
-        // Kotlin plugin fails on JDK 21
-        languageVersion.set(JavaLanguageVersion.of(DEFAULT_JAVA_VERSION.majorVersion))
-    }
-
+    // Kotlin plugin fails on JDK 21
+    toolchain.languageVersion.set(customJvmExt.javaToolchain)
     disableAutoTargetJvm()
 }
 
@@ -36,7 +34,7 @@ tasks.withType<AbstractCompile>().configureEach {
 
 tasks.withType<JavaCompile>().configureEach {
     with(options) {
-        release.set(DEFAULT_JAVA_VERSION.majorVersion.toInt())
+        release.set(customJvmExt.javaTarget.get().asInt())
 
         compilerArgs.add("-parameters")
         compilerArgs.addAll(customJavaExt.buildCompilerArgs())
@@ -69,3 +67,4 @@ normalization {
         }
     }
 }
+

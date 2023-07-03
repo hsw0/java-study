@@ -9,6 +9,7 @@ spring-boot = "3.1.1"
 spotless = "6.19.0"
 errorprone = "2.20.0"
 checkerframework = "3.34.0-eisop1"
+jacoco = "0.8.10"
 
 [libraries]
 bom-kotlin = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
