@@ -33,6 +33,7 @@ bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies",
 bom-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version = "1.7.2" }
 
 guava = { module = "com.google.guava:guava", version = "32.1.1-jre" }
+kotlin-logging = { module = "io.github.oshai:kotlin-logging-jvm", version = "5.0.0-beta-02" }
 
 assertj = { module = "org.assertj:assertj-core", version = "3.24.2" }
 reactor-blockhound = { module = "io.projectreactor.tools:blockhound", version = "1.0.8.RELEASE" }
@@ -53,6 +54,7 @@ bomDependencies = [
 
 dependencies = [
   "guava",
+  "kotlin-logging",
   "assertj",
   "reactor-blockhound",
   "errorprone-core", "errorprone-annotations",

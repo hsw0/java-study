@@ -12,6 +12,8 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.google.guava:guava")
 
+    implementation("io.github.oshai:kotlin-logging-jvm")
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
