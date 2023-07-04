@@ -36,21 +36,19 @@ pluginManager.withPlugin("java") {
     val checkerFrameworkDep = versionCatalog.findLibrary("checkerframework").get().get().toString()
     val checkerQualDep = versionCatalog.findLibrary("checkerframework-qual").get().get().toString()
 
-    configurations {
-        "checkerFramework" {
+    configurations.configureEach {
+        if (name == "checkerFramework") {
             resolutionStrategy.dependencySubstitution {
                 substitute(module("org.checkerframework:checker"))
                     .using(module(checkerFrameworkDep))
             }
         }
-        all {
-            if (name.endsWith("Classpath", ignoreCase = true)
-                || name.contains("AnnotationProcessor", ignoreCase = true)
-            ) {
-                resolutionStrategy.dependencySubstitution {
-                    substitute(module("org.checkerframework:checker-qual"))
-                        .using(module(checkerQualDep))
-                }
+        if (name.endsWith("Classpath", ignoreCase = true)
+            || name.endsWith("AnnotationProcessor", ignoreCase = true)
+        ) {
+            resolutionStrategy.dependencySubstitution {
+                substitute(module("org.checkerframework:checker-qual"))
+                    .using(module(checkerQualDep))
             }
         }
     }
