@@ -71,6 +71,10 @@ pluginManager.withPlugin("java") {
             disable("ParameterMissingNullable")
             disable("ReturnMissingNullable")
             disable("VoidMissingNullable")
+
+            disable("AndroidJdkLibsChecker")
+            disable("Java7ApiChecker")
+            disable("Java8ApiChecker")
         }
     }
 
