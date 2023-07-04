@@ -1,6 +1,6 @@
+
 import io.syscall.gradle.conventions.CustomJavaExtension
 import io.syscall.gradle.conventions.CustomJvmExtension
-import org.jetbrains.kotlin.gradle.internal.KaptWithoutKotlincTask
 import org.jetbrains.kotlin.gradle.tasks.CompileUsingKotlinDaemon
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.UsesKotlinJavaToolchain
@@ -50,10 +50,6 @@ tasks.withType<KotlinCompile>().configureEach {
 tasks.withType<CompileUsingKotlinDaemon>().configureEach {
     kotlinDaemonJvmArguments.add("--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
 }
-tasks.withType<KaptWithoutKotlincTask>().configureEach {
-    kaptProcessJvmArgs.add("--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
-}
-
 
 @Suppress("UnstableApiUsage")
 testing.suites.withType<JvmTestSuite>().configureEach {
