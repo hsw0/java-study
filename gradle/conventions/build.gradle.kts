@@ -1,3 +1,5 @@
+import com.diffplug.spotless.LineEnding
+
 plugins {
     `kotlin-dsl`
     alias(libs.plugins.spotless)
@@ -30,6 +32,8 @@ dependencies {
 }
 
 spotless {
+    lineEndings = LineEnding.UNIX
+
     kotlin {
         target("src/main/kotlin/**/*.kt")
         ktlint()

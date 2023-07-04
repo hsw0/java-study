@@ -1,4 +1,5 @@
 import com.diffplug.gradle.spotless.SpotlessExtension
+import com.diffplug.spotless.LineEnding
 
 /**
  * Spotless
@@ -30,6 +31,8 @@ if (project == rootProject) {
 }
 
 spotless {
+    lineEndings = LineEnding.UNIX
+
     if (pluginManager.hasPlugin("java")) {
         java {
             if (JavaVersion.current() < JavaVersion.VERSION_21) {

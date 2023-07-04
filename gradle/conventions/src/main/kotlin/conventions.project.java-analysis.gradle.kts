@@ -1,5 +1,6 @@
 import net.ltgt.gradle.errorprone.errorprone
 import org.checkerframework.gradle.plugin.CheckerFrameworkExtension
+import org.checkerframework.gradle.plugin.CreateManifestTask
 
 /**
  * Java static analyzers
@@ -88,5 +89,10 @@ pluginManager.withPlugin("java") {
 
         // error: [type.checking.not.run] ${NAME}Checker did not run because of a previous error issued by javac
         extraJavacArgs.add("-AsuppressWarnings=type.checking.not.run")
+    }
+
+    tasks.withType<CreateManifestTask>().configureEach {
+        // Task `:${PROJECT}:createCheckerFrameworkManifest` of type `org.checkerframework.gradle.plugin.CreateManifestTask`: invocation of 'Task.project' at execution time is unsupported.
+        notCompatibleWithConfigurationCache("UNSUPPORTED")
     }
 }

@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 /**
  * Spring Boot Application convention
  *
@@ -13,4 +15,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+}
+
+tasks.withType<BootJar>().configureEach {
+    // > Execution of task ':${PROJECT}:bootJar' caused invocation of 'Task.project' by task ':${PROJECT}:resolveMainClassName' at execution time which is unsupported.
+    notCompatibleWithConfigurationCache("UNSUPPORTED")
 }
