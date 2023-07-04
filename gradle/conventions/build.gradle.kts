@@ -3,10 +3,6 @@ plugins {
     alias(libs.plugins.spotless)
 }
 
-repositories {
-    gradlePluginPortal()
-}
-
 // Kotlin plugin fails on JDK 21
 // Execution failed for task ':conventions:compileKotlin'.
 //> Error while evaluating property 'compilerOptions.jvmTarget' of task ':conventions:compileKotlin'.

@@ -12,10 +12,6 @@ plugins {
 }
 
 if (project == rootProject) {
-    repositories {
-        mavenCentral()
-    }
-
     spotless {
         predeclareDeps()
     }

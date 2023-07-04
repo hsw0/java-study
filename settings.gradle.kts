@@ -1,5 +1,11 @@
 rootProject.name = "java-study"
 
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
 includeBuild("gradle/conventions")
 
 include(":dependencyManagement")

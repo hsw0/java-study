@@ -9,10 +9,6 @@ plugins {
     base
 }
 
-repositories {
-    mavenCentral()
-}
-
 evaluationDependsOn(":dependencyManagement")
 val dependencyManagementConf: Configuration = configurations.create("dependencyManagement") {
     isCanBeConsumed = false
