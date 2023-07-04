@@ -11,7 +11,9 @@ import java.time.Instant
 public class ExampleCoroutineController {
 
     @PostMapping("/example/coroutine")
-    public suspend fun sample(@RequestBody req: ExampleReq): ExampleRes {
+    public suspend fun sample(
+        @RequestBody req: ExampleReq,
+    ): ExampleRes {
         return ExampleRes(
             id = 123,
             name = req.name,

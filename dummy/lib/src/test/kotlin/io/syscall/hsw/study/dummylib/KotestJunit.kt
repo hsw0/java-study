@@ -15,6 +15,5 @@ class KotestJunit {
         thrown.message
             .shouldContain("Collection should be empty")
             .shouldContain("반동분자")
-
     }
 }

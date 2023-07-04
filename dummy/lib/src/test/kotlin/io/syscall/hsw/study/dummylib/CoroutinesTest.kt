@@ -19,7 +19,7 @@ class CoroutinesTest {
         runBlocking {
             log.info("Before launch")
             launch {
-                val message = coroutineMethod();
+                val message = coroutineMethod()
                 log.info("Result: {}", message)
             }
             log.info("After launch")

@@ -11,4 +11,4 @@ public data class ExampleRes(
 
     val timestamp: Instant,
 
-    )
+)
