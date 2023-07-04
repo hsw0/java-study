@@ -2,7 +2,7 @@
  * Java project convention
  *
  */
-interface Comments
+private object Comments
 
 plugins {
     id("conventions.project.jvm")

@@ -1,5 +1,3 @@
-rootProject.name = "project-conventions"
-
 dependencyResolutionManagement {
     repositories {
         gradlePluginPortal()

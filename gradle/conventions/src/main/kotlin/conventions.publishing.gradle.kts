@@ -3,7 +3,7 @@
  *
  * @see org.gradle.api.publish.maven.plugins.MavenPublishPlugin
  */
-interface Comments
+private object Comments
 
 plugins {
     java

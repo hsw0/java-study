@@ -5,7 +5,7 @@ import com.diffplug.gradle.spotless.SpotlessExtension
  *
  * Based on [otel.spotless-conventions](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/bba8a073901f6ffd3e415e2570efda075656468d/conventions/src/main/kotlin/otel.spotless-conventions.gradle.kts)
  */
-interface Comments
+private object Comments
 
 plugins {
     id("com.diffplug.spotless")

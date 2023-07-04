@@ -2,7 +2,7 @@
  * Spring Boot Application convention
  *
  */
-interface Comments
+private object Comments
 
 plugins {
     id("conventions.project.spring-boot")

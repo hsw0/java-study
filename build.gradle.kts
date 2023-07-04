@@ -1,6 +1,5 @@
 plugins {
     `project-report`
-    `build-dashboard`
     id("conventions.project.spotless")
 }
 

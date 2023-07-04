@@ -9,7 +9,7 @@ import org.jetbrains.kotlin.gradle.tasks.UsesKotlinJavaToolchain
  * Kotlin convention
  *
  */
-interface Comments
+private object Comments
 
 
 plugins {
@@ -18,13 +18,13 @@ plugins {
     kotlin("jvm")
 }
 
+// region Toolchain 관련 설정
+
 val customJavaExt = extensions.getByType<CustomJavaExtension>()
 val customJvmExt = extensions.getByType<CustomJvmExtension>()
 
 kotlin {
     jvmToolchain(customJvmExt.kotlinToolchain.get().asInt())
-
-    explicitApi()
 }
 
 java {
@@ -41,7 +41,7 @@ tasks.withType<UsesKotlinJavaToolchain>().configureEach {
     kotlinJavaToolchain.toolchain.use(customLauncher)
 }
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = customJvmExt.kotlinJvmTarget.get().toString()
+    compilerOptions.jvmTarget.set(customJvmExt.kotlinJvmTarget)
 }
 
 // Kapt fails on JDK 21
@@ -49,6 +49,12 @@ tasks.withType<KotlinCompile>().configureEach {
 // java.lang.IllegalAccessError: superclass access check failed: class org.jetbrains.kotlin.kapt3.base.javac.KaptJavaCompiler (in unnamed module @<...>) cannot access class com.sun.tools.javac.main.JavaCompiler (in module jdk.compiler) because module jdk.compiler does not export com.sun.tools.javac.main to unnamed module @<...>
 tasks.withType<CompileUsingKotlinDaemon>().configureEach {
     kotlinDaemonJvmArguments.add("--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
+}
+
+// endregion
+
+kotlin {
+    explicitApi()
 }
 
 @Suppress("UnstableApiUsage")

@@ -5,7 +5,7 @@ import org.jetbrains.kotlin.gradle.plugin.KaptExtension
  * Spring Boot 에 의존하는 project convention
  *
  */
-interface Comments
+private object Comments
 
 plugins {
     id("conventions.project.jvm")

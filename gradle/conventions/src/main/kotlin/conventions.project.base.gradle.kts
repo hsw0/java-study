@@ -1,7 +1,7 @@
 /**
  * Base conventions applied to all projects
  */
-interface Comments
+private object Comments
 
 plugins {
     id("conventions.base")

@@ -3,7 +3,7 @@
  *
  * @see org.gradle.api.plugins.JavaBasePlugin
  */
-interface ConventionJavaBase
+private object Comments
 
 plugins {
     `java-base`

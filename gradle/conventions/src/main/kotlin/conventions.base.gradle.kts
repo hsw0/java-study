@@ -5,7 +5,7 @@
  * @see <a href="https://docs.gradle.org/current/userguide/base_plugin.html">Base plugin Doc</a>
  * @see org.gradle.language.base.plugins.LifecycleBasePlugin
  */
-interface Comments
+private object Comments
 
 // Reproducible build
 tasks.withType<AbstractArchiveTask>().configureEach {

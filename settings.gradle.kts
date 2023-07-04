@@ -1,12 +1,16 @@
 rootProject.name = "java-study"
 
+pluginManagement {
+    includeBuild("gradle/conventions") {
+        name = "conventions"
+    }
+}
+
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
     }
 }
-
-includeBuild("gradle/conventions")
 
 include(":dependencyManagement")
 project(":dependencyManagement").buildFileName = "../gradle/dependency.gradle.kts"

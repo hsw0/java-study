@@ -10,8 +10,8 @@ interface Comments
 plugins {
     id("conventions.dependency-management")
 
-    id("net.ltgt.errorprone")
-    id("org.checkerframework")
+    id("net.ltgt.errorprone") apply false
+    id("org.checkerframework") apply false
 }
 
 pluginManager.withPlugin("java") {

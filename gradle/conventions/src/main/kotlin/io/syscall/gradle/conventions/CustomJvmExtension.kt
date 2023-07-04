@@ -4,12 +4,13 @@ package io.syscall.gradle.conventions
 
 import org.gradle.api.provider.Property
 import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 public interface CustomJvmExtension {
     val javaToolchain: Property<JavaLanguageVersion>
     val javaTarget: Property<JavaLanguageVersion>
     val kotlinToolchain: Property<JavaLanguageVersion>
-    val kotlinJvmTarget: Property<JavaLanguageVersion>
+    val kotlinJvmTarget: Property<JvmTarget>
     val runtimeJdkVersion: Property<JavaLanguageVersion>
 }
 
@@ -18,8 +19,7 @@ internal abstract class DefaultCustomJvmExtension : CustomJvmExtension {
         javaToolchain.convention(JavaLanguageVersion.of(21))
         javaTarget.convention(JavaLanguageVersion.of(17))
         kotlinToolchain.convention(JavaLanguageVersion.of(21))
-        kotlinJvmTarget.convention(JavaLanguageVersion.of(17))
-
+        kotlinJvmTarget.convention(JvmTarget.JVM_17)
 
         runtimeJdkVersion.convention(JavaLanguageVersion.of(21)) // TODO
     }
@@ -47,5 +47,4 @@ public object UnconfiguredVersion : JavaLanguageVersion {
     override fun canCompileOrRun(otherVersion: Int): Boolean {
         TODO("Not yet implemented")
     }
-
 }
