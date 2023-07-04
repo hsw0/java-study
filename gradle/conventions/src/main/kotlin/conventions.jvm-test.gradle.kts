@@ -23,15 +23,20 @@ jacoco {
     toolVersion = versionCatalog.findVersion("jacoco").get().toString()
 }
 
-testing {
-    val jUnitVersion = versionCatalog.findVersion("junit").get().toString()
+afterEvaluate {
+    testing {
+        val jUnitVersion = versionCatalog.findVersion("junit").get().toString()
 
-    suites.withType<JvmTestSuite>().configureEach {
-        useJUnitJupiter(jUnitVersion)
+        suites.withType<JvmTestSuite>().configureEach {
+            // Test framework 및 junit-jupiter 의존성 추가
+            useJUnitJupiter(jUnitVersion)
+        }
     }
 }
 
 tasks.withType<Test>().configureEach {
+    // Test framework만 설정
+    useJUnitPlatform()
     testLogging {
         events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
         showStandardStreams = true
