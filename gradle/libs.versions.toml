@@ -61,3 +61,4 @@ dependencies = [
 
 [plugins]
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+mrjar = { id = "me.champeau.mrjar", version = "0.1.1" }

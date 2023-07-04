@@ -1,6 +1,7 @@
 import io.syscall.gradle.conventions.CustomJavaExtension
 import io.syscall.gradle.conventions.CustomJvmExtension
 import io.syscall.gradle.conventions.DefaultCustomJvmExtension
+import io.syscall.gradle.conventions.UnconfiguredVersion
 import org.gradle.api.internal.tasks.compile.HasCompileOptions
 import java.util.jar.Attributes.Name as JarAttribute
 
@@ -17,25 +18,32 @@ plugins {
     id("conventions.jvm-test")
 }
 
-val customJavaExt = extensions.create<CustomJavaExtension>("customJava")
-val customJvmExt = extensions.create(CustomJvmExtension::class, "customJvm", DefaultCustomJvmExtension::class)
-
-java {
-    // Kotlin plugin fails on JDK 21
-    toolchain.languageVersion.set(customJvmExt.javaToolchain)
-    disableAutoTargetJvm()
-}
-
 tasks.withType<AbstractCompile>().configureEach {
     if (this is HasCompileOptions) {
         options.encoding = "UTF-8"
     }
 }
 
+val customJavaExt = extensions.create<CustomJavaExtension>("customJava")
+val customJvmExt = extensions.create(CustomJvmExtension::class, "customJvm", DefaultCustomJvmExtension::class)
+
+afterEvaluate {
+    if (customJvmExt.javaToolchain.orNull !is UnconfiguredVersion) {
+        java {
+            toolchain.languageVersion.set(customJvmExt.javaToolchain)
+            disableAutoTargetJvm()
+        }
+    }
+
+    if (customJvmExt.javaTarget.orNull !is UnconfiguredVersion) {
+        tasks.withType<JavaCompile>().configureEach {
+            options.release.set(customJvmExt.javaTarget.get().asInt())
+        }
+    }
+}
+
 tasks.withType<JavaCompile>().configureEach {
     with(options) {
-        release.set(customJvmExt.javaTarget.get().asInt())
-
         compilerArgs.add("-parameters")
         compilerArgs.addAll(customJavaExt.buildCompilerArgs())
     }
