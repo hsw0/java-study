@@ -17,4 +17,5 @@ include(
     ":dummy:app",
 )
 
+include(":module:java21-compat")
 include(":spring-webflux-api")
