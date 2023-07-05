@@ -40,3 +40,6 @@ management.endpoint:
   mappings.enabled: true
   configprops.enabled: true
   configprops.show-values: ALWAYS
+
+custom.netty.webserver:
+  use-virtual-thread: true
