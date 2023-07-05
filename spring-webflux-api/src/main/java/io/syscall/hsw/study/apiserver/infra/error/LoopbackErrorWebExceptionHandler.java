@@ -7,11 +7,13 @@ import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.core.NestedExceptionUtils;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,13 @@ import reactor.core.publisher.Mono;
 public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandler, InitializingBean {
 
     protected static final Logger log = LoggerFactory.getLogger(LoopbackErrorWebExceptionHandler.class);
+
+    /**
+     * @see org.springframework.web.server.adapter.HttpWebHandlerAdapter#DISCONNECTED_CLIENT_EXCEPTIONS
+     */
+    @SuppressWarnings("JavadocReference")
+    private static final Set<String> DISCONNECTED_CLIENT_EXCEPTIONS =
+            Set.of("AbortedException", "ClientAbortException", "EOFException", "EofException");
 
     private final RequestMappingHandlerAdapter requestMappingHandlerAdapter;
     private final List<HandlerResultHandler> resultHandlers;
@@ -92,10 +101,12 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
     }
 
     private Mono<Void> handleUncaught(ServerWebExchange exchange, Throwable t) {
-        log.error("Uncaught exception", t);
-        if (exchange.getResponse().isCommitted()) {
-            return Mono.empty();
+        if (exchange.getResponse().isCommitted() || isDisconnectedClientError(t)) {
+            return Mono.error(t);
         }
+
+        log.error("Uncaught exception", t);
+
         return Mono.defer(() -> {
             var responseTemplate = defaultInternalErrorResponse;
 
@@ -107,6 +118,11 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
             var responseBuffer = DefaultDataBufferFactory.sharedInstance.wrap(responseTemplate.responseBody());
             return response.writeWith(Mono.just(responseBuffer));
         });
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        defaultInternalErrorResponse = buildInternalError();
     }
 
     @VisibleForTesting
@@ -136,8 +152,20 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
         }
     }
 
-    @Override
-    public void afterPropertiesSet() {
-        defaultInternalErrorResponse = buildInternalError();
+    /**
+     * @see org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler#isDisconnectedClientError
+     */
+    private boolean isDisconnectedClientError(Throwable ex) {
+        return DISCONNECTED_CLIENT_EXCEPTIONS.contains(ex.getClass().getSimpleName())
+                || isDisconnectedClientErrorMessage(NestedExceptionUtils.getMostSpecificCause(ex).getMessage());
     }
+
+    /**
+     * @see org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler#isDisconnectedClientErrorMessage
+     */
+    private boolean isDisconnectedClientErrorMessage(String message) {
+        message = (message != null) ? message.toLowerCase() : "";
+        return (message.contains("broken pipe") || message.contains("connection reset by peer"));
+    }
+
 }
