@@ -28,6 +28,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
+    runtimeOnly("io.micrometer:micrometer-core")
+    runtimeOnly("io.micrometer:micrometer-tracing")
 
     testImplementation("io.projectreactor:reactor-test")
     devRuntimeOnly("io.projectreactor:reactor-tools")
