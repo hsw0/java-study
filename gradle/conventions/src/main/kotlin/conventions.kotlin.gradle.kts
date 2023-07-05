@@ -61,6 +61,11 @@ kotlin {
     explicitApi()
 }
 
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions.javaParameters.set(true)
+    compilerOptions.freeCompilerArgs.addAll("-Xjsr305=strict")
+}
+
 @Suppress("UnstableApiUsage")
 testing.suites.withType<JvmTestSuite>().configureEach {
     dependencies {
