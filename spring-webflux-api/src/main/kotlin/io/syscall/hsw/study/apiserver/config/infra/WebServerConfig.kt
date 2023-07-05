@@ -32,7 +32,7 @@ internal class WebServerConfig {
         }
         log.info { "NettyServer: Using virtual thread" }
 
-        val nThreads = Runtime.getRuntime().availableProcessors()
+        val nThreads = LoopResources.DEFAULT_IO_WORKER_COUNT
         val threadFactory = Thread.ofVirtual().name("nettyserver-nio-v").factory()
         val executor = Executors.newThreadPerTaskExecutor(threadFactory)
 

@@ -42,4 +42,4 @@ management.endpoint:
   configprops.show-values: ALWAYS
 
 custom.netty.webserver:
-  use-virtual-thread: true
+  use-virtual-thread: false

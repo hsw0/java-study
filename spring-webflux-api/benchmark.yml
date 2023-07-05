@@ -1,0 +1,11 @@
+---
+# https://github.com/fcsonline/drill
+
+base: 'http://localhost:8080'
+concurrency: 500
+iterations: 10000
+
+plan:
+  - name: Thread.sleep(40ms) on VirtualThread Per task
+    request:
+      url: /util/sleep/40?strategy=THREAD_SLEEP_ON_SCHEDULER
