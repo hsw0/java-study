@@ -17,7 +17,7 @@ public interface CustomJvmExtension {
 internal abstract class DefaultCustomJvmExtension : CustomJvmExtension {
     init {
         javaToolchain.convention(JavaLanguageVersion.of(21))
-        javaTarget.convention(JavaLanguageVersion.of(17))
+        javaTarget.convention(JavaLanguageVersion.of(21))
         kotlinToolchain.convention(JavaLanguageVersion.of(21))
         kotlinJvmTarget.convention(JvmTarget.JVM_17)
 
