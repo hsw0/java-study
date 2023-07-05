@@ -1,3 +1,7 @@
+import org.gradle.kotlin.dsl.support.serviceOf
+import org.gradle.platform.Architecture
+import org.gradle.platform.OperatingSystem
+
 plugins {
     id("conventions.project.kotlin")
     id("conventions.project.spring-boot-app")
@@ -31,5 +35,23 @@ dependencies {
     compileOnly("io.projectreactor.tools:blockhound") // BlockHoundIntegration SPI
     devRuntimeOnly("io.projectreactor.tools:blockhound")
     testRuntimeOnly("io.projectreactor.tools:blockhound")
+
+    @Suppress("UnstableApiUsage")
+    if (serviceOf<BuildPlatform>().operatingSystem == OperatingSystem.MAC_OS) {
+        val classifier = when (val arch = serviceOf<BuildPlatform>().architecture) {
+            Architecture.X86_64 -> "osx-x86_64"
+            Architecture.AARCH64 -> "osx-aarch_64"
+            else -> TODO("No macOS for $arch")
+        }
+        // ex) netty-transport-native-kqueue-${VERSION}-osx-aarch_64.jar
+        runtimeOnly(group = "io.netty", name = "netty-transport-native-kqueue", classifier = classifier)
+        runtimeOnly(group = "io.netty", name = "netty-resolver-dns-native-macos", classifier = classifier)
+    }
+
+    // Production
+    for (arch in listOf("aarch_64", "x86_64")) {
+        runtimeOnly(group = "io.netty", name = "netty-transport-native-epoll", classifier = "linux-${arch}")
+    }
 }
+
 

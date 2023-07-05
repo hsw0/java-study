@@ -8,6 +8,8 @@ logging.level:
   ROOT: INFO
   io.syscall: DEBUG
 
+  "reactor.netty.resources": DEBUG
+
 server:
   shutdown: GRACEFUL
   forward-headers-strategy: NATIVE
