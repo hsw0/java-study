@@ -3,7 +3,7 @@
 format.version = "1.1"
 
 [versions]
-kotlin = "1.8.22"
+kotlin = "1.9.0"
 junit = "5.9.2"
 spring-boot = "3.1.1"
 spotless = "6.19.0"
@@ -29,8 +29,9 @@ gradlePlugin-errorprone = { module = "net.ltgt.gradle:gradle-errorprone-plugin",
 
 bom-junit = { module = "org.junit:junit-bom", version.ref = "junit" }
 bom-kotest = { module = "io.kotest:kotest-bom", version = "5.6.2" }
-bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 bom-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version = "1.7.2" }
+bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+bom-springCloud-Commons = { module = "org.springframework.cloud:spring-cloud-commons-dependencies", version = "4.0.3" }
 
 guava = { module = "com.google.guava:guava", version = "32.1.1-jre" }
 kotlin-logging = { module = "io.github.oshai:kotlin-logging-jvm", version = "5.0.0-beta-02" }
@@ -48,8 +49,9 @@ bomDependencies = [
   # kotlin은 별도 지정
   "bom-junit",
   "bom-kotest",
-  "bom-springBoot",
   "bom-kotlinx-coroutines",
+  "bom-springBoot",
+  "bom-springCloud-Commons",
 ]
 
 dependencies = [
