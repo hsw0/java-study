@@ -1,5 +1,5 @@
+import org.jetbrains.kotlin.allopen.gradle.SpringGradleSubplugin
 import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin.Companion.getKaptConfigurationName
-import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 
 /**
  * Spring Boot 에 의존하는 project convention
@@ -14,20 +14,19 @@ plugins {
 if (pluginManager.hasPlugin("org.jetbrains.kotlin.jvm")) {
     logger.info("Spring Boot: Applying kotlin specific config")
 
-    apply(plugin = "org.jetbrains.kotlin.plugin.spring")
+    apply(plugin = "org.jetbrains.kotlin.plugin.allopen")
     apply(plugin = "org.jetbrains.kotlin.kapt")
 
-    configure<KaptExtension> {
-        showProcessorStats = true
-    }
+    apply<SpringGradleSubplugin>() // allopen
 }
 
+val useKotlinApt = pluginManager.hasPlugin("org.jetbrains.kotlin.kapt")
 val applyAptToSourceSets = listOf("main", "test")
 
 dependencies {
     implementation(platform("org.springframework.boot:spring-boot-dependencies"))
 
-    val aptConfigurations: List<String> = if (configurations.get("kapt") != null) {
+    val aptConfigurations: List<String> = if (useKotlinApt) {
         applyAptToSourceSets.map(::getKaptConfigurationName)
     } else {
         applyAptToSourceSets.map { sourceSets[it].annotationProcessorConfigurationName }

@@ -6,6 +6,7 @@ plugins {
     id("conventions.project.kotlin")
     id("conventions.project.spring-boot-app")
     id("io.syscall.gradle.plugin.devonly")
+    id("conventions.jpa-entity")
 }
 
 group = "io.syscall.hsw.study"
@@ -13,6 +14,9 @@ version = "1.0-SNAPSHOT"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.cloud:spring-cloud-context") {
+        exclude(group = "org.springframework.security", module = "spring-security-crypto")
+    }
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.google.guava:guava")
@@ -30,6 +34,9 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("io.micrometer:micrometer-core")
     runtimeOnly("io.micrometer:micrometer-tracing")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("com.h2database:h2")
 
     testImplementation("io.projectreactor:reactor-test")
     devRuntimeOnly("io.projectreactor:reactor-tools")
@@ -56,4 +63,8 @@ dependencies {
     }
 }
 
+configurations.compileClasspath {
+    // Spring이 아닌 @jakarta.transaction.Transactional로 잘못 쓰는 것 방지
+    exclude(group = "jakarta.transaction", module = "jakarta.transaction-api")
+}
 
