@@ -1,12 +1,15 @@
 package io.syscall.hsw.study.apiserver.infra.error;
 
+import io.syscall.hsw.study.apiserver.infra.jpa.hibernate.DetailedEntityNotFoundDelegate.DetailedEntityNotFoundException;
 import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.reactive.HandlerMapping;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
@@ -17,6 +20,12 @@ import reactor.core.publisher.Mono;
 public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final Logger log = LoggerFactory.getLogger(DefaultExceptionHandler.class);
+
+    @ExceptionHandler
+    public Mono<ResponseEntity<Object>> handleEntityNotFoundException(DetailedEntityNotFoundException ex,
+            ServerWebExchange exchange) {
+        return handleExceptionInternal(ex, null, null, HttpStatus.NOT_FOUND, exchange);
+    }
 
     @Override
     protected Mono<ResponseEntity<Object>> handleExceptionInternal(
