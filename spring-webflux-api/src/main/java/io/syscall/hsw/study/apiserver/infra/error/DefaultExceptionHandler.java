@@ -22,8 +22,8 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     private final Logger log = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
     @ExceptionHandler
-    public Mono<ResponseEntity<Object>> handleEntityNotFoundException(DetailedEntityNotFoundException ex,
-            ServerWebExchange exchange) {
+    public Mono<ResponseEntity<Object>> handleEntityNotFoundException(
+            DetailedEntityNotFoundException ex, ServerWebExchange exchange) {
         return handleExceptionInternal(ex, null, null, HttpStatus.NOT_FOUND, exchange);
     }
 

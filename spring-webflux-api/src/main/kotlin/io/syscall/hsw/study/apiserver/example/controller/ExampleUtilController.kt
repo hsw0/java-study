@@ -49,5 +49,4 @@ internal class ExampleUtilController {
     }
 
     enum class SleepStrategy { MONO_DELAY, THREAD_SLEEP_ON_SCHEDULER, THREAD_SLEEP_CURRENT }
-
 }

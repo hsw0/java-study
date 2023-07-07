@@ -29,8 +29,8 @@ public final class CustomHttpServerMetricsRecorder implements HttpServerMetricsR
 
     private final SimpleRequestMappingPatternResolver uriPatternResolver;
 
-    public CustomHttpServerMetricsRecorder(HttpServerMetricsRecorder delegate,
-            SimpleRequestMappingPatternResolver uriPatternResolver) {
+    public CustomHttpServerMetricsRecorder(
+            HttpServerMetricsRecorder delegate, SimpleRequestMappingPatternResolver uriPatternResolver) {
         this.delegate = delegate;
         this.uriPatternResolver = uriPatternResolver;
     }
@@ -145,7 +145,6 @@ public final class CustomHttpServerMetricsRecorder implements HttpServerMetricsR
     public void recordServerConnectionClosed(SocketAddress localAddress) {
         delegate.recordServerConnectionClosed(localAddress);
     }
-
 
     @Override
     public void recordDataReceived(SocketAddress remoteAddress, long bytes) {

@@ -13,6 +13,7 @@ group = "io.syscall.hsw.study"
 version = "1.0-SNAPSHOT"
 
 dependencies {
+    compileOnly(project(":module:annotations"))
     implementation(project(":module:entityid"))
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")

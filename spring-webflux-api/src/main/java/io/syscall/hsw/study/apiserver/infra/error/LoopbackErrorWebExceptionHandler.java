@@ -2,7 +2,7 @@ package io.syscall.hsw.study.apiserver.infra.error;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.annotations.VisibleForTesting;
+import io.syscall.annotations.VisibleForTesting;
 import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.util.List;
@@ -126,7 +126,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
     }
 
     @VisibleForTesting
-    StaticErrorResponse buildInternalError() {
+    protected StaticErrorResponse buildInternalError() {
         var detail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
 
@@ -157,7 +157,8 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
      */
     private boolean isDisconnectedClientError(Throwable ex) {
         return DISCONNECTED_CLIENT_EXCEPTIONS.contains(ex.getClass().getSimpleName())
-                || isDisconnectedClientErrorMessage(NestedExceptionUtils.getMostSpecificCause(ex).getMessage());
+                || isDisconnectedClientErrorMessage(
+                NestedExceptionUtils.getMostSpecificCause(ex).getMessage());
     }
 
     /**
@@ -167,5 +168,4 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
         message = (message != null) ? message.toLowerCase() : "";
         return (message.contains("broken pipe") || message.contains("connection reset by peer"));
     }
-
 }

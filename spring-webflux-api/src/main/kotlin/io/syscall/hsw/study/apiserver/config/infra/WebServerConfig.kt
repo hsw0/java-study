@@ -34,7 +34,6 @@ internal class WebServerConfig {
     @Bean
     internal fun enableNettyMetrics(simpleRequestMappingPatternResolver: SimpleRequestMappingPatternResolver) =
         NettyServerCustomizer {
-
             // reactor.netty.http.server.MicrometerHttpServerMetricsRecorder 가 package-private 이어서 이를 얻어오려는 삽질
             val defaultMetricsRecorder = it
                 .metrics(true, { _ -> "DUMMY" })
@@ -60,7 +59,8 @@ internal class WebServerConfig {
 
         val loopResources = OverrideServerEventLoopGroup(
             delegate = it.configuration().loopResources(),
-            nThreads, executor,
+            nThreads,
+            executor,
         )
         return@NettyServerCustomizer it.runOn(loopResources)
     }

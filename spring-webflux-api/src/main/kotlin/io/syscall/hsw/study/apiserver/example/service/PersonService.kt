@@ -1,4 +1,4 @@
-package io.syscall.hsw.study.apiserver.example.service;
+package io.syscall.hsw.study.apiserver.example.service
 
 import io.syscall.hsw.study.apiserver.example.model.Person
 import io.syscall.hsw.study.apiserver.example.model.PersonId

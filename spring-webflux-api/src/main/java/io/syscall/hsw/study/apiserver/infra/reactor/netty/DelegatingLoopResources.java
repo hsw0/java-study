@@ -7,9 +7,7 @@ import java.util.Objects;
 import reactor.core.publisher.Mono;
 import reactor.netty.resources.LoopResources;
 
-@SuppressWarnings({
-        "java:S119" /* Sonar: Type parameter names should comply with a naming convention */
-})
+@SuppressWarnings({"java:S119" /* Sonar: Type parameter names should comply with a naming convention */})
 public abstract class DelegatingLoopResources implements LoopResources {
 
     protected final LoopResources delegate;
@@ -44,8 +42,8 @@ public abstract class DelegatingLoopResources implements LoopResources {
     }
 
     @Override
-    public <CHANNEL extends Channel> Class<? extends CHANNEL> onChannelClass(Class<CHANNEL> channelType,
-            EventLoopGroup group) {
+    public <CHANNEL extends Channel> Class<? extends CHANNEL> onChannelClass(
+            Class<CHANNEL> channelType, EventLoopGroup group) {
         return delegate.onChannelClass(channelType, group);
     }
 

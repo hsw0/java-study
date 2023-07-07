@@ -11,8 +11,8 @@ import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 public class HibernateSessionFactoryCustomizer implements Integrator {
 
     @Override
-    public void integrate(Metadata metadata, BootstrapContext bootstrapContext,
-            SessionFactoryImplementor sessionFactory) {
+    public void integrate(
+            Metadata metadata, BootstrapContext bootstrapContext, SessionFactoryImplementor sessionFactory) {
         if (sessionFactory.getSessionFactoryOptions() instanceof SessionFactoryOptionsBuilder builder) {
             EntityNotFoundDelegate thrower;
             builder.applyEntityNotFoundDelegate(new DetailedEntityNotFoundDelegate());

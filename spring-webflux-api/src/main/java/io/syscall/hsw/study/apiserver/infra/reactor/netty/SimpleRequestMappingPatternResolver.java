@@ -67,7 +67,6 @@ public class SimpleRequestMappingPatternResolver {
         }
     }
 
-
     @Autowired
     public void setHandlerMapping(ObjectProvider<RequestMappingInfoHandlerMapping> handlerMappingBeans) {
         for (var bean : (Iterable<RequestMappingInfoHandlerMapping>) handlerMappingBeans.orderedStream()::iterator) {
@@ -76,15 +75,20 @@ public class SimpleRequestMappingPatternResolver {
                 if (log.isDebugEnabled()) {
                     var entries = new LinkedHashSet<String>();
                     entries.addAll(info.getDirectPaths());
-                    entries.addAll(info.getPatternsCondition().getPatterns().stream().map(PathPattern::getPatternString)
+                    entries.addAll(info.getPatternsCondition().getPatterns().stream()
+                            .map(PathPattern::getPatternString)
                             .toList());
 
-                    log.debug("{} -> \"{} {}\"", entry.getValue(), info.getMethodsCondition().getMethods(), entries);
+                    log.debug(
+                            "{} -> \"{} {}\"",
+                            entry.getValue(),
+                            info.getMethodsCondition().getMethods(),
+                            entries);
                 }
 
                 for (var requestMethod : info.getMethodsCondition().getMethods()) {
-                    var forMethod = methodPatterns.computeIfAbsent(requestMethod.asHttpMethod(),
-                            ignored -> Patterns.create());
+                    var forMethod =
+                            methodPatterns.computeIfAbsent(requestMethod.asHttpMethod(), ignored -> Patterns.create());
                     forMethod.directPathMappings().addAll(info.getDirectPaths());
                     forMethod.pathPatterns().addAll(info.getPatternsCondition().getPatterns());
                 }
@@ -94,5 +98,4 @@ public class SimpleRequestMappingPatternResolver {
             }
         }
     }
-
 }
