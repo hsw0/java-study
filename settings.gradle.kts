@@ -23,6 +23,7 @@ project(":test-report").buildFileName = "../gradle/test-report.gradle.kts"
 include(
     ":module:annotations",
     ":module:entityid",
+    ":module:entityid:hibernate",
 )
 
 ///////////////////////////////////////////////////////////////////////////////

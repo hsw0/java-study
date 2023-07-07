@@ -15,6 +15,7 @@ version = "1.0-SNAPSHOT"
 dependencies {
     compileOnly(project(":module:annotations"))
     implementation(project(":module:entityid"))
+    implementation(project(":module:entityid:hibernate"))
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.cloud:spring-cloud-context") {

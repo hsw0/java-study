@@ -14,7 +14,7 @@ import org.hibernate.type.descriptor.jdbc.JdbcTypeIndicators;
 @SuppressWarnings("java:S119") // Sonar: Type parameter names should comply with a naming convention
 public class LongEntityIdJavaType extends AbstractEntityIdJavaType<LongEntityId> {
 
-    private final LongEntityIdFactory<LongEntityId> factory;
+    private final transient LongEntityIdFactory<LongEntityId> factory;
 
     @SuppressWarnings("unchecked")
     public static <T extends LongEntityId> LongEntityIdJavaType of(Class<? extends EntityId<?>> clazz) {

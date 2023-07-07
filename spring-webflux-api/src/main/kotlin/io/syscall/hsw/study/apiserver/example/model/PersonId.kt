@@ -1,12 +1,13 @@
 package io.syscall.hsw.study.apiserver.example.model
 
 import io.syscall.commons.entityid.LongEntityId
+import io.syscall.commons.entityid.LongEntityIdFactoryWithString
 import java.io.Serial
 
 @JvmInline
 public value class PersonId private constructor(override val value: Long) : LongEntityId {
 
-    public companion object : LongEntityId.LongEntityIdFactoryWithString<PersonId> {
+    public companion object : LongEntityIdFactoryWithString<PersonId> {
 
         @Serial
         private const val serialVersionUID: Long = 0x1111_2222_3333_4444
