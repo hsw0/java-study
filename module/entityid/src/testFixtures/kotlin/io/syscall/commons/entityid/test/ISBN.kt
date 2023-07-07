@@ -1,13 +1,14 @@
 package io.syscall.commons.entityid.test
 
 import io.syscall.commons.entityid.StringEntityId
+import io.syscall.commons.entityid.StringEntityIdFactory
 import java.io.Serial
 import java.io.Serializable
 
 @JvmInline
 value class ISBN private constructor(override val value: String) : StringEntityId, Serializable {
 
-    companion object : StringEntityId.StringEntityIdFactory<ISBN> {
+    companion object : StringEntityIdFactory<ISBN> {
 
         @Serial
         private const val serialVersionUID: Long = 1L

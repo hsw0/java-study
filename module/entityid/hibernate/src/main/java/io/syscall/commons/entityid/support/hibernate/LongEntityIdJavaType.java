@@ -3,7 +3,8 @@ package io.syscall.commons.entityid.support.hibernate;
 import io.syscall.annotations.Nullable;
 import io.syscall.commons.entityid.EntityId;
 import io.syscall.commons.entityid.LongEntityId;
-import io.syscall.commons.entityid.LongEntityId.LongEntityIdFactory;
+import io.syscall.commons.entityid.LongEntityIdFactory;
+import io.syscall.commons.entityid.LongEntityIdSupport;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.jdbc.BigIntJdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcType;
@@ -24,7 +25,7 @@ public class LongEntityIdJavaType extends AbstractEntityIdJavaType<LongEntityId>
         super(clazz);
 
         @SuppressWarnings("unchecked")
-        var tmp = (LongEntityIdFactory<LongEntityId>) LongEntityId.factory(clazz);
+        var tmp = (LongEntityIdFactory<LongEntityId>) LongEntityIdSupport.factory(clazz);
         this.factory = tmp;
     }
 

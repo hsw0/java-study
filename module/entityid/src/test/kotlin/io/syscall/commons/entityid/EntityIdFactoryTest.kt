@@ -1,6 +1,8 @@
 package io.syscall.commons.entityid
 
 import io.github.oshai.kotlinlogging.KotlinLogging
+import io.syscall.commons.entityid.LongEntityIdSupport.factory
+import io.syscall.commons.entityid.StringEntityIdFactorySupport.factory
 import io.syscall.commons.entityid.test.ISBN
 import io.syscall.commons.entityid.test.PersonId
 import org.assertj.core.api.Assertions.assertThat
@@ -15,6 +17,13 @@ import kotlin.test.Test
 private val log = KotlinLogging.logger {}
 
 class EntityIdFactoryTest {
+
+    @Test
+    fun `Create from string`() {
+        assertThat(PersonId.create("ALICE")).isEqualTo(PersonId.ALICE)
+        assertThat(PersonId.create("BOB")).isNotEqualTo(PersonId.MALLORY)
+        assertThat(PersonId.create("MALLORY")).isNotEqualTo(PersonId.CHARLIE)
+    }
 
     @Test
     fun test() {
