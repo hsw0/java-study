@@ -2,6 +2,7 @@ package io.syscall.hsw.study.apiserver.infra.jpa.hibernate.type;
 
 import io.syscall.hsw.study.apiserver.example.model.EntityId;
 import java.lang.reflect.Modifier;
+import javax.annotation.Nullable;
 import org.hibernate.type.descriptor.java.AbstractClassJavaType;
 import org.hibernate.type.descriptor.java.ImmutableMutabilityPlan;
 import org.hibernate.type.descriptor.jdbc.JdbcType;
@@ -25,4 +26,11 @@ public abstract class AbstractEntityIdJavaType<T extends EntityId<?>> extends Ab
     @Override
     public abstract JdbcType getRecommendedJdbcType(JdbcTypeIndicators indicators);
 
+    @Override
+    public String toString(@Nullable T value) {
+        if (value == null) {
+            return "null";
+        }
+        return value.asString();
+    }
 }
