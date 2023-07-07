@@ -1,5 +1,6 @@
 package io.syscall.hsw.study.apiserver.example.model
 
+import io.syscall.commons.entityid.LongEntityId
 import java.io.Serial
 
 @JvmInline

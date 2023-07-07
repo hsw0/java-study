@@ -13,6 +13,8 @@ group = "io.syscall.hsw.study"
 version = "1.0-SNAPSHOT"
 
 dependencies {
+    implementation(project(":module:entityid"))
+
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.cloud:spring-cloud-context") {
         exclude(group = "org.springframework.security", module = "spring-security-crypto")
