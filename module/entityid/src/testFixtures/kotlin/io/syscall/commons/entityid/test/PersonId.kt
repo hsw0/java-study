@@ -2,48 +2,47 @@ package io.syscall.commons.entityid.test
 
 import io.syscall.commons.entityid.LongEntityId
 import io.syscall.commons.entityid.LongEntityIdFactoryWithString
+import io.syscall.commons.entityid.WellKnownValueSupport
 import java.io.Serial
 import java.io.Serializable
-import kotlin.reflect.full.memberProperties
 
 @JvmInline
 value class PersonId private constructor(override val value: Long) : LongEntityId, Serializable {
 
+    override fun asString(): String {
+        val named = wellKnownValues[this]
+        return named ?: super.asString()
+    }
+
     companion object : LongEntityIdFactoryWithString<PersonId> {
 
-        @JvmStatic
-        val EVERYONE = PersonId(-1)
+        private val wellKnownValues = WellKnownValueSupport(::PersonId)
 
         @JvmStatic
-        val ALICE = PersonId(1000_0001)
+        val EVERYONE: PersonId = wellKnownValues.declare("EVERYONE", -1)
 
         @JvmStatic
-        val BOB = PersonId(1000_0002)
+        val ALICE = wellKnownValues.declare("ALICE", 1000_0001)
 
         @JvmStatic
-        var CHARLIE = PersonId(1000_0003)
+        val BOB = wellKnownValues.declare("BOB", 1000_0002)
 
         @JvmStatic
-        val MALLORY: PersonId = PersonId(1000_0004)
+        var CHARLIE = wellKnownValues.declare("CHARLIE", 1000_0003)
 
         @JvmStatic
+        val MALLORY = wellKnownValues.declare("MALLORY", 1000_0004)
+
         override fun create(value: Long): PersonId {
             require(value > 0)
-            return PersonId(value)
+            return wellKnownValues.internIfExists(PersonId(value))
         }
 
-        @JvmStatic
-        override fun create(value: String): PersonId {
-            for (prop in Companion::class.memberProperties) {
-                if (prop.name == value) {
-                    return prop.get(Companion) as PersonId
-                }
-            }
-            return create(value.toLong())
-        }
-
+        override fun create(value: String) = wellKnownValues[value] ?: create(value.toLong())
 
         @Serial
         private const val serialVersionUID: Long = 1L
     }
+
+
 }

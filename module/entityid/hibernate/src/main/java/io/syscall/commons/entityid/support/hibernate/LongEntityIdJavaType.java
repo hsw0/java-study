@@ -48,7 +48,7 @@ public class LongEntityIdJavaType extends AbstractEntityIdJavaType<LongEntityId>
             return tmp;
         } else if (String.class.isAssignableFrom(dbType)) {
             @SuppressWarnings("unchecked")
-            var tmp = (DB) value.asString();
+            var tmp = (DB) Long.toString(value.getValue());
             return tmp;
         }
 

@@ -5,7 +5,7 @@ import kotlin.reflect.KFunction
 
 public fun interface StringEntityIdFactory<E : StringEntityId> : EntityIdFactory<String, E>
 
-public object StringEntityIdFactorySupport {
+public object StringEntityIdSupport {
 
     public fun <E : StringEntityId> StringEntityId.Companion.factory(type: KClass<E>): StringEntityIdFactory<E> {
         val ctor: KFunction<E> = EntityIdFactory.initializeConstructor(type, "dummy")

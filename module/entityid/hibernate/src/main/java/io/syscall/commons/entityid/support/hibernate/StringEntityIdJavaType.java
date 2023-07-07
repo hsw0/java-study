@@ -4,7 +4,7 @@ import io.syscall.annotations.Nullable;
 import io.syscall.commons.entityid.EntityId;
 import io.syscall.commons.entityid.StringEntityId;
 import io.syscall.commons.entityid.StringEntityIdFactory;
-import io.syscall.commons.entityid.StringEntityIdFactorySupport;
+import io.syscall.commons.entityid.StringEntityIdSupport;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.jdbc.JdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcTypeIndicators;
@@ -24,7 +24,7 @@ public class StringEntityIdJavaType extends AbstractEntityIdJavaType<StringEntit
         super(clazz);
 
         @SuppressWarnings("unchecked")
-        var tmp = (StringEntityIdFactory<StringEntityId>) StringEntityIdFactorySupport.factory(clazz);
+        var tmp = (StringEntityIdFactory<StringEntityId>) StringEntityIdSupport.factory(clazz);
         this.factory = tmp;
     }
 

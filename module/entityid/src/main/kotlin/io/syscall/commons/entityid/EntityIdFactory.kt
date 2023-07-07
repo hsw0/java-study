@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.companionObjectInstance
+import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.primaryConstructor
 
 public fun interface EntityIdFactory<T, E : EntityId<T>> {
@@ -11,6 +12,10 @@ public fun interface EntityIdFactory<T, E : EntityId<T>> {
 
     public companion object {
         internal fun <T, E : EntityId<T>> initializeConstructor(type: KClass<E>, dummyValue: T): KFunction<E> {
+            runCatching { require(type.isSubclassOf(EntityId::class)) }.onFailure {
+                throw UnsupportedEntityIdImplementationException("Unsupported EntityId type: $type", it)
+            }
+
             if (type.companionObjectInstance is EntityIdFactory<*, *>) {
                 @Suppress("UNCHECKED_CAST")
                 val factory = type.companionObjectInstance as EntityIdFactory<T, E>
@@ -21,14 +26,14 @@ public fun interface EntityIdFactory<T, E : EntityId<T>> {
             try {
                 ctor = type.primaryConstructor!!
             } catch (e: Exception) {
-                throw UnsupportedOperationException("Unsupported EntityId implementation", e)
+                throw UnsupportedEntityIdImplementationException("Unsupported EntityId implementation: $type", e)
             }
 
             try {
                 ctor.call(dummyValue)
             } catch (e: Throwable) {
                 if (e !is InvocationTargetException || e.targetException !is RuntimeException) {
-                    throw UnsupportedOperationException("Unsupported EntityId implementation: $type", e)
+                    throw UnsupportedEntityIdImplementationException("Unsupported EntityId implementation: $type", e)
                 }
                 // ignored
             }
