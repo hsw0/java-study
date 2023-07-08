@@ -1,3 +1,5 @@
+import io.syscall.gradle.conventions.libs
+import io.syscall.gradle.conventions.versionCatalog
 import net.ltgt.gradle.errorprone.errorprone
 import org.checkerframework.gradle.plugin.CheckerFrameworkExtension
 import org.checkerframework.gradle.plugin.CreateManifestTask
@@ -32,10 +34,8 @@ pluginManager.withPlugin("java") {
         testCompileOnly("org.checkerframework:checker-qual")
     }
 
-    val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
-
-    val checkerFrameworkDep = versionCatalog.findLibrary("checkerframework").get().get().toString()
-    val checkerQualDep = versionCatalog.findLibrary("checkerframework-qual").get().get().toString()
+    val checkerFrameworkDep = versionCatalog.libs["checkerframework"].toString()
+    val checkerQualDep = versionCatalog.libs["checkerframework-qual"].toString()
 
     configurations.configureEach {
         if (name == "checkerFramework") {

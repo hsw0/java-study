@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage") // JvmTestSuite is @Incubating
 
+import io.syscall.gradle.conventions.versionCatalog
+import io.syscall.gradle.conventions.versions
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
@@ -17,15 +19,13 @@ plugins {
     jacoco
 }
 
-val versionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
-
 jacoco {
-    toolVersion = versionCatalog.findVersion("jacoco").get().toString()
+    toolVersion = versionCatalog.versions["jacoco"].toString()
 }
 
 afterEvaluate {
     testing {
-        val jUnitVersion = versionCatalog.findVersion("junit").get().toString()
+        val jUnitVersion = versionCatalog.versions["junit"].toString()
 
         suites.withType<JvmTestSuite>().configureEach {
             // Test framework 및 junit-jupiter 의존성 추가
