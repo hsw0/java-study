@@ -32,6 +32,7 @@ dependencies {
     implementation("com.h2database:h2")
 
     implementation(project(":module:springboot-app-base"))
+    testImplementation(testFixtures(project(":module:springboot-app-base")))
     testFixturesImplementation(testFixtures(project(":module:springboot-app-base")))
 
     devRuntimeOnly("io.projectreactor:reactor-tools")

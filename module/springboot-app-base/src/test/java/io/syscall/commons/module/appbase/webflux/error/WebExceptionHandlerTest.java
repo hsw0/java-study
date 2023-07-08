@@ -1,6 +1,6 @@
-package io.syscall.hsw.study.apiserver.infra.error;
+package io.syscall.commons.module.appbase.webflux.error;
 
-import io.syscall.hsw.study.apiserver.infra.ApiInfraLayerTest;
+import io.syscall.commons.module.appbase.test.AbstractAppBaseTest;
 import java.nio.ByteBuffer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 /**
  * {@link LoopbackErrorWebExceptionHandler} Tests
  */
-class WebExceptionHandlerTest extends ApiInfraLayerTest {
+class WebExceptionHandlerTest extends AbstractAppBaseTest {
 
     @Autowired
     WebTestClient webClient;
@@ -23,7 +23,7 @@ class WebExceptionHandlerTest extends ApiInfraLayerTest {
     @DisplayName("No errors")
     @Test
     void testNoException() {
-        webClient.get().uri(ErrorTestController.SUCCESS_PATH).exchange().expectAll(spec -> {
+        webClient.get().uri(AbstractErrorTestController.SUCCESS_PATH).exchange().expectAll(spec -> {
             spec.expectStatus().isEqualTo(HttpStatus.ACCEPTED.value());
             spec.expectBody(String.class).isEqualTo("This is fine.");
         });
@@ -32,10 +32,14 @@ class WebExceptionHandlerTest extends ApiInfraLayerTest {
     @DisplayName("Normal @ExceptionHandler Path")
     @Test
     void testNormalExceptionHandlerPath() {
-        webClient.post().uri(ErrorTestController.THROW_CHECKED_PATH).exchange().expectAll(spec -> {
-            spec.expectStatus().isEqualTo(HttpStatus.I_AM_A_TEAPOT);
-            spec.expectBody(String.class).isEqualTo(ErrorTestControllerAdvice.ERROR_HANDLED_BODY);
-        });
+        webClient
+                .post()
+                .uri(AbstractErrorTestController.THROW_CHECKED_PATH)
+                .exchange()
+                .expectAll(spec -> {
+                    spec.expectStatus().isEqualTo(HttpStatus.I_AM_A_TEAPOT);
+                    spec.expectBody(String.class).isEqualTo(ErrorTestControllerAdvice.ERROR_HANDLED_BODY);
+                });
     }
 
     @DisplayName("WebFilter + @ExceptionHandler")

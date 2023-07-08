@@ -1,9 +1,9 @@
-package io.syscall.hsw.study.apiserver.infra.reactor.netty;
+package io.syscall.commons.module.appbase.webflux.netty;
 
 import java.net.SocketAddress;
 import java.time.Duration;
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import reactor.netty.channel.ChannelMetricsRecorder;
 import reactor.netty.http.server.HttpServer;
@@ -23,6 +23,7 @@ import reactor.netty.http.server.HttpServerMetricsRecorder;
  * @see <a href="https://projectreactor.io/docs/netty/1.1.8/reference/index.html#_metrics_4">
  * reactor-netty: HTTP Server &gt; 5.11. Metrics</a>
  */
+@SuppressWarnings("UngroupedOverloads")
 public final class CustomHttpServerMetricsRecorder implements HttpServerMetricsRecorder {
 
     private final HttpServerMetricsRecorder delegate;

@@ -1,4 +1,4 @@
-package io.syscall.hsw.study.apiserver.infra.error;
+package io.syscall.commons.module.appbase.webflux.error;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +8,9 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -45,6 +48,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
     private final List<HandlerResultHandler> resultHandlers;
     private final ObjectMapper objectMapper;
 
+    @MonotonicNonNull
     private StaticErrorResponse defaultInternalErrorResponse;
 
     public LoopbackErrorWebExceptionHandler(
@@ -56,11 +60,13 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
         this.objectMapper = objectMapper;
     }
 
+    @SuppressWarnings("MemberName")
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable t) {
         return requestMappingHandlerAdapter
                 .handleError(exchange, t)
-                .flatMap(hr -> handleResult(exchange, hr))
+                // MemberName: error: An unhandled exception was thrown by the Error Prone static analysis plugin.
+                .flatMap(hr -> handleResult(exchange, hr)) //
                 .onErrorResume(t2 -> handleUncaught(exchange, t2));
     }
 
@@ -73,11 +79,11 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
     @SuppressWarnings("JavadocReference")
     private Mono<Void> handleResult(ServerWebExchange exchange, HandlerResult result) {
         Mono<Void> resultMono = doHandleResult(exchange, result, "Handler " + result.getHandler());
-        if (result.getExceptionHandler() == null) {
+        var eh = result.getExceptionHandler();
+        if (eh == null) {
             return resultMono;
         }
-        return resultMono.onErrorResume(ex -> result.getExceptionHandler()
-                .handleError(exchange, ex)
+        return resultMono.onErrorResume(ex -> eh.handleError(exchange, ex)
                 .flatMap(result2 -> doHandleResult(
                         exchange,
                         result2,
@@ -100,6 +106,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
         return Mono.error(new IllegalStateException("No HandlerResultHandler for " + handlerResult.getReturnValue()));
     }
 
+    @SuppressWarnings("dereference.of.nullable")
     private Mono<Void> handleUncaught(ServerWebExchange exchange, Throwable t) {
         if (exchange.getResponse().isCommitted() || isDisconnectedClientError(t)) {
             return Mono.error(t);
@@ -120,6 +127,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
         });
     }
 
+    @EnsuresNonNull("this.defaultInternalErrorResponse")
     @Override
     public void afterPropertiesSet() {
         defaultInternalErrorResponse = buildInternalError();
@@ -155,6 +163,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
     /**
      * @see org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler#isDisconnectedClientError
      */
+    @SuppressWarnings("JavadocReference")
     private boolean isDisconnectedClientError(Throwable ex) {
         return DISCONNECTED_CLIENT_EXCEPTIONS.contains(ex.getClass().getSimpleName())
                 || isDisconnectedClientErrorMessage(
@@ -164,7 +173,8 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
     /**
      * @see org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler#isDisconnectedClientErrorMessage
      */
-    private boolean isDisconnectedClientErrorMessage(String message) {
+    @SuppressWarnings("JavadocReference")
+    private boolean isDisconnectedClientErrorMessage(@Nullable String message) {
         message = (message != null) ? message.toLowerCase() : "";
         return (message.contains("broken pipe") || message.contains("connection reset by peer"));
     }

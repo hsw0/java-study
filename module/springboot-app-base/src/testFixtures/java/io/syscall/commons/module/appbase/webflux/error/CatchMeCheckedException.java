@@ -1,4 +1,4 @@
-package io.syscall.hsw.study.apiserver.infra.error;
+package io.syscall.commons.module.appbase.webflux.error;
 
 public class CatchMeCheckedException extends Throwable {
 

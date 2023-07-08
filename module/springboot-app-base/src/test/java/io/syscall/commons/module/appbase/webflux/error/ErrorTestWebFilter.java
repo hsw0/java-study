@@ -1,4 +1,4 @@
-package io.syscall.hsw.study.apiserver.infra.error;
+package io.syscall.commons.module.appbase.webflux.error;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;

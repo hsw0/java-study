@@ -1,4 +1,4 @@
-package io.syscall.hsw.study.apiserver.infra.reactor.netty;
+package io.syscall.commons.module.appbase.webflux.netty;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import javax.annotation.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
@@ -19,6 +19,7 @@ import org.springframework.web.reactive.result.method.RequestMappingInfoHandlerM
 import org.springframework.web.util.pattern.PathPattern;
 
 @Component
+@SuppressWarnings({"type.anno.before.decl.anno", "type.anno.before.modifier"})
 public class SimpleRequestMappingPatternResolver {
 
     private static final Logger log = LoggerFactory.getLogger(SimpleRequestMappingPatternResolver.class);
@@ -44,6 +45,7 @@ public class SimpleRequestMappingPatternResolver {
         return resolved;
     }
 
+    @SuppressWarnings("ImmutableMemberCollection")
     record Patterns(Set<String> directPathMappings, SortedSet<PathPattern> pathPatterns) {
 
         static Patterns create() {

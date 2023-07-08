@@ -30,4 +30,7 @@ dependencies {
     implementation(project(":module:reactor-support"))
 
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    testFixturesApi("org.springframework.boot:spring-boot-starter-test")
+    testFixturesApi("org.springframework.boot:spring-boot-starter-webflux")
 }

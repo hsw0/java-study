@@ -1,11 +1,11 @@
-package io.syscall.hsw.study.apiserver.infra.controller;
+package io.syscall.commons.module.appbase.controller;
 
-import io.syscall.hsw.study.apiserver.infra.ApiInfraLayerTest;
+import io.syscall.commons.module.appbase.test.AbstractAppBaseTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-class HealthControllerTest extends ApiInfraLayerTest {
+class HealthControllerTest extends AbstractAppBaseTest {
 
     @Autowired
     WebTestClient webClient;

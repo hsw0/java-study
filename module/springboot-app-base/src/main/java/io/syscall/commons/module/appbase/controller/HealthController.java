@@ -1,4 +1,4 @@
-package io.syscall.hsw.study.apiserver.infra.controller;
+package io.syscall.commons.module.appbase.controller;
 
 import org.springframework.boot.availability.ApplicationAvailability;
 import org.springframework.boot.availability.LivenessState;
