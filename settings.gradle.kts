@@ -24,6 +24,8 @@ include(
     ":module:annotations",
     ":module:entityid",
     ":module:entityid:hibernate",
+    ":module:reactor-support",
+    ":module:springboot-app-base",
 )
 
 ///////////////////////////////////////////////////////////////////////////////
