@@ -64,5 +64,4 @@ public class StringEntityIdJavaType extends AbstractEntityIdJavaType<StringEntit
 
         throw unknownWrap(value.getClass());
     }
-
 }

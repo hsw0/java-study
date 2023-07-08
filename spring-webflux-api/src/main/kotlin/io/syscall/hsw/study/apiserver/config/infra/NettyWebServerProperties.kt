@@ -8,8 +8,8 @@ import org.springframework.validation.annotation.Validated
 @Validated
 @ConfigurationProperties(prefix = "custom.netty.webserver")
 internal data class NettyWebServerProperties
-@ConstructorBinding
-constructor(
-    @DefaultValue("false") val accessLog: Boolean,
-    @DefaultValue("false") val useVirtualThread: Boolean,
-)
+    @ConstructorBinding
+    constructor(
+        @DefaultValue("false") val accessLog: Boolean,
+        @DefaultValue("false") val useVirtualThread: Boolean,
+    )

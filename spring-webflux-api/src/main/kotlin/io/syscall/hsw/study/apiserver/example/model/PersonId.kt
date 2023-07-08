@@ -24,6 +24,5 @@ public value class PersonId private constructor(override val value: Long) : Long
 
         @Serial
         private const val serialVersionUID: Long = 0x1L
-
     }
 }

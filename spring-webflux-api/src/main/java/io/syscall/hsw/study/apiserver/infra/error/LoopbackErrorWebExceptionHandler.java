@@ -158,7 +158,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
     private boolean isDisconnectedClientError(Throwable ex) {
         return DISCONNECTED_CLIENT_EXCEPTIONS.contains(ex.getClass().getSimpleName())
                 || isDisconnectedClientErrorMessage(
-                NestedExceptionUtils.getMostSpecificCause(ex).getMessage());
+                        NestedExceptionUtils.getMostSpecificCause(ex).getMessage());
     }
 
     /**
