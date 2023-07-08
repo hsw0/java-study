@@ -19,7 +19,6 @@ java {
 dependencies {
     implementation(gradleApi())
 
-    implementation(platform(libs.bom.kotlin))
     implementation(libs.gradlePlugin.kotlin)
     implementation(libs.gradlePlugin.kotlin.allopen)
     implementation(libs.gradlePlugin.kotlin.noarg)

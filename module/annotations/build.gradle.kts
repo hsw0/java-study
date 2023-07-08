@@ -1,5 +1,3 @@
-import io.syscall.gradle.conventions.CustomJvmExtension
-
 plugins {
     id("conventions.base")
     id("conventions.java")
@@ -10,8 +8,8 @@ plugins {
 group = "io.syscall.util"
 version = "1.0-SNAPSHOT"
 
-configure<CustomJvmExtension> {
-    javaTarget.set(JavaLanguageVersion.of(11))
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(11)
 }
 
 dependencies {

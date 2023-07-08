@@ -1,7 +1,5 @@
+
 import io.syscall.gradle.conventions.CustomJavaExtension
-import io.syscall.gradle.conventions.CustomJvmExtension
-import io.syscall.gradle.conventions.DefaultCustomJvmExtension
-import io.syscall.gradle.conventions.UnconfiguredVersion
 import org.gradle.api.internal.tasks.compile.HasCompileOptions
 import java.util.jar.Attributes.Name as JarAttribute
 
@@ -25,21 +23,14 @@ tasks.withType<AbstractCompile>().configureEach {
 }
 
 val customJavaExt = extensions.create<CustomJavaExtension>("customJava")
-val customJvmExt = extensions.create(CustomJvmExtension::class, "customJvm", DefaultCustomJvmExtension::class)
 
-afterEvaluate {
-    if (customJvmExt.javaToolchain.orNull !is UnconfiguredVersion) {
-        java {
-            toolchain.languageVersion.set(customJvmExt.javaToolchain)
-            disableAutoTargetJvm()
-        }
-    }
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    disableAutoTargetJvm()
+}
 
-    if (customJvmExt.javaTarget.orNull !is UnconfiguredVersion) {
-        tasks.withType<JavaCompile>().configureEach {
-            options.release.set(customJvmExt.javaTarget.get().asInt())
-        }
-    }
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(21)
 }
 
 tasks.withType<JavaCompile>().configureEach {

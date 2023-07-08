@@ -1,9 +1,9 @@
-import io.syscall.gradle.conventions.CustomJavaExtension
-import io.syscall.gradle.conventions.CustomJvmExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.internal.KaptWithoutKotlincTask
 import org.jetbrains.kotlin.gradle.tasks.CompileUsingKotlinDaemon
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.gradle.tasks.UsesKotlinJavaToolchain
 
 /**
  * Kotlin convention
@@ -20,28 +20,12 @@ plugins {
 
 // region Toolchain 관련 설정
 
-val customJavaExt = extensions.getByType<CustomJavaExtension>()
-val customJvmExt = extensions.getByType<CustomJvmExtension>()
-
-kotlin {
-    jvmToolchain(customJvmExt.kotlinToolchain.get().asInt())
+configure<KotlinJvmProjectExtension> {
+    jvmToolchain(21)
 }
 
-java {
-    // Overwritten by kotlin plugin
-    // > Note that setting a toolchain via the kotlin extension updates the toolchain for Java compile tasks as well.
-    toolchain.languageVersion.set(customJvmExt.javaToolchain.get())
-}
-
-val service = project.extensions.getByType<JavaToolchainService>()
-val customLauncher = service.launcherFor {
-    languageVersion.set(customJvmExt.kotlinToolchain)
-}
-tasks.withType<UsesKotlinJavaToolchain>().configureEach {
-    kotlinJavaToolchain.toolchain.use(customLauncher)
-}
 tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions.jvmTarget.set(customJvmExt.kotlinJvmTarget)
+    compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
 }
 
 // Kapt fails on JDK 21
@@ -57,7 +41,7 @@ tasks.withType<KaptWithoutKotlincTask>().configureEach {
 
 // endregion
 
-kotlin {
+configure<KotlinProjectExtension> {
     explicitApi()
 }
 
