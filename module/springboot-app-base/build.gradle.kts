@@ -1,6 +1,5 @@
 plugins {
     id("conventions.project.java")
-    id("conventions.project.kotlin")
     id("conventions.project.spring-boot")
     `java-library`
     `java-test-fixtures`
@@ -30,5 +29,5 @@ dependencies {
 
     implementation(project(":module:reactor-support"))
 
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
