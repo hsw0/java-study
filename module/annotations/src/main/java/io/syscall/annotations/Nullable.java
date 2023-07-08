@@ -17,11 +17,11 @@
 package io.syscall.annotations;
 
 import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import javax.annotation.Nonnull;
 import javax.annotation.meta.TypeQualifierNickname;
+import javax.annotation.meta.When;
 
 /**
  * A common Spring annotation to declare that annotated elements can be {@code null} under some circumstance.
@@ -43,10 +43,10 @@ import javax.annotation.meta.TypeQualifierNickname;
  * @see NonNullFields
  * @see NonNull
  */
-@SuppressWarnings("JavadocReference")
-@Target({ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD})
+@SuppressWarnings({"JavadocReference", "NullableProblems"})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Nonnull(when = When.MAYBE) // Cannot annotate with both @Nonnull and @Nullable
 @javax.annotation.Nullable
 @jakarta.annotation.Nullable
 @TypeQualifierNickname
