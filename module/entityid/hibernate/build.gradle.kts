@@ -4,11 +4,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("conventions.project.java")
     id("conventions.project.kotlin")
+    id("conventions.publishing")
+    `java-library`
 }
 
-group = "io.syscall.util"
+group = "io.syscall.commons"
 version = "1.0-SNAPSHOT"
 
+ext["publishing.artifactId"] = "entityid-hibernate"
 
 tasks.withType<JavaCompile>().configureEach {
     options.release.set(17)
@@ -23,7 +26,7 @@ dependencies {
     compileOnly(project(":module:annotations"))
     api(project(":module:entityid"))
 
-    implementation("org.hibernate.orm:hibernate-core")
+    implementation("org.hibernate.orm:hibernate-core:[6.2,)")
 
     testImplementation("io.github.oshai:kotlin-logging-jvm")
 }

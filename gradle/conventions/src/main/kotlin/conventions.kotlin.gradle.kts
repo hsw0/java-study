@@ -1,3 +1,4 @@
+
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
@@ -61,6 +62,22 @@ testing.suites.withType<JvmTestSuite>().configureEach {
     }
 }
 
+val implementationDependencies = listOf(
+    dependencies.kotlin("stdlib"),
+)
+
 dependencies {
-    implementation(kotlin("stdlib"))
+    for (dep in implementationDependencies) {
+        implementation(dep)
+    }
+}
+
+plugins.withType<JavaTestFixturesPlugin> {
+    val testFixturesImplementation by configurations
+
+    dependencies {
+        for (dep in implementationDependencies) {
+            testFixturesImplementation(dep)
+        }
+    }
 }

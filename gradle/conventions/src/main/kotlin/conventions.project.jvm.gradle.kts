@@ -10,7 +10,7 @@ plugins {
 }
 
 dependencies {
-    implementation("org.slf4j:slf4j-api") // Who doesn't?
+    implementation("org.slf4j:slf4j-api:[2.0,)") // Who doesn't?
 
     // Test framework의 의존성은 아니라서 jvm-test에 넣진 않았는데 없으면 로깅이 안된다
     testRuntimeOnly("ch.qos.logback:logback-core")
