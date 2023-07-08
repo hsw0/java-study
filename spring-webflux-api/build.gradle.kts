@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.support.serviceOf
-import org.gradle.platform.Architecture
-import org.gradle.platform.OperatingSystem
-
 plugins {
     id("conventions.project.kotlin")
     id("conventions.project.spring-boot-app")
@@ -12,17 +8,15 @@ plugins {
 group = "io.syscall.hsw.study"
 version = "1.0-SNAPSHOT"
 
+val testFixturesImplementation by configurations.creating
+
 dependencies {
     compileOnly(project(":module:annotations"))
     implementation(project(":module:entityid"))
     implementation(project(":module:entityid:hibernate"))
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("org.springframework.cloud:spring-cloud-context") {
-        exclude(group = "org.springframework.security", module = "spring-security-crypto")
-    }
 
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.google.guava:guava")
 
     implementation("io.github.oshai:kotlin-logging-jvm")
@@ -34,37 +28,14 @@ dependencies {
     devRuntimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
     testRuntimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
 
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("io.micrometer:micrometer-registry-prometheus")
-    runtimeOnly("io.micrometer:micrometer-core")
-    runtimeOnly("io.micrometer:micrometer-tracing")
-
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.h2database:h2")
 
-    testImplementation("io.projectreactor:reactor-test")
+    implementation(project(":module:springboot-app-base"))
+    testFixturesImplementation(testFixtures(project(":module:springboot-app-base")))
+
     devRuntimeOnly("io.projectreactor:reactor-tools")
-    testRuntimeOnly("io.projectreactor:reactor-tools")
-    compileOnly("io.projectreactor.tools:blockhound") // BlockHoundIntegration SPI
     devRuntimeOnly("io.projectreactor.tools:blockhound")
-    testRuntimeOnly("io.projectreactor.tools:blockhound")
-
-    @Suppress("UnstableApiUsage")
-    if (serviceOf<BuildPlatform>().operatingSystem == OperatingSystem.MAC_OS) {
-        val classifier = when (val arch = serviceOf<BuildPlatform>().architecture) {
-            Architecture.X86_64 -> "osx-x86_64"
-            Architecture.AARCH64 -> "osx-aarch_64"
-            else -> TODO("No macOS for $arch")
-        }
-        // ex) netty-transport-native-kqueue-${VERSION}-osx-aarch_64.jar
-        runtimeOnly(group = "io.netty", name = "netty-transport-native-kqueue", classifier = classifier)
-        runtimeOnly(group = "io.netty", name = "netty-resolver-dns-native-macos", classifier = classifier)
-    }
-
-    // Production
-    for (arch in listOf("aarch_64", "x86_64")) {
-        runtimeOnly(group = "io.netty", name = "netty-transport-native-epoll", classifier = "linux-${arch}")
-    }
 }
 
 configurations.compileClasspath {
