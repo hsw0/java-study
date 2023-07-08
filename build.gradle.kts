@@ -11,3 +11,12 @@ spotless {
         endWithNewline()
     }
 }
+
+allprojects {
+    // Intellij
+    tasks.withType<Task>().configureEach {
+        if (name in setOf("DownloadSources", "DependenciesReport")) {
+            notCompatibleWithConfigurationCache("Incompatible")
+        }
+    }
+}
