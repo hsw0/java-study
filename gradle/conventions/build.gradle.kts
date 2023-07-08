@@ -1,4 +1,4 @@
-import com.diffplug.spotless.LineEnding
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     `kotlin-dsl`
@@ -10,10 +10,11 @@ plugins {
 // > Error while evaluating property 'compilerOptions.jvmTarget' of task ':conventions:compileKotlin'.
 //   > Failed to calculate the value of property 'jvmTarget'.
 //      > Unknown Kotlin JVM target: 21
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
+try {
+    JvmTarget.fromTarget(JavaVersion.current().toString())
+} catch (e: IllegalArgumentException) {
+    logger.warn("Kotlin gradle plugin doesn't supports current jvm: '${e.message}'. Applying workaround")
+    java.toolchain.languageVersion.convention(JavaLanguageVersion.of(17))
 }
 
 dependencies {
@@ -31,7 +32,7 @@ dependencies {
 }
 
 spotless {
-    lineEndings = LineEnding.UNIX
+    lineEndings = com.diffplug.spotless.LineEnding.UNIX
 
     kotlin {
         target("src/main/kotlin/**/*.kt")

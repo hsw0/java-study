@@ -25,12 +25,12 @@ tasks.withType<AbstractCompile>().configureEach {
 val customJavaExt = extensions.create<CustomJavaExtension>("customJava")
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    toolchain.languageVersion.convention(JavaLanguageVersion.of(21))
     disableAutoTargetJvm()
 }
 
 tasks.withType<JavaCompile>().configureEach {
-    options.release.set(21)
+    options.release.convention(21)
 }
 
 tasks.withType<JavaCompile>().configureEach {

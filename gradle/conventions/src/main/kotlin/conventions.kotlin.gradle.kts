@@ -2,6 +2,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.internal.KaptWithoutKotlincTask
 import org.jetbrains.kotlin.gradle.tasks.CompileUsingKotlinDaemon
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -22,11 +23,14 @@ plugins {
 // region Toolchain 관련 설정
 
 configure<KotlinJvmProjectExtension> {
-    jvmToolchain(21)
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
+    jvmToolchain {
+        languageVersion.convention(JavaLanguageVersion.of(21))
+    }
+    compilerOptions {
+        jvmTarget.convention(JvmTarget.JVM_17)
+        languageVersion.convention(KotlinVersion.KOTLIN_1_9)
+        apiVersion.convention(KotlinVersion.KOTLIN_1_9)
+    }
 }
 
 // Kapt fails on JDK 21
