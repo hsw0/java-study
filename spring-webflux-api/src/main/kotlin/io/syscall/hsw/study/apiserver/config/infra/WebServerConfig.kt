@@ -27,8 +27,6 @@ internal class WebServerConfig {
             .accessLog(properties.accessLog)
     }
 
-
-
     @Bean
     internal fun virtualThreadCustomizer(properties: NettyWebServerProperties) = NettyServerCustomizer {
         if (!properties.useVirtualThread) {
