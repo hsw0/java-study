@@ -38,8 +38,7 @@ import javax.annotation.meta.TypeQualifierDefault;
  * @author Sebastien Deleuze
  * @author Juergen Hoeller
  * @see NonNullFields
- * @see Nullable
- * @see NonNull
+ * @see org.checkerframework.checker.nullness.qual.NonNull
  */
 @SuppressWarnings("JavadocReference")
 @Target(ElementType.PACKAGE)
