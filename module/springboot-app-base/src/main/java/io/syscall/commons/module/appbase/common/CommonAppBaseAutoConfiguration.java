@@ -1,8 +1,8 @@
-package io.syscall.commons.module.appbase;
+package io.syscall.commons.module.appbase.common;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 @AutoConfiguration
 @ComponentScan
-class AppBaseAutoConfiguration {}
+class CommonAppBaseAutoConfiguration {}

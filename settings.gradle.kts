@@ -20,11 +20,23 @@ project(":test-report").buildFileName = "../gradle/test-report.gradle.kts"
 
 ///////////////////////////////////////////////////////////////////////////////
 
+// Internal utilities
 include(
     ":module:annotations",
+)
+
+// Reusable module
+include(
     ":module:entityid",
     ":module:entityid:hibernate",
+)
+
+// Project-specific component w/o business logic
+include(
+    ":module:protocol",
     ":module:reactor-support",
+    ":module:jpa-support",
+    ":module:api-base",
     ":module:springboot-app-base",
 )
 

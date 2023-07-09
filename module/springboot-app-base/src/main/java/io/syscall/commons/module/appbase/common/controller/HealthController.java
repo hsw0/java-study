@@ -1,4 +1,4 @@
-package io.syscall.commons.module.appbase.controller;
+package io.syscall.commons.module.appbase.common.controller;
 
 import org.springframework.boot.availability.ApplicationAvailability;
 import org.springframework.boot.availability.LivenessState;

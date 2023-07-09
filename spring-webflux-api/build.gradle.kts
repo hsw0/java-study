@@ -15,6 +15,11 @@ dependencies {
     implementation(project(":module:entityid"))
     implementation(project(":module:entityid:hibernate"))
 
+    implementation(project(":module:springboot-app-base"))
+    testImplementation(testFixtures(project(":module:springboot-app-base")))
+    testFixturesImplementation(testFixtures(project(":module:springboot-app-base")))
+
+    implementation(project(":module:api-base"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
     implementation("com.google.guava:guava")
@@ -30,10 +35,6 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.h2database:h2")
-
-    implementation(project(":module:springboot-app-base"))
-    testImplementation(testFixtures(project(":module:springboot-app-base")))
-    testFixturesImplementation(testFixtures(project(":module:springboot-app-base")))
 
     devRuntimeOnly("io.projectreactor:reactor-tools")
     devRuntimeOnly("io.projectreactor.tools:blockhound")
