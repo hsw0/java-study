@@ -1,0 +1,67 @@
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+
+name: CI
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+permissions:
+  contents: read
+
+jobs:
+  # https://github.com/gradle/wrapper-validation-action
+  # https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/6f09cf79b1a18850e88897a54c1e39ef167b803a/.github/workflows/build-common.yml#L49C1-L55C54
+  gradle-wrapper-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: gradle/wrapper-validation-action@v1.0.6
+
+  build:
+    runs-on: ubuntu-latest
+    needs: gradle-wrapper-validation
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          check-latest: true
+          java-version: |
+            21-ea
+            17
+
+      - name: Inspect environment
+        run: |
+          env
+
+      - name: Build
+        uses: gradle/gradle-build-action@v2.5.1
+        with:
+          arguments: assemble testClasses --exclude-task bootJar
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          check-latest: true
+          java-version: |
+            21-ea
+            17
+
+      - name: Test
+        uses: gradle/gradle-build-action@v2.5.1
+        with:
+          arguments: test --continue
