@@ -1,10 +1,10 @@
 package io.syscall.commons.entityid.support.hibernate;
 
-import io.syscall.annotations.Nullable;
 import io.syscall.commons.entityid.EntityId;
 import io.syscall.commons.entityid.StringEntityId;
 import io.syscall.commons.entityid.StringEntityIdFactory;
 import io.syscall.commons.entityid.StringEntityIdSupport;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.jdbc.JdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcTypeIndicators;
@@ -33,10 +33,9 @@ public class StringEntityIdJavaType extends AbstractEntityIdJavaType<StringEntit
         return VarcharJdbcType.INSTANCE;
     }
 
-    @SuppressWarnings("return.type.incompatible")
-    @Nullable
+    @SuppressWarnings("override.return.invalid")
     @Override
-    public <DB> DB unwrap(@Nullable StringEntityId value, Class<DB> dbType, WrapperOptions options) {
+    public <DB> @Nullable DB unwrap(@Nullable StringEntityId value, Class<DB> dbType, WrapperOptions options) {
         if (value == null) {
             return null;
         }
@@ -50,10 +49,9 @@ public class StringEntityIdJavaType extends AbstractEntityIdJavaType<StringEntit
         throw unknownUnwrap(dbType);
     }
 
-    @SuppressWarnings("return.type.incompatible")
-    @Nullable
+    @SuppressWarnings("override.return.invalid")
     @Override
-    public <DB> StringEntityId wrap(@Nullable DB value, WrapperOptions options) {
+    public <DB> @Nullable StringEntityId wrap(@Nullable DB value, WrapperOptions options) {
         if (value == null) {
             return null;
         }

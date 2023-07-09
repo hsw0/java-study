@@ -1,10 +1,10 @@
 package io.syscall.commons.entityid.support.hibernate;
 
-import io.syscall.annotations.Nullable;
 import io.syscall.commons.entityid.EntityId;
 import io.syscall.commons.entityid.LongEntityId;
 import io.syscall.commons.entityid.LongEntityIdFactory;
 import io.syscall.commons.entityid.LongEntityIdSupport;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.jdbc.BigIntJdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcType;
@@ -34,10 +34,9 @@ public class LongEntityIdJavaType extends AbstractEntityIdJavaType<LongEntityId>
         return BigIntJdbcType.INSTANCE;
     }
 
-    @SuppressWarnings("return.type.incompatible")
-    @Nullable
+    @SuppressWarnings("override.return.invalid")
     @Override
-    public <DB> DB unwrap(@Nullable LongEntityId value, Class<DB> dbType, WrapperOptions options) {
+    public <DB> @Nullable DB unwrap(@Nullable LongEntityId value, Class<DB> dbType, WrapperOptions options) {
         if (value == null) {
             return null;
         }
@@ -55,10 +54,9 @@ public class LongEntityIdJavaType extends AbstractEntityIdJavaType<LongEntityId>
         throw unknownUnwrap(dbType);
     }
 
-    @SuppressWarnings("return.type.incompatible")
-    @Nullable
+    @SuppressWarnings("override.return.invalid")
     @Override
-    public <DB> LongEntityId wrap(@Nullable DB value, WrapperOptions options) {
+    public <DB> @Nullable LongEntityId wrap(@Nullable DB value, WrapperOptions options) {
         if (value == null) {
             return null;
         }

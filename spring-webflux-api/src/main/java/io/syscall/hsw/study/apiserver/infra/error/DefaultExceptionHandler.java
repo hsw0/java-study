@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.reactive.HandlerMapping;
+import org.springframework.web.reactive.resource.ResourceWebHandler;
 import org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebHandler;
 import reactor.core.publisher.Mono;
 
 @ControllerAdvice
@@ -34,8 +37,23 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
             @Nullable HttpHeaders headers,
             HttpStatusCode status,
             ServerWebExchange exchange) {
-        log(ex, exchange);
+        if (shouldLog(ex, exchange)) {
+            log(ex, exchange);
+        }
         return super.handleExceptionInternal(ex, body, headers, status, exchange);
+    }
+
+    private boolean shouldLog(Exception ex, ServerWebExchange exchange) {
+        WebHandler handler = null;
+        if (exchange.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE) instanceof WebHandler tmp) {
+            handler = tmp;
+        }
+        if (handler instanceof ResourceWebHandler
+                && ex instanceof ResponseStatusException rse
+                && rse.getStatusCode() == HttpStatus.NOT_FOUND) {
+            return false;
+        }
+        return true;
     }
 
     private void log(Exception ex, ServerWebExchange exchange) {

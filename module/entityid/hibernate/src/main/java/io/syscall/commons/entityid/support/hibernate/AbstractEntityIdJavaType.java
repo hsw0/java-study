@@ -1,8 +1,8 @@
 package io.syscall.commons.entityid.support.hibernate;
 
-import io.syscall.annotations.Nullable;
 import io.syscall.commons.entityid.EntityId;
 import java.lang.reflect.Modifier;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.type.descriptor.java.AbstractClassJavaType;
 import org.hibernate.type.descriptor.java.ImmutableMutabilityPlan;
 import org.hibernate.type.descriptor.jdbc.JdbcType;
