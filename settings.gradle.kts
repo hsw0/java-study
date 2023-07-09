@@ -36,6 +36,7 @@ include(
     ":module:protocol",
     ":module:reactor-support",
     ":module:jpa-support",
+    ":module:springboot-support",
     ":module:api-base",
     ":module:springboot-app-base",
 )
