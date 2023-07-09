@@ -1,0 +1,6 @@
+---
+test-data:
+  whoami: "src/test/resources/config/auto-include-first.yml"
+  from-auto-include: 1st
+  from-auto-include-1: auto-include-first
+  override-me-case2: auto-include-first

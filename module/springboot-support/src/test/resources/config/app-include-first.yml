@@ -1,0 +1,5 @@
+---
+test-data:
+  whoami: "src/test/resources/config/app-include-first.yml"
+  first: 1st
+  override-me-case1: 1st

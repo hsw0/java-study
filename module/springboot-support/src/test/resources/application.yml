@@ -1,0 +1,11 @@
+---
+spring.application.name: springboot-support-tests
+spring.config.import:
+  - classpath:/config/app-include-first.yml
+  - classpath:/config/app-include-second.yml
+---
+
+test-data:
+  whoami: "src/test/resources/application.yml"
+  override-me-case2: application.yml
+

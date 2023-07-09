@@ -9,6 +9,6 @@ group = "dummy"
 dependencies {
     compileOnly(project(":module:annotations"))
 
-    implementation("org.springframework.boot:spring-boot")
-    implementation("org.springframework.boot:spring-boot-autoconfigure")
+    implementation("org.springframework.boot:spring-boot:[3.0,)")
+    implementation("org.springframework.boot:spring-boot-autoconfigure:[3.0,)")
 }

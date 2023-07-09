@@ -1,0 +1,4 @@
+---
+test-data:
+  from-auto-include: Overridden by 2nd
+  from-auto-include-2: auto-include-second
