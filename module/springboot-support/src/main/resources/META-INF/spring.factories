@@ -1,3 +1,5 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
   io.syscall.commons.module.springboot.configdata.AutoImportConfigDataProcessor, \
   io.syscall.commons.module.springboot.configdata.AutoImportConfigDataCompleteProcessor
+org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\
+  io.syscall.commons.module.springboot.autoconfigure.disable.ExcludeAutoConfigurationImportFilter

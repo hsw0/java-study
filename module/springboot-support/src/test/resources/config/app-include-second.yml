@@ -3,3 +3,9 @@ test-data:
   whoami: "src/test/resources/config/app-include-second.yml"
   second: 2nd
   override-me-case1: by-2nd
+
+# 병합 테스트, 배열.
+spring.autoconfigure.exclude:
+  - org.springframework.boot.actuate.autoconfigure.observation.web.servlet.WebMvcObservationAutoConfiguration
+  - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+  - org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration

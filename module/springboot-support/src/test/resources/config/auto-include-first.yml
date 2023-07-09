@@ -4,3 +4,6 @@ test-data:
   from-auto-include: 1st
   from-auto-include-1: auto-include-first
   override-me-case2: auto-include-first
+
+spring.autoconfigure.exclude:
+  - io.syscall.commons.module.springboot.autoconfigure.disable.cases.Disabled2

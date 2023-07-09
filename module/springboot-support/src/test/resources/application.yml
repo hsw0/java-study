@@ -9,3 +9,7 @@ test-data:
   whoami: "src/test/resources/application.yml"
   override-me-case2: application.yml
 
+
+spring.autoconfigure.exclude:
+  - io.syscall.commons.module.springboot.autoconfigure.disable.cases.Disabled1
+  - org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration

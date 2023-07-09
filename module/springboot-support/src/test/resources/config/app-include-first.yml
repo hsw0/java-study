@@ -3,3 +3,6 @@ test-data:
   whoami: "src/test/resources/config/app-include-first.yml"
   first: 1st
   override-me-case1: 1st
+
+# 병합 테스트, Scalar
+spring.autoconfigure.exclude: org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchClientAutoConfiguration
