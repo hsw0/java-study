@@ -27,6 +27,7 @@ dependencies {
     runtimeOnly("io.micrometer:micrometer-core")
     runtimeOnly("io.micrometer:micrometer-tracing")
 
+    runtimeOnly(project(":module:springboot-support"))
     implementation(project(":module:reactor-support"))
 
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")

@@ -1,0 +1,50 @@
+---
+spring.main.banner-mode: OFF
+
+logging.config: classpath:logback-main.xml
+logging.level:
+  ROOT: INFO
+  io.syscall: DEBUG
+
+  # Default Epoll support : false
+  "reactor.netty.resources": DEBUG
+
+  ## Using candidate component class from index: ${BEAN FQCN}
+  #"org.springframework.context.annotation.ClassPathBeanDefinitionScanner": DEBUG
+
+  # For monitoring
+  #  "Application availability state LivenessState changed to CORRECT"
+  #  "Application availability state ReadinessState changed to ACCEPTING_TRAFFIC"
+  "org.springframework.boot.availability.ApplicationAvailabilityBean": DEBUG
+
+  # BeanFactory id=${UUID}
+  "org.springframework.cloud.context.scope.GenericScope": WARN
+
+  # ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 @ExceptionHandler
+  "org.springframework.web.reactive.result.method.annotation.ControllerMethodResolver": DEBUG
+
+spring.main.cloud-platform: NONE
+management.cloudfoundry.enabled: false
+
+management:
+  endpoints.enabled-by-default: false
+  endpoints.web:
+    base-path: /internal
+    discovery.enabled: false
+    exposure.include: "*"
+    path-mapping:
+      prometheus: metrics
+      beans: /actuator/beans
+      configprops: /actuator/configprops
+      mappings: /actuator/mappings
+  endpoint:
+    prometheus.enabled: true
+
+---
+spring.config.activate.on-profile: local
+
+management.endpoint:
+  beans.enabled: true
+  mappings.enabled: true
+  configprops.enabled: true
+  configprops.show-values: ALWAYS
