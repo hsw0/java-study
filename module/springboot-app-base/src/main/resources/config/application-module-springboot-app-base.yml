@@ -40,6 +40,165 @@ management:
   endpoint:
     prometheus.enabled: true
 
+spring.autoconfigure.exclude:
+  - org.springframework.cloud.autoconfigure.WritableEnvironmentEndpointAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.management.HeapDumpWebEndpointAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.management.ThreadDumpEndpointAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration
+  - org.springframework.boot.autoconfigure.ssl.SslAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.integration.IntegrationGraphEndpointAutoConfiguration
+  - org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration
+  - org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration
+  - org.springframework.boot.autoconfigure.jsonb.JsonbAutoConfiguration
+  - org.springframework.boot.autoconfigure.hateoas.HypermediaAutoConfiguration
+
+  - org.springframework.boot.actuate.autoconfigure.availability.AvailabilityHealthContributorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.availability.AvailabilityProbesAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.health.HealthContributorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.system.DiskSpaceHealthContributorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.jdbc.DataSourceHealthContributorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.cloudfoundry.servlet.CloudFoundryActuatorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.cloudfoundry.reactive.ReactiveCloudFoundryActuatorAutoConfiguration
+
+  - org.springframework.boot.actuate.autoconfigure.observation.graphql.GraphQlObservationAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.integration.IntegrationMetricsAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.jersey.JerseyServerMetricsAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.web.jetty.JettyMetricsAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.Log4J2MetricsAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.appoptics.AppOpticsMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.atlas.AtlasMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.datadog.DatadogMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.dynatrace.DynatraceMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.elastic.ElasticMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.ganglia.GangliaMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.graphite.GraphiteMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.humio.HumioMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.influx.InfluxMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.jmx.JmxMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.kairos.KairosMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.newrelic.NewRelicMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.signalfx.SignalFxMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.stackdriver.StackdriverMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.statsd.StatsdMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.wavefront.WavefrontMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.tracing.BraveAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.tracing.wavefront.WavefrontTracingAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.wavefront.WavefrontAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.jdbc.XADataSourceAutoConfiguration
+  - org.springframework.boot.autoconfigure.jdbc.JndiDataSourceAutoConfiguration
+  - org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration
+  - org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration
+  - org.springframework.boot.autoconfigure.jooq.JooqAutoConfiguration
+  - org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.flyway.FlywayEndpointAutoConfiguration
+  - org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.liquibase.LiquibaseEndpointAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.neo4j.Neo4jAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.cassandra.CassandraHealthContributorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.cassandra.CassandraReactiveHealthContributorAutoConfiguration
+  - org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.cassandra.CassandraDataAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.cassandra.CassandraReactiveDataAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.cassandra.CassandraReactiveRepositoriesAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.cassandra.CassandraRepositoriesAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.couchbase.CouchbaseHealthContributorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.couchbase.CouchbaseReactiveHealthContributorAutoConfiguration
+  - org.springframework.boot.autoconfigure.couchbase.CouchbaseAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.couchbase.CouchbaseDataAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.couchbase.CouchbaseReactiveDataAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.couchbase.CouchbaseReactiveRepositoriesAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.couchbase.CouchbaseRepositoriesAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.elasticsearch.ElasticsearchRestHealthContributorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.data.elasticsearch.ElasticsearchReactiveHealthContributorAutoConfiguration
+  - org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchClientAutoConfiguration
+  - org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientAutoConfiguration
+  - org.springframework.boot.autoconfigure.elasticsearch.ReactiveElasticsearchClientAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchRepositoriesAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.elasticsearch.ReactiveElasticsearchRepositoriesAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.ldap.LdapRepositoriesAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.mongo.MongoReactiveDataAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration
+  - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+  - org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.data.mongo.MongoHealthContributorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.data.mongo.MongoReactiveHealthContributorAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.data.neo4j.Neo4jDataAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.neo4j.Neo4jReactiveDataAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.neo4j.Neo4jReactiveRepositoriesAutoConfiguration
+  - org.springframework.boot.autoconfigure.data.neo4j.Neo4jRepositoriesAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.neo4j.Neo4jHealthContributorAutoConfiguration
+  - org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapAutoConfiguration
+  - org.springframework.boot.autoconfigure.ldap.LdapAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.ldap.LdapHealthContributorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.influx.InfluxDbHealthContributorAutoConfiguration
+  - org.springframework.boot.autoconfigure.influx.InfluxDbAutoConfiguration
+  - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.amqp.RabbitMetricsAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.amqp.RabbitHealthContributorAutoConfiguration
+  - org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration
+  - org.springframework.boot.autoconfigure.jms.JndiConnectionFactoryAutoConfiguration
+  - org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration
+  - org.springframework.boot.autoconfigure.jms.artemis.ArtemisAutoConfiguration
+
+  - org.springframework.boot.actuate.autoconfigure.hazelcast.HazelcastHealthContributorAutoConfiguration
+  - org.springframework.boot.autoconfigure.hazelcast.HazelcastAutoConfiguration
+  - org.springframework.boot.autoconfigure.hazelcast.HazelcastJpaDependencyAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.graphql.GraphQlAutoConfiguration
+  - org.springframework.boot.autoconfigure.graphql.data.GraphQlReactiveQueryByExampleAutoConfiguration
+  - org.springframework.boot.autoconfigure.graphql.data.GraphQlReactiveQuerydslAutoConfiguration
+  - org.springframework.boot.autoconfigure.graphql.data.GraphQlQueryByExampleAutoConfiguration
+  - org.springframework.boot.autoconfigure.graphql.data.GraphQlQuerydslAutoConfiguration
+  - org.springframework.boot.autoconfigure.graphql.reactive.GraphQlWebFluxAutoConfiguration
+  - org.springframework.boot.autoconfigure.graphql.rsocket.GraphQlRSocketAutoConfiguration
+  - org.springframework.boot.autoconfigure.graphql.rsocket.RSocketGraphQlClientAutoConfiguration
+  - org.springframework.boot.autoconfigure.graphql.security.GraphQlWebFluxSecurityAutoConfiguration
+  - org.springframework.boot.autoconfigure.graphql.security.GraphQlWebMvcSecurityAutoConfiguration
+  - org.springframework.boot.autoconfigure.graphql.servlet.GraphQlWebMvcAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.sendgrid.SendGridAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.rsocket.RSocketMessagingAutoConfiguration
+  - org.springframework.boot.autoconfigure.rsocket.RSocketRequesterAutoConfiguration
+  - org.springframework.boot.autoconfigure.rsocket.RSocketServerAutoConfiguration
+  - org.springframework.boot.autoconfigure.rsocket.RSocketStrategiesAutoConfiguration
+  - org.springframework.boot.autoconfigure.security.rsocket.RSocketSecurityAutoConfiguration
+
+  #- org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  #- org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration
+  #- org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
+  - org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.security.saml2.Saml2RelyingPartyAutoConfiguration
+  - org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration
+  - org.springframework.boot.autoconfigure.security.oauth2.client.reactive.ReactiveOAuth2ClientAutoConfiguration
+  - org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration
+  - org.springframework.boot.autoconfigure.security.oauth2.resource.reactive.ReactiveOAuth2ResourceServerAutoConfiguration
+  - org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration
+  - org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration
+  - org.springframework.boot.autoconfigure.websocket.servlet.WebSocketMessagingAutoConfiguration
+  - org.springframework.boot.autoconfigure.webservices.WebServicesAutoConfiguration
+  - org.springframework.boot.autoconfigure.webservices.client.WebServiceTemplateAutoConfiguration
+  - org.springframework.boot.autoconfigure.jersey.JerseyAutoConfiguration
+
+  - org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration
+  - org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration
+  - org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration
+  - org.springframework.boot.autoconfigure.groovy.template.GroovyTemplateAutoConfiguration
+
 ---
 spring.config.activate.on-profile: local
 
