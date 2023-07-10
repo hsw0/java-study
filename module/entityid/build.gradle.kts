@@ -27,6 +27,7 @@ tasks.withType<JavaCompile>().configureEach {
 
 dependencies {
     compileOnly(project(":module:annotations"))
+    testRuntimeOnly(testFixtures(project(":module:logging-support")))
 
     implementation(kotlin("reflect"))
 

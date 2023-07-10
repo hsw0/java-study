@@ -10,6 +10,7 @@ group = "io.syscall.hsw.study"
 version = "1.0-SNAPSHOT"
 
 dependencies {
+    testRuntimeOnly(testFixtures(project(":module:logging-support")))
     implementation("io.github.oshai:kotlin-logging-jvm")
     testImplementation("io.github.oshai:kotlin-logging-jvm")
 

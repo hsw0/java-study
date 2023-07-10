@@ -21,9 +21,10 @@ tasks.withType<KotlinCompile>().configureEach {
     compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
 }
 
-
 dependencies {
     compileOnly(project(":module:annotations"))
+    testRuntimeOnly(testFixtures(project(":module:logging-support")))
+
     api(project(":module:entityid"))
 
     implementation("org.hibernate.orm:hibernate-core:[6.2,)")

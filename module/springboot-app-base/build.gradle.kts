@@ -9,6 +9,8 @@ group = "dummy"
 
 dependencies {
     compileOnly(project(":module:annotations"))
+    runtimeOnly(project(":module:logging-support"))
+    testRuntimeOnly(testFixtures(project(":module:logging-support")))
 
     // conventions.project.spring-boot-app 과 중복
     implementation("org.springframework.boot:spring-boot-starter")
