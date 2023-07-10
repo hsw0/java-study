@@ -16,14 +16,25 @@ plugins {
     `jacoco-report-aggregation`
 }
 
-dependencies {
-    for (subproject in rootProject.subprojects) {
-        if (!subproject.pluginManager.hasPlugin("jvm-test-suite")) {
-            continue
-        }
-        testReportAggregation(subproject)
-        if (subproject.pluginManager.hasPlugin("jacoco")) {
-            jacocoAggregation(subproject)
+val projectsList = rootProject.allprojects.filterNot { it.path == project.path }
+
+for (targetProject in projectsList) {
+    evaluationDependsOn(targetProject.path)
+}
+
+afterEvaluate {
+    dependencies {
+        for (targetProject in projectsList) {
+            if (!targetProject.pluginManager.hasPlugin("jvm-test-suite")) {
+                continue
+            }
+
+            testReportAggregation(targetProject)
+            if (targetProject.pluginManager.hasPlugin("jacoco")) {
+                with(jacocoAggregation(targetProject) as ProjectDependency) {
+                    this.isTransitive = false
+                }
+            }
         }
     }
 }
