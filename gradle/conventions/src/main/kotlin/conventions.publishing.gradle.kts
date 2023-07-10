@@ -12,6 +12,10 @@ plugins {
 }
 
 plugins.withType<JavaLibraryPlugin> {
+    afterEvaluate(::applyConfig)
+}
+
+fun applyConfig(project: Project) {
     configure<JavaPluginExtension> {
         withJavadocJar()
         withSourcesJar()
@@ -39,5 +43,6 @@ plugins.withType<JavaLibraryPlugin> {
         withBuildIdentifier()
         from(components["java"])
     }
+
     // TODO: repositories
 }
