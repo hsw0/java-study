@@ -23,52 +23,46 @@ for (targetProject in projectsList) {
     evaluationDependsOn(targetProject.path)
 }
 
-afterEvaluate {
-    dependencies {
-        for (targetProject in projectsList) {
-            if (!targetProject.pluginManager.hasPlugin("jvm-test-suite")) {
-                continue
-            }
-
-            testReportAggregation(targetProject)
-
-            if (targetProject.pluginManager.hasPlugin("jacoco")) {
-                jaCoCoProjectsList.add(targetProject)
-            }
+dependencies {
+    for (targetProject in projectsList) {
+        if (!targetProject.pluginManager.hasPlugin("jvm-test-suite")) {
+            continue
         }
 
-        for (targetProject in jaCoCoProjectsList) {
-            with(jacocoAggregation(targetProject) as ProjectDependency) {
-                this.isTransitive = false
-            }
+        testReportAggregation(targetProject)
+
+        if (targetProject.pluginManager.hasPlugin("jacoco")) {
+            jaCoCoProjectsList.add(targetProject)
+        }
+    }
+
+    for (targetProject in jaCoCoProjectsList) {
+        with(jacocoAggregation(targetProject) as ProjectDependency) {
+            this.isTransitive = false
         }
     }
 }
 
-reporting {
+reporting.reports.create<AggregateTestReport>("test") {
+    testType.set(TestSuiteType.UNIT_TEST)
+}
+
+val jacocoTestReport by reporting.reports.creating(JacocoCoverageReport::class) {
+    testType.set(TestSuiteType.UNIT_TEST)
+}
+
+jacocoTestReport.reportTask {
+    // 수동 지정: JacocoReportAggregationPlugin 의 기본값이 위 jacocoAggregation 으로 지정한 의존성들의 출력 중
+    // LibraryElements.CLASSES 인 Artifact를 자종 선택하는 방식인데 일부 케이스에서 AmbiguousVariantSelectionException 예외 발생
+    // class 경로만 이렇게 처리하고 의존성 관리는 제거하지 않고 나머지 기능에 계속 사용한다.
+    val classesDirs = jaCoCoProjectsList.flatMap {
+        it.sourceSets.findByName(SourceSet.MAIN_SOURCE_SET_NAME)
+            ?.output?.classesDirs ?: emptySet()
+    }
+    classDirectories.setFrom(classesDirs)
+
     reports {
-        create<AggregateTestReport>("test") {
-            testType.set(TestSuiteType.UNIT_TEST)
-        }
-
-        create<JacocoCoverageReport>("jacocoTestReport") {
-            testType.set(TestSuiteType.UNIT_TEST)
-
-            reportTask {
-                // 수동 지정: JacocoReportAggregationPlugin 의 기본값이 위 jacocoAggregation 으로 지정한 의존성들의 출력 중
-                // LibraryElements.CLASSES 인 Artifact를 자종 선택하는 방식인데 일부 케이스에서 AmbiguousVariantSelectionException 예외 발생
-                // class 경로만 이렇게 처리하고 의존성 관리는 제거하지 않고 나머지 기능에 계속 사용한다.
-                val classesDirs = jaCoCoProjectsList.flatMap {
-                    it.sourceSets.findByName(SourceSet.MAIN_SOURCE_SET_NAME)
-                        ?.output?.classesDirs ?: emptySet()
-                }
-                classDirectories.setFrom(classesDirs)
-
-                reports {
-                    html.required.set(true)
-                    xml.required.set(true)
-                }
-            }
-        }
+        html.required.set(true)
+        xml.required.set(true)
     }
 }
