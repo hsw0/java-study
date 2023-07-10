@@ -4,12 +4,16 @@ plugins {
     `java-test-fixtures`
 }
 
-group = "dummy"
+version = "1.0-SNAPSHOT"
+
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(11)
+}
 
 dependencies {
     compileOnly(project(":module:annotations"))
 
-    api("org.slf4j:slf4j-api:[2.0,)") // Who doesn't?
+    api("org.slf4j:slf4j-api:[2.0,)")
 
     implementation("ch.qos.logback:logback-core")
     implementation("ch.qos.logback:logback-classic")

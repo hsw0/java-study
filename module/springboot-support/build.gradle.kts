@@ -4,7 +4,9 @@ plugins {
     `java-library`
 }
 
-group = "dummy"
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(17)
+}
 
 dependencies {
     compileOnly(project(":module:annotations"))

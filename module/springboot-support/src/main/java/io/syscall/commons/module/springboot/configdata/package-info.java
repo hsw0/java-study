@@ -34,7 +34,6 @@
  * @see io.syscall.commons.module.springboot.configdata.AutoConfigDataFile
  */
 @NonNullApi
-@SuppressWarnings("JavadocReference")
 package io.syscall.commons.module.springboot.configdata;
 
 import io.syscall.annotations.NonNullApi;
