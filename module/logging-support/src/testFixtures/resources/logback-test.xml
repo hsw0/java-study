@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Logback startup config -->
+<!DOCTYPE configuration>
+<configuration>
+  <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
+  <import class="ch.qos.logback.core.ConsoleAppender"/>
+
+  <appender name="CONSOLE" class="ConsoleAppender">
+    <encoder class="PatternLayoutEncoder">
+      <pattern>%date{yyyy-MM-dd'T'HH:mm:ss.SSS}%micros%date{XXX} %highlight(%-5level) %message %kvp [%magenta(%logger{40})] [%cyan(%thread)]%n%rootException</pattern>
+    </encoder>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+  <logger name="io.syscall" level="DEBUG"/>
+
+</configuration>

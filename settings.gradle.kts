@@ -23,6 +23,7 @@ project(":test-report").buildFileName = "../gradle/test-report.gradle.kts"
 // Internal utilities
 include(
     ":module:annotations",
+    ":module:logging-support",
 )
 
 // Reusable module
