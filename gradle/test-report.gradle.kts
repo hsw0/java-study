@@ -8,7 +8,7 @@ import io.syscall.gradle.plugin.jacoco.JacocoMergeTask
  * @see <a href="https://docs.gradle.org/current/userguide/test_report_aggregation_plugin.html">Test Report Aggregation Plugin</a>
  * @see <a href="https://docs.gradle.org/current/userguide/jacoco_report_aggregation_plugin.html">JaCoCo Report Aggregation Plugin</a>
  */
-interface Comments
+private object Comments
 
 plugins {
     id("conventions.java-base")
@@ -39,25 +39,39 @@ dependencies {
         testReportAggregation(targetProject)
 
         if (targetProject.pluginManager.hasPlugin("jacoco")) {
-            jaCoCoProjectsList.add(targetProject)
+            val jacocoTasks = targetProject.tasks.filter {
+                it.extensions.findByType<JacocoTaskExtension>()?.isEnabled == true
+            }
+            if (jacocoTasks.isNotEmpty()) {
+                jaCoCoProjectsList.add(targetProject)
+            }
         }
     }
 
     for (targetProject in jaCoCoProjectsList) {
         with(jacocoAggregation(targetProject) as ProjectDependency) {
-            this.isTransitive = false
+            isTransitive = false
         }
     }
 }
 
-reporting.reports.create<AggregateTestReport>("test") {
+val defaultCheckTask = tasks.getByName(LifecycleBasePlugin.CHECK_TASK_NAME)
+
+reporting.reports.create<AggregateTestReport>("testReport") {
     testType.set(TestSuiteType.UNIT_TEST)
+    reportTask {
+        group = LifecycleBasePlugin.VERIFICATION_GROUP
+        defaultCheckTask.dependsOn(this)
+    }
 }
 
 val jacocoTestReport by reporting.reports.creating(JacocoCoverageReport::class) {
     testType.set(TestSuiteType.UNIT_TEST)
 
     reportTask {
+        group = LifecycleBasePlugin.VERIFICATION_GROUP
+        defaultCheckTask.dependsOn(this)
+
         reports {
             html.required.set(true)
             xml.required.set(true)
@@ -66,6 +80,9 @@ val jacocoTestReport by reporting.reports.creating(JacocoCoverageReport::class) 
 }
 
 val jacocoMergeExecution by tasks.creating(JacocoMergeTask::class) {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    defaultCheckTask.dependsOn(this)
+
     dependsOn(jacocoTestReport.reportTask)
     executionData.from(jacocoTestReport.reportTask.map { it.executionData })
     jacocoClasspath = configurations[JacocoPlugin.ANT_CONFIGURATION_NAME]
