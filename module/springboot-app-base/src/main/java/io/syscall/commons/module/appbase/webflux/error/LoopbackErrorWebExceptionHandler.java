@@ -6,6 +6,7 @@ import io.syscall.annotations.VisibleForTesting;
 import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
@@ -48,8 +49,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
     private final List<HandlerResultHandler> resultHandlers;
     private final ObjectMapper objectMapper;
 
-    @MonotonicNonNull
-    private StaticErrorResponse defaultInternalErrorResponse;
+    private @MonotonicNonNull StaticErrorResponse defaultInternalErrorResponse;
 
     public LoopbackErrorWebExceptionHandler(
             RequestMappingHandlerAdapter requestMappingHandlerAdapter,
@@ -175,7 +175,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
      */
     @SuppressWarnings("JavadocReference")
     private boolean isDisconnectedClientErrorMessage(@Nullable String message) {
-        message = (message != null) ? message.toLowerCase() : "";
+        message = (message != null) ? message.toLowerCase(Locale.ROOT) : "";
         return (message.contains("broken pipe") || message.contains("connection reset by peer"));
     }
 }

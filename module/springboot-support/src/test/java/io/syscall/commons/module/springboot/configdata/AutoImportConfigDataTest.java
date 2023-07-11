@@ -81,7 +81,7 @@ class AutoImportConfigDataTest {
             String sourceDesc;
             try {
                 sourceDesc = ((PropertySource<?>) propertyDetail.getSource().getUnderlyingSource()).getName();
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 sourceDesc = propertyDetail.getSource().toString();
             }
             log.debug("{}={} source: {}", key, value, sourceDesc);

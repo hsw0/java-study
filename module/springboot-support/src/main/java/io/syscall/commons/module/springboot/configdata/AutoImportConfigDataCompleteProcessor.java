@@ -14,7 +14,7 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 
 /**
- * @see ConfigDataEnvironmentPostProcessor
+ * See {@link ConfigDataEnvironmentPostProcessor}
  */
 public final class AutoImportConfigDataCompleteProcessor implements EnvironmentPostProcessor, Ordered {
 
@@ -38,7 +38,7 @@ public final class AutoImportConfigDataCompleteProcessor implements EnvironmentP
         reorder(propertySources, autoImportedSources);
     }
 
-    private void reorder(MutablePropertySources propertySources, ArrayList<PropertySource<?>> autoImportedSources) {
+    private void reorder(MutablePropertySources propertySources, List<PropertySource<?>> autoImportedSources) {
         for (var it : autoImportedSources) {
             propertySources.remove(it.getName());
             propertySources.addLast(it);
@@ -46,7 +46,7 @@ public final class AutoImportConfigDataCompleteProcessor implements EnvironmentP
         DefaultPropertiesPropertySource.moveToEnd(propertySources);
     }
 
-    private ArrayList<PropertySource<?>> findAutoImportedSources(
+    private List<PropertySource<?>> findAutoImportedSources(
             MutablePropertySources propertySources, List<String> autoImportedLocations) {
         var list = new ArrayList<PropertySource<?>>(autoImportedLocations.size());
         for (var it : propertySources) {

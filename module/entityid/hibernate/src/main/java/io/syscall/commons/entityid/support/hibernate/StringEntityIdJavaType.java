@@ -10,7 +10,8 @@ import org.hibernate.type.descriptor.jdbc.JdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcTypeIndicators;
 import org.hibernate.type.descriptor.jdbc.VarcharJdbcType;
 
-@SuppressWarnings("java:S119") // Sonar: Type parameter names should comply with a naming convention
+// Sonar: java:S119: Type parameter names should comply with a naming convention
+@SuppressWarnings({"serial", "java:S119"})
 public class StringEntityIdJavaType extends AbstractEntityIdJavaType<StringEntityId> {
 
     private final transient StringEntityIdFactory<StringEntityId> factory;

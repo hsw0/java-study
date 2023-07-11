@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.core.env.MapPropertySource;
 
+// java:S2160: Subclasses that add fields to classes that override "equals" should also override "equals"
+@SuppressWarnings("java:S2160")
 public final class AutoImportPropertySource extends MapPropertySource {
 
     /**
-     * @see org.springframework.boot.context.config.ConfigDataEnvironment#IMPORT_PROPERTY
+     * See {@link org.springframework.boot.context.config.ConfigDataEnvironment#IMPORT_PROPERTY}
      */
     @SuppressWarnings("JavadocReference")
     static final String CONFIG_DATA_IMPORT_PROPERTY = "spring.config.import";

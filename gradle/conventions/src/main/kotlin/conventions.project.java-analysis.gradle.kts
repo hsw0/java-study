@@ -53,6 +53,20 @@ pluginManager.withPlugin("java") {
             disable("AndroidJdkLibsChecker")
             disable("Java7ApiChecker")
             disable("Java8ApiChecker")
+
+            // If you don't intend to mutate a member collection prefer using Immutable types.
+            // guava ImmutableMap 등을 추천함
+            disable("ImmutableMemberCollection")
+
+            // Non-constant variable missing @Var annotation
+            disable("Var")
+
+            // Type Parameter DB must be a single letter with an optional numeric suffix, or an UpperCamelCase name followed by the letter 'T'.
+            disable("TypeParameterNaming")
+
+            // Since Java 8, it's been unnecessary to make local variables and parameters `final` for use in lambdas or anonymous classes. Marking them as `final` is weakly discouraged, as it adds a fair amount of noise for minimal benefit.
+            // ex) "final var variableName", "final String str"
+            disable("UnnecessaryFinal")
         }
     }
 

@@ -10,8 +10,8 @@ import org.hibernate.type.descriptor.jdbc.BigIntJdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcTypeIndicators;
 
-// @JavaTypeRegistration(javaType = PersonId.class, descriptorClass = LongEntityIdJavaType.class)
-@SuppressWarnings("java:S119") // Sonar: Type parameter names should comply with a naming convention
+// Sonar: java:S119: Type parameter names should comply with a naming convention
+@SuppressWarnings({"serial", "java:S119"})
 public class LongEntityIdJavaType extends AbstractEntityIdJavaType<LongEntityId> {
 
     private final transient LongEntityIdFactory<LongEntityId> factory;

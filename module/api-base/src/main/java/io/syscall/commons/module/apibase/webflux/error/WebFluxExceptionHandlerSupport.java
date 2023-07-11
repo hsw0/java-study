@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.reactive.HandlerMapping;
 import org.springframework.web.reactive.resource.ResourceWebHandler;
@@ -20,26 +21,28 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebHandler;
 import reactor.core.publisher.Mono;
 
+/**
+ * 커스텀 {@link ExceptionHandler} 클래스에서 {@link org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler} 를 바로 상속하지 말고 이걸 사용
+ */
 public abstract class WebFluxExceptionHandlerSupport implements MessageSourceAware {
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    @MonotonicNonNull
-    private MessageSource messageSource;
+    private @MonotonicNonNull MessageSource messageSource;
 
     @Override
     public void setMessageSource(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
-    // Late init false positive workaround  for checkerframework
+    // Late init false positive workaround for checkerframework
     @SuppressWarnings("return.type.incompatible")
     protected MessageSource getMessageSource() {
         return messageSource;
     }
 
     /**
-     * @see org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler#handleExceptionInternal
+     * Based on {@link org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler#handleExceptionInternal}
      */
     @SuppressWarnings("JavadocReference")
     protected Mono<ResponseEntity<Object>> handleExceptionInternal(
@@ -65,7 +68,7 @@ public abstract class WebFluxExceptionHandlerSupport implements MessageSourceAwa
     }
 
     /**
-     * @see org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler#createResponseEntity
+     * Based on {@link org.springframework.web.reactive.result.method.annotation.ResponseEntityExceptionHandler#createResponseEntity}
      */
     @SuppressWarnings("JavadocReference")
     protected Mono<ResponseEntity<Object>> createResponseEntity(

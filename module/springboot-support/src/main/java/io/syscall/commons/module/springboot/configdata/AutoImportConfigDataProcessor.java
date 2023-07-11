@@ -11,7 +11,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertySource;
 
 /**
- * @see ConfigDataEnvironmentPostProcessor
+ * See {@link ConfigDataEnvironmentPostProcessor}
  */
 public final class AutoImportConfigDataProcessor implements EnvironmentPostProcessor, Ordered {
 

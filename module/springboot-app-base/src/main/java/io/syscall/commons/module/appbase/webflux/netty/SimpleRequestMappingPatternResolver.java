@@ -28,8 +28,7 @@ public class SimpleRequestMappingPatternResolver {
 
     private final Patterns allPatterns = Patterns.create();
 
-    @Nullable
-    public String resolve(String requestPath, @Nullable String method) {
+    public @Nullable String resolve(String requestPath, @Nullable String method) {
         @Nullable String resolved = null;
         if (method != null) {
             var forMethod = methodPatterns.get(HttpMethod.valueOf(method));
@@ -53,8 +52,7 @@ public class SimpleRequestMappingPatternResolver {
             return new Patterns(new HashSet<>(), new TreeSet<>());
         }
 
-        @Nullable
-        public String resolve(String requestPath) {
+        public @Nullable String resolve(String requestPath) {
             if (directPathMappings.contains(requestPath)) {
                 return requestPath;
             }

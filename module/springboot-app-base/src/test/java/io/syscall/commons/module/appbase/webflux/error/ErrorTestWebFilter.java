@@ -16,9 +16,9 @@ class ErrorTestWebFilter implements WebFilter {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         var requestPath =
                 exchange.getRequest().getPath().pathWithinApplication().value();
-        if (HANDLED_EXCEPTION_PATH.equals(requestPath)) {
+        if (requestPath.equals(HANDLED_EXCEPTION_PATH)) {
             return Mono.error(new CatchMeCheckedException());
-        } else if (UNHANDLED_EXCEPTION_PATH.equals(requestPath)) {
+        } else if (requestPath.equals(UNHANDLED_EXCEPTION_PATH)) {
             throw new CatchMeUnhandledError();
         }
         return chain.filter(exchange);

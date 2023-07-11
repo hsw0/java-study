@@ -14,11 +14,15 @@ public class DetailedEntityNotFoundDelegate implements EntityNotFoundDelegate {
         throw new DetailedEntityNotFoundException(entityName, id);
     }
 
+    @SuppressWarnings({
+        "serial",
+        "java:S110", // Sonar: This class has N parents which is greater than M authorized.
+    })
     public static class DetailedEntityNotFoundException extends EntityNotFoundException implements ErrorResponse {
 
         private final String entityName;
 
-        private final Object id;
+        private final transient Object id;
 
         public DetailedEntityNotFoundException(String entityName, Object id) {
             super("Unable to find " + entityName + " with id " + id);
