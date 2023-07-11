@@ -56,26 +56,17 @@ reporting.reports.create<AggregateTestReport>("test") {
 
 val jacocoTestReport by reporting.reports.creating(JacocoCoverageReport::class) {
     testType.set(TestSuiteType.UNIT_TEST)
+
+    reportTask {
+        reports {
+            html.required.set(true)
+            xml.required.set(true)
+        }
+    }
 }
 
 val jacocoMergeExecution by tasks.creating(JacocoMergeTask::class) {
     dependsOn(jacocoTestReport.reportTask)
     executionData.from(jacocoTestReport.reportTask.map { it.executionData })
     jacocoClasspath = configurations[JacocoPlugin.ANT_CONFIGURATION_NAME]
-}
-
-jacocoTestReport.reportTask {
-    // 수동 지정: JacocoReportAggregationPlugin 의 기본값이 위 jacocoAggregation 으로 지정한 의존성들의 출력 중
-    // LibraryElements.CLASSES 인 Artifact를 자종 선택하는 방식인데 일부 케이스에서 AmbiguousVariantSelectionException 예외 발생
-    // class 경로만 이렇게 처리하고 의존성 관리는 제거하지 않고 나머지 기능에 계속 사용한다.
-    val classesDirs = jaCoCoProjectsList.flatMap {
-        it.sourceSets.findByName(SourceSet.MAIN_SOURCE_SET_NAME)
-            ?.output?.classesDirs ?: emptySet()
-    }
-    classDirectories.setFrom(classesDirs)
-
-    reports {
-        html.required.set(true)
-        xml.required.set(true)
-    }
 }
