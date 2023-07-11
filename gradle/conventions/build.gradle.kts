@@ -33,6 +33,7 @@ dependencies {
     implementation(libs.gradlePlugin.kotlin.noarg)
 
     implementation(libs.gradlePlugin.spotless)
+    implementation(libs.gradlePlugin.detekt)
     implementation(libs.gradlePlugin.errorprone)
     implementation(libs.gradlePlugin.checkerframework)
 

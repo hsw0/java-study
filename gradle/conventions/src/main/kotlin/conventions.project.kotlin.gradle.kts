@@ -8,6 +8,7 @@ plugins {
     id("conventions.project.jvm")
     id("conventions.kotlin")
     id("conventions.project.spotless")
+    id("conventions.project.kotlin-analysis")
 }
 
 @Suppress("UnstableApiUsage")
