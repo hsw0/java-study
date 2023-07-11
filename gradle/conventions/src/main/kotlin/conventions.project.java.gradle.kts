@@ -10,3 +10,9 @@ plugins {
     id("conventions.project.spotless")
     id("conventions.project.java-analysis")
 }
+
+tasks.withType<Javadoc> {
+    when (val it = options) {
+        is CoreJavadocOptions -> it.addStringOption("Xdoclint:none", "-quiet")
+    }
+}
