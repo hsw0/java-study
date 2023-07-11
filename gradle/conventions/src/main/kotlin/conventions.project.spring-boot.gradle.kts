@@ -9,6 +9,7 @@ private object Comments
 
 plugins {
     id("conventions.project.jvm")
+    id("conventions.dependency-management.spring-boot")
 }
 
 if (pluginManager.hasPlugin("org.jetbrains.kotlin.jvm")) {
@@ -24,7 +25,7 @@ val useKotlinApt = pluginManager.hasPlugin("org.jetbrains.kotlin.kapt")
 val applyAptToSourceSets = listOf("main", "test")
 
 dependencies {
-    implementation(platform("org.springframework.boot:spring-boot-dependencies"))
+    //implementation(platform("org.springframework.boot:spring-boot-dependencies"))
 
     val aptConfigurations: List<String> = if (useKotlinApt) {
         applyAptToSourceSets.map(::getKaptConfigurationName)

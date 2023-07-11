@@ -15,8 +15,11 @@ dependencyResolutionManagement {
     }
 }
 
-include(":dependencyManagement")
-project(":dependencyManagement").buildFileName = "../gradle/dependency.gradle.kts"
+include(":dependencyManagement:default")
+project(":dependencyManagement:default").buildFileName = "../../gradle/dependency.gradle.kts"
+
+include(":dependencyManagement:spring-boot")
+project(":dependencyManagement:spring-boot").buildFileName = "../../gradle/dependency.spring-boot.gradle.kts"
 
 include(":test-report")
 project(":test-report").buildFileName = "../gradle/test-report.gradle.kts"
@@ -54,4 +57,6 @@ include(
     ":dummy:app",
 )
 
-include(":spring-webflux-api")
+include(
+    ":spring-webflux-api",
+)

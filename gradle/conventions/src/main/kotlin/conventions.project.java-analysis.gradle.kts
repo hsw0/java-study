@@ -1,4 +1,6 @@
-
+import io.syscall.gradle.conventions.isClasspathLike
+import io.syscall.gradle.conventions.libs
+import io.syscall.gradle.conventions.versionCatalog
 import net.ltgt.gradle.errorprone.errorprone
 import org.checkerframework.gradle.plugin.CheckerFrameworkExtension
 import org.checkerframework.gradle.plugin.CreateManifestTask
@@ -27,7 +29,7 @@ pluginManager.withPlugin("java") {
         add("errorprone", "com.google.errorprone:error_prone_core")
         compileOnly("com.google.errorprone:error_prone_annotations")
 
-        add("checkerFramework", platform(project(":dependencyManagement")))
+        add("checkerFramework", platform(project(":dependencyManagement:default")))
         add("checkerFramework", "org.checkerframework:checker")
         compileOnly("org.checkerframework:checker-qual")
         testCompileOnly("org.checkerframework:checker-qual")
@@ -87,5 +89,24 @@ pluginManager.withPlugin("java") {
     tasks.withType<CreateManifestTask>().configureEach {
         // Task `:${PROJECT}:createCheckerFrameworkManifest` of type `org.checkerframework.gradle.plugin.CreateManifestTask`: invocation of 'Task.project' at execution time is unsupported.
         notCompatibleWithConfigurationCache("UNSUPPORTED")
+    }
+}
+
+
+val checkerFrameworkDep = versionCatalog.libs["checkerframework"].toString()
+val checkerQualDep = versionCatalog.libs["checkerframework-qual"].toString()
+
+dependencies {
+    add("checkerFrameworkAnnotatedJDK", "org.checkerframework:jdk8:3.3.0")
+}
+
+configurations.matching { it.isClasspathLike || it.name.startsWith("checkerFramework") }.configureEach {
+    resolutionStrategy {
+        dependencySubstitution {
+            substitute(module("org.checkerframework:checker"))
+                .using(module(checkerFrameworkDep))
+            substitute(module("org.checkerframework:checker-qual"))
+                .using(module(checkerQualDep))
+        }
     }
 }
