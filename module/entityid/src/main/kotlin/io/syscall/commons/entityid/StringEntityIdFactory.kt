@@ -9,7 +9,7 @@ public object StringEntityIdSupport {
 
     public fun <E : StringEntityId> StringEntityId.Companion.factory(type: KClass<E>): StringEntityIdFactory<E> {
         val ctor: KFunction<E> = EntityIdFactory.initializeConstructor(type, "dummy")
-        return StringEntityIdFactory { it: String ->
+        return StringEntityIdFactory {
             EntityIdFactory.invokeConstructor(ctor, it)
         }
     }

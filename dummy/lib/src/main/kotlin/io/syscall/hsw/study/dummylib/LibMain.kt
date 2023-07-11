@@ -1,11 +1,9 @@
 package io.syscall.hsw.study.dummylib
 
-public class LibMain {
+public object LibMain {
 
-    public companion object {
-        @JvmStatic
-        public fun main(args: Array<String>) {
-            System.out.println("Library main()")
-        }
+    @JvmStatic
+    public fun main(args: Array<String>) {
+        System.out.println("Library main()")
     }
 }

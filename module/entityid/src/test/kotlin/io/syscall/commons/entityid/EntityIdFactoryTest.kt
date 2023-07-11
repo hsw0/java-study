@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package io.syscall.commons.entityid
 
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -119,7 +121,9 @@ class EntityIdFactoryTest {
         val alice = PersonId.create("ALICE")
         val randomPerson = PersonId.create("5234123")
         log.info { "\"ALICE\": value=${alice.value} asString=${alice.asString()} toString=${alice}" }
-        log.info { "\"5234123\": value=${randomPerson.value} asString=${randomPerson.asString()} toString=${randomPerson}" }
+        log.info {
+            "\"5234123\": value=${randomPerson.value} asString=${randomPerson.asString()} toString=${randomPerson}"
+        }
     }
 
     @Test
@@ -146,7 +150,9 @@ class EntityIdFactoryTest {
         objectOutputStream.close()
 
         val b64Encoder = Base64.getEncoder()
-        val toBase64 = { it: ByteArray -> String(b64Encoder.encode(it), StandardCharsets.ISO_8859_1) }
+        val toBase64 = fun(bytes: ByteArray): String {
+            return String(b64Encoder.encode(bytes), StandardCharsets.ISO_8859_1)
+        }
 
         log.info { "serialized=${toBase64(baos.toByteArray())}" }
 

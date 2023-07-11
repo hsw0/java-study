@@ -3,8 +3,7 @@ package io.syscall.commons.entityid
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 
-public fun interface LongEntityIdFactory<E : LongEntityId> : EntityIdFactory<Long, E> {
-}
+public fun interface LongEntityIdFactory<E : LongEntityId> : EntityIdFactory<Long, E>
 
 public object LongEntityIdSupport {
 
@@ -24,7 +23,7 @@ public object LongEntityIdSupport {
             }
         }
 
-        return LongEntityIdFactory { it: Long ->
+        return LongEntityIdFactory {
             EntityIdFactory.invokeConstructor(ctor, it)
         }
     }

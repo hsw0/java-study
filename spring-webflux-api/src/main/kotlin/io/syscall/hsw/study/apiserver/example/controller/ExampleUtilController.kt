@@ -28,6 +28,7 @@ internal class ExampleUtilController {
     ): Mono<String> {
         val start = System.nanoTime()
         val buildResponse = fun(): String {
+            @Suppress("MagicNumber")
             val elapsed = (System.nanoTime() - start) / 1_000_000
             return "${elapsed}ms elapsed @ ${Thread.currentThread()}"
         }

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest(classes = arrayOf(ApiApplication::class))
+@SpringBootTest(classes = [ApiApplication::class])
 class ApiApplicationTests {
 
     @Test

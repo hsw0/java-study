@@ -11,6 +11,7 @@ public fun interface EntityIdFactory<T, E : EntityId<T>> {
     public fun create(value: T): E
 
     public companion object {
+        @Suppress("ThrowsCount")
         internal fun <T, E : EntityId<T>> initializeConstructor(type: KClass<E>, dummyValue: T): KFunction<E> {
             runCatching { require(type.isSubclassOf(EntityId::class)) }.onFailure {
                 throw UnsupportedEntityIdImplementationException("Unsupported EntityId type: $type", it)
@@ -25,13 +26,14 @@ public fun interface EntityIdFactory<T, E : EntityId<T>> {
             val ctor: KFunction<E>
             try {
                 ctor = type.primaryConstructor!!
-            } catch (e: Exception) {
+            } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
                 throw UnsupportedEntityIdImplementationException("Unsupported EntityId implementation: $type", e)
             }
 
             try {
                 ctor.call(dummyValue)
-            } catch (e: Throwable) {
+            } catch (@Suppress("TooGenericExceptionCaught") e: Throwable) {
+                @Suppress("InstanceOfCheckForException")
                 if (e !is InvocationTargetException || e.targetException !is RuntimeException) {
                     throw UnsupportedEntityIdImplementationException("Unsupported EntityId implementation: $type", e)
                 }
@@ -53,7 +55,7 @@ public fun interface EntityIdFactory<T, E : EntityId<T>> {
         internal fun <T, E : EntityId<T>> invokeConstructor(ctor: KFunction<E>, value: T): E {
             try {
                 return ctor.call(value)
-            } catch (e: InvocationTargetException) {
+            } catch (@Suppress("SwallowedException") e: InvocationTargetException) {
                 if (e.targetException is RuntimeException || e.targetException is Error) {
                     throw e.targetException
                 }
