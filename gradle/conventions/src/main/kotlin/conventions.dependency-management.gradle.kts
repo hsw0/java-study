@@ -24,16 +24,19 @@ val includedConfigurations = setOf(
     "checkerFramework",
     /*${configuration.name}*/"DependenciesMetadata",
     "devRuntimeOnly",
+
+    // Spring Boot
     "developmentOnly",
+    "productionRuntimeOnly",
 )
 
 fun shouldIncluded(c: Configuration): Boolean {
-    return c.isClasspathLike || includedConfigurations.any { c.name.contains(it) }
+    return includedConfigurations.any { c.name.contains(it) }
 }
 
 afterEvaluate {
     configurations.configureEach {
-        if (isCanBeResolved && !isCanBeConsumed && shouldIncluded(this)) {
+        if ((isCanBeResolved && !isCanBeConsumed && isClasspathLike) || shouldIncluded(this)) {
             logger.info("Applying dependencyManagement to ${name}")
             extendsFrom(dependencyManagementConf)
         }

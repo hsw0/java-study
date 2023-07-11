@@ -29,11 +29,11 @@ val includedConfigurations = setOf(
 )
 
 fun shouldIncluded(c: Configuration): Boolean {
-    return c.isClasspathLike || includedConfigurations.any { c.name.contains(it) }
+    return includedConfigurations.any { c.name.contains(it) }
 }
 afterEvaluate {
     configurations.configureEach {
-        if (isCanBeResolved && !isCanBeConsumed && shouldIncluded(this)) {
+        if ((isCanBeResolved && !isCanBeConsumed && isClasspathLike) || shouldIncluded(this)) {
             logger.info("Applying dependencyManagement (Spring Boot) to ${name}")
             extendsFrom(dependencyManagementConf)
         }
