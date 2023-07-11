@@ -23,9 +23,6 @@ plugins {
 // region Toolchain 관련 설정
 
 configure<KotlinJvmProjectExtension> {
-    jvmToolchain {
-        languageVersion.convention(JavaLanguageVersion.of(21))
-    }
     compilerOptions {
         jvmTarget.convention(JvmTarget.JVM_17)
         languageVersion.convention(KotlinVersion.KOTLIN_1_9)
@@ -42,7 +39,6 @@ tasks.withType<CompileUsingKotlinDaemon>().configureEach {
 tasks.withType<KaptWithoutKotlincTask>().configureEach {
     kaptProcessJvmArgs.add("--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
 }
-
 
 // endregion
 

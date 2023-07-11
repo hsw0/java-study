@@ -5,8 +5,13 @@ plugins {
     id("conventions.jpa-entity")
 }
 
-group = "io.syscall.hsw.study"
-version = "1.0-SNAPSHOT"
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.release.set(21)
+}
 
 val testFixturesImplementation by configurations.creating
 
@@ -41,4 +46,3 @@ configurations.compileClasspath {
     // Spring이 아닌 @jakarta.transaction.Transactional로 잘못 쓰는 것 방지
     exclude(group = "jakarta.transaction", module = "jakarta.transaction-api")
 }
-
