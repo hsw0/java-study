@@ -15,6 +15,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    developmentOnly("io.projectreactor:reactor-tools")
+    developmentOnly("io.projectreactor.tools:blockhound")
 }
 
 tasks.withType<BootJar>().configureEach {

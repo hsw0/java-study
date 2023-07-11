@@ -8,7 +8,7 @@ import java.util.jar.Attributes.Name as JarAttribute
  *
  * @see org.gradle.api.plugins.JavaPlugin
  */
-interface Comments
+private object Comments
 
 plugins {
     java

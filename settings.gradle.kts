@@ -4,9 +4,12 @@ pluginManagement {
     includeBuild("gradle/conventions") {
         name = "conventions"
     }
+    // Default:
+    //repositories { gradlePluginPortal() }
 }
 
 dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage")
     repositories {
         mavenCentral()
     }

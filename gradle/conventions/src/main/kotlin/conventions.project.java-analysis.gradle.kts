@@ -1,5 +1,4 @@
-import io.syscall.gradle.conventions.libs
-import io.syscall.gradle.conventions.versionCatalog
+
 import net.ltgt.gradle.errorprone.errorprone
 import org.checkerframework.gradle.plugin.CheckerFrameworkExtension
 import org.checkerframework.gradle.plugin.CreateManifestTask
@@ -8,7 +7,7 @@ import org.checkerframework.gradle.plugin.CreateManifestTask
  * Java static analyzers
  *
  */
-interface Comments
+private object Comments
 
 plugins {
     id("conventions.dependency-management")
@@ -32,26 +31,6 @@ pluginManager.withPlugin("java") {
         add("checkerFramework", "org.checkerframework:checker")
         compileOnly("org.checkerframework:checker-qual")
         testCompileOnly("org.checkerframework:checker-qual")
-    }
-
-    val checkerFrameworkDep = versionCatalog.libs["checkerframework"].toString()
-    val checkerQualDep = versionCatalog.libs["checkerframework-qual"].toString()
-
-    configurations.configureEach {
-        if (name == "checkerFramework") {
-            resolutionStrategy.dependencySubstitution {
-                substitute(module("org.checkerframework:checker"))
-                    .using(module(checkerFrameworkDep))
-            }
-        }
-        if (name.endsWith("Classpath", ignoreCase = true)
-            || name.endsWith("AnnotationProcessor", ignoreCase = true)
-        ) {
-            resolutionStrategy.dependencySubstitution {
-                substitute(module("org.checkerframework:checker-qual"))
-                    .using(module(checkerQualDep))
-            }
-        }
     }
 
     tasks.withType<JavaCompile>().configureEach {

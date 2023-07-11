@@ -1,4 +1,4 @@
-package io.syscall.gradle.util
+package io.syscall.gradle.conventions
 
 import org.gradle.api.provider.Provider
 

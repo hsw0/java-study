@@ -55,17 +55,6 @@ tasks.withType<KotlinCompile>().configureEach {
     compilerOptions.freeCompilerArgs.addAll("-Xjsr305=strict")
 }
 
-@Suppress("UnstableApiUsage")
-testing.suites.withType<JvmTestSuite>().configureEach {
-    dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-test-junit5")
-
-        runtimeOnly("io.kotest:kotest-runner-junit5")
-        implementation("io.kotest:kotest-assertions-core")
-        implementation("io.kotest:kotest-property")
-    }
-}
-
 val implementationDependencies = listOf(
     dependencies.kotlin("stdlib"),
 )
