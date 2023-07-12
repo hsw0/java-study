@@ -42,7 +42,7 @@ include(
 include(
     ":module:protocol",
     ":module:reactor-support",
-    ":module:jpa-support",
+    ":module:persistence-support",
     ":module:springboot-support",
     ":module:api-base",
     ":module:springboot-app-base",
@@ -58,5 +58,6 @@ include(
 )
 
 include(
+    ":auth-server",
     ":spring-webflux-api",
 )

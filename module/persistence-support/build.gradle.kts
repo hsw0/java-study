@@ -5,8 +5,6 @@ plugins {
     `java-test-fixtures`
 }
 
-group = "dummy"
-
 dependencies {
     compileOnly(project(":module:annotations"))
 
