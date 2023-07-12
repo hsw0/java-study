@@ -9,7 +9,7 @@ group = "dummy"
 
 dependencies {
     compileOnly(project(":module:annotations"))
-    runtimeOnly(project(":module:logging-support"))
+    implementation(project(":module:logging-support"))
     testRuntimeOnly(testFixtures(project(":module:logging-support")))
 
     // conventions.project.spring-boot-app 과 중복
@@ -29,7 +29,7 @@ dependencies {
     runtimeOnly("io.micrometer:micrometer-core")
     runtimeOnly("io.micrometer:micrometer-tracing")
 
-    runtimeOnly(project(":module:springboot-support"))
+    implementation(project(":module:springboot-support"))
     implementation(project(":module:reactor-support"))
 
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
