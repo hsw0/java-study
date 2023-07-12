@@ -1,4 +1,3 @@
-
 import io.syscall.gradle.conventions.CustomJavaExtension
 import org.gradle.api.internal.tasks.compile.HasCompileOptions
 import java.util.jar.Attributes.Name as JarAttribute
@@ -69,3 +68,16 @@ normalization {
     }
 }
 
+afterEvaluate {
+    val configuredToolchainVersion = java.toolchain.languageVersion.orNull ?: return@afterEvaluate
+
+    val javaToolchains = project.extensions.getByType<JavaToolchainService>()
+    val launcher = javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+
+    tasks.withType<JavaExec>().configureEach {
+        logger.info("${this.path}: Using toolchain version $configuredToolchainVersion")
+        this.javaLauncher.set(launcher)
+    }
+}
