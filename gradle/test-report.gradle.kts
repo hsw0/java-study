@@ -39,12 +39,7 @@ dependencies {
         testReportAggregation(targetProject)
 
         if (targetProject.pluginManager.hasPlugin("jacoco")) {
-            val jacocoTasks = targetProject.tasks.filter {
-                it.extensions.findByType<JacocoTaskExtension>()?.isEnabled == true
-            }
-            if (jacocoTasks.isNotEmpty()) {
-                jaCoCoProjectsList.add(targetProject)
-            }
+            jaCoCoProjectsList.add(targetProject)
         }
     }
 
