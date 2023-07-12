@@ -1,0 +1,9 @@
+*.md text diff=markdown
+*.sh text eol=lf diff=bash
+*.bat text eol=crlf
+*.java text diff=java
+*.kt text diff=kotlin
+*.kts text diff=kotlin
+*.jar binary
+
+/gradlew text eol=lf
