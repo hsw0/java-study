@@ -2,13 +2,11 @@ package io.syscall.commons.module.appbase.webflux.netty;
 
 import java.util.function.UnaryOperator;
 import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.embedded.netty.NettyServerCustomizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.reactive.result.method.RequestMappingInfoHandlerMapping;
 import reactor.netty.http.server.HttpServer;
 import reactor.netty.http.server.HttpServerMetricsRecorder;
 
@@ -18,11 +16,8 @@ import reactor.netty.http.server.HttpServerMetricsRecorder;
 public class ReactorNettyWebServerConfig {
 
     @Bean
-    SimpleRequestMappingPatternResolver routeResolver(
-            ObjectProvider<RequestMappingInfoHandlerMapping> handlerMappingBeans) {
-        var bean = new SimpleRequestMappingPatternResolver();
-        bean.setHandlerMapping(handlerMappingBeans);
-        return bean;
+    SimpleRequestMappingPatternResolver routeResolver() {
+        return new SimpleRequestMappingPatternResolver();
     }
 
     @Bean
