@@ -26,6 +26,9 @@ val includedConfigurations = setOf(
     "devRuntimeOnly",
     "developmentOnly",
     "productionRuntimeOnly",
+
+    // Spring Boot AOT
+    "AotClasspath", // "processAotClasspath", "processTestAotClasspath,
 )
 
 fun shouldIncluded(c: Configuration): Boolean {

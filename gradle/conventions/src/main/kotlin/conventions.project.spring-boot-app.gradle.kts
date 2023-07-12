@@ -1,3 +1,4 @@
+import org.springframework.boot.gradle.tasks.aot.ProcessAot
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 /**
@@ -9,6 +10,7 @@ private object Comments
 plugins {
     id("conventions.project.spring-boot")
     id("org.springframework.boot")
+    id("org.springframework.boot.aot")
 }
 
 dependencies {
@@ -23,4 +25,8 @@ dependencies {
 tasks.withType<BootJar>().configureEach {
     // > Execution of task ':${PROJECT}:bootJar' caused invocation of 'Task.project' by task ':${PROJECT}:resolveMainClassName' at execution time which is unsupported.
     notCompatibleWithConfigurationCache("UNSUPPORTED")
+}
+
+tasks.withType<ProcessAot>().configureEach {
+    notCompatibleWithConfigurationCache("Invokes other task: resolveMainClassName")
 }

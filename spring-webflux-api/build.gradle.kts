@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.run.BootRun
+
 plugins {
     id("conventions.project.kotlin")
     id("conventions.project.spring-boot-app")
@@ -11,6 +13,11 @@ java {
 
 tasks.withType<JavaCompile>().configureEach {
     options.release.set(21)
+}
+
+tasks.withType<BootRun>().configureEach {
+    optimizedLaunch.set(false)
+    jvmArguments.add("-Dspring.aot.enabled=true")
 }
 
 val testFixturesImplementation by configurations.creating
