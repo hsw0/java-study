@@ -41,11 +41,7 @@ tasks.withType<JavaCompile>().configureEach {
     }
 }
 
-tasks.withType<JavaCompile>().configureEach {
-    if (!name.contains("Test")) {
-        return@configureEach
-    }
-
+tasks.withType<JavaCompile>().matching { it.name.contains("Test") }.configureEach {
     // serialVersionUID is basically guaranteed to be useless in tests
     options.compilerArgs.add("-Xlint:-serial")
 }

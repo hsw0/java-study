@@ -1,5 +1,7 @@
+
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import io.syscall.gradle.conventions.kotlin
 
 /**
  * Kotlin static analyzers
@@ -15,16 +17,12 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
 }
 
-val Project.sourceSets: SourceSetContainer
-    get() = extensions.getByType<SourceSetContainer>()
-
-// src/{main,test}/kotlin
-val allKotlinSourceDirs = project.sourceSets.map {
-    it.extensions.getByName("kotlin") as SourceDirectorySet
-}
-
 configure<DetektExtension> {
     // Default: src/{main,test}/{java,kotlin}
+    // src/{main,test}/kotlin
+    val allKotlinSourceDirs = project.sourceSets.map {
+        it.extensions["kotlin"] as SourceDirectorySet
+    }
     source.setFrom(allKotlinSourceDirs)
 }
 

@@ -26,7 +26,7 @@ try {
 }
 
 dependencies {
-    implementation(gradleApi())
+    implementation(gradleKotlinDsl())
 
     implementation(libs.gradlePlugin.kotlin)
     implementation(libs.gradlePlugin.kotlin.allopen)

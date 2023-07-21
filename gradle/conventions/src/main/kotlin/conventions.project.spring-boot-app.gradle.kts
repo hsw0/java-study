@@ -30,3 +30,8 @@ tasks.withType<BootJar>().configureEach {
 tasks.withType<ProcessAot>().configureEach {
     notCompatibleWithConfigurationCache("Invokes other task: resolveMainClassName")
 }
+
+tasks.withType<JavaCompile>().matching { it.name.contains("Aot") }.configureEach {
+    options.compilerArgs.removeIf { it.startsWith("-Xlint:")}
+    options.compilerArgs.add("-Xlint:none")
+}

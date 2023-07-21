@@ -1,5 +1,7 @@
 rootProject.name = "java-study"
 
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+
 pluginManagement {
     includeBuild("gradle/conventions") {
         name = "conventions"
