@@ -18,14 +18,7 @@ configure<SpotlessExtension> {
     if (pluginManager.hasPlugin("java")) {
         java {
             target("src/**/*.java")
-            if (JavaVersion.current() < JavaVersion.VERSION_21) {
-                palantirJavaFormat("2.33.0")
-            } else {
-                logger.warn("Disabling palantir-java-format on Gradle JVM >= 21")
-                // Execution failed for task ':analysis-example:spotlessJava'.
-                // > 'com.sun.tools.javac.tree.JCTree com.sun.tools.javac.tree.JCTree$JCImport.getQualifiedIdentifier()'
-                // https://github.com/palantir/palantir-java-format/pull/886 아직 발생
-            }
+            palantirJavaFormat("2.35.0")
 
             toggleOffOn()
         }
