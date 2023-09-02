@@ -1,5 +1,7 @@
 package io.syscall.commons.entityid.support.hibernate;
 
+import static java.util.Objects.requireNonNull;
+
 import io.syscall.commons.entityid.EntityId;
 import io.syscall.commons.entityid.LongEntityId;
 import io.syscall.commons.entityid.StringEntityId;
@@ -63,7 +65,7 @@ public class EntityIdTypeAutoContributor implements TypeContributor {
         final var entityIdBaseClass = tmpClassLoader.classForName(EntityId.class.getName());
 
         // final var entityIdBaseClass = EntityId.class; // NOSONAR
-        var classLoader = bootstrapContext.getServiceRegistry().getService(ClassLoaderService.class);
+        var classLoader = requireNonNull(bootstrapContext.getServiceRegistry().getService(ClassLoaderService.class));
 
         // Spring Data JPA @EntityScan 이나 spring-context-index에 의해 탐지된 엔티티와 기타등등
         // 사용되지 않을 클래스도 들어올수 있지만 뭐....
