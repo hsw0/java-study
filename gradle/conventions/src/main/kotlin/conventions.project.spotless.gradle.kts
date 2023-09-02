@@ -12,25 +12,7 @@ plugins {
     id("com.diffplug.spotless")
 }
 
-if (project == rootProject) {
-    spotless {
-        predeclareDeps()
-    }
-
-    with(extensions["spotlessPredeclare"] as SpotlessExtension) {
-        java {
-            palantirJavaFormat("2.33.0")
-        }
-        kotlin {
-            ktlint()
-        }
-        kotlinGradle {
-            ktlint()
-        }
-    }
-}
-
-spotless {
+configure<SpotlessExtension> {
     lineEndings = LineEnding.UNIX
 
     if (pluginManager.hasPlugin("java")) {

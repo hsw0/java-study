@@ -10,7 +10,6 @@ import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.support.serviceOf
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 
-
 public val Project.sourceSets: SourceSetContainer get() = extensions.getByType()
 
 public val Project.javaToolchainService: JavaToolchainService get() = serviceOf()
