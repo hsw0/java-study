@@ -3,6 +3,8 @@ package io.syscall.gradle.plugin.devonly
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.artifacts.DependencyScopeConfiguration
+import org.gradle.api.artifacts.ResolvableConfiguration
 import org.gradle.api.attributes.Bundling
 import org.gradle.api.attributes.LibraryElements
 import org.gradle.api.attributes.Usage
@@ -22,16 +24,17 @@ class DevelopmentOnlyPlugin : Plugin<Project> {
 
     companion object {
         const val CONFIGURATION_NAME = "devRuntimeOnly"
+        const val DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME = "devRuntimeClasspath"
         const val PRODUCTION_RUNTIME_CLASSPATH_CONFIGURATION_NAME = "prodRuntimeClasspath"
     }
 
     override fun apply(project: Project) {
         project.plugins.withType<JavaPlugin> {
             val productionRuntimeClasspath = addProductionRuntimeOnlyConfig(project)
-            val developmentOnly = addDevelopmentOnlyConfig(project)
+            val (_, developmentClasspath) = addDevelopmentOnlyConfig(project)
 
             project.tasks.withType<AbstractArchiveTask>().configureEach {
-                val devOnlyClasspath = developmentOnly.minus(productionRuntimeClasspath)
+                val devOnlyClasspath = developmentClasspath.minus(productionRuntimeClasspath)
 
                 exclude {
                     devOnlyClasspath.contains(it.file)
@@ -43,26 +46,31 @@ class DevelopmentOnlyPlugin : Plugin<Project> {
     /**
      * @see org.springframework.boot.gradle.plugin.JavaPluginAction.configureDevelopmentOnlyConfiguration
      */
-    private fun addDevelopmentOnlyConfig(project: Project): Configuration {
+    private fun addDevelopmentOnlyConfig(project: Project): Pair<DependencyScopeConfiguration, ResolvableConfiguration> {
         val runtimeClasspath = project.configurations.getByName(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME)
 
-        val developmentOnly = project.configurations.create(CONFIGURATION_NAME)
+        val developmentOnly = project.configurations.dependencyScope(CONFIGURATION_NAME).get()
         with(developmentOnly) {
             description = "Configuration for development-only dependencies such as Spring Boot's DevTools."
             isVisible = false
-            isCanBeResolved = runtimeClasspath.isCanBeResolved
-            isCanBeConsumed = runtimeClasspath.isCanBeConsumed
         }
 
-        runtimeClasspath.extendsFrom(developmentOnly)
+        val devClasspath = project.configurations.resolvable(DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME).get()
+        with(devClasspath) {
+            isVisible = false
+            extendsFrom(developmentOnly)
+        }
 
-        return developmentOnly
+        runtimeClasspath.extendsFrom(devClasspath)
+
+        return Pair(developmentOnly, devClasspath)
     }
 
     private fun addProductionRuntimeOnlyConfig(project: Project): Configuration {
         val runtimeClasspath = project.configurations.getByName(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME)
 
-        val productionRuntimeClasspath = project.configurations.create(PRODUCTION_RUNTIME_CLASSPATH_CONFIGURATION_NAME)
+        val productionRuntimeClasspath =
+            project.configurations.resolvable(PRODUCTION_RUNTIME_CLASSPATH_CONFIGURATION_NAME).get()
         with(productionRuntimeClasspath.attributes) {
             with(project.objects) {
                 attribute(Usage.USAGE_ATTRIBUTE, named<Usage>(Usage.JAVA_RUNTIME))
@@ -73,9 +81,6 @@ class DevelopmentOnlyPlugin : Plugin<Project> {
 
         with(productionRuntimeClasspath) {
             isVisible = false
-            isCanBeConsumed = runtimeClasspath.isCanBeConsumed
-            isCanBeResolved = runtimeClasspath.isCanBeResolved
-
             setExtendsFrom(runtimeClasspath.extendsFrom)
         }
 

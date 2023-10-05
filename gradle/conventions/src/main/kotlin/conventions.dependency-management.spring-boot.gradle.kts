@@ -16,11 +16,7 @@ plugins {
 // region Dependency management 적용
 
 evaluationDependsOn(":dependencyManagement:spring-boot")
-val dependencyManagementConf: Configuration = configurations.create("dependencyManagement.spring-boot") {
-    isCanBeConsumed = false
-    isCanBeResolved = false
-    isVisible = false
-}
+val dependencyManagementConf: Configuration = configurations.dependencyScope("dependencyManagement.spring-boot").get()
 
 val includedConfigurations = setOf(
     "devRuntimeOnly",
@@ -35,12 +31,12 @@ fun shouldIncluded(c: Configuration): Boolean {
     return includedConfigurations.any { c.name.contains(it) }
 }
 afterEvaluate {
-    configurations.configureEach {
-        if ((isCanBeResolved && !isCanBeConsumed && isClasspathLike) || shouldIncluded(this)) {
+    configurations
+        .matching { (it.isCanBeResolved && !it.isCanBeConsumed && it.isClasspathLike) || shouldIncluded(it) }
+        .configureEach {
             logger.info("Applying dependencyManagement (Spring Boot) to ${name}")
             extendsFrom(dependencyManagementConf)
         }
-    }
 }
 
 dependencies {

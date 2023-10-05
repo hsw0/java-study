@@ -14,11 +14,7 @@ plugins {
 // opentelemetry-java-instrumentation의 [otel.java-conventions](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/cd13fd40189d7297e953e68a8d2a4be1c68f56d9/conventions/src/main/kotlin/otel.java-conventions.gradle.kts) 를 참고함.
 
 evaluationDependsOn(":dependencyManagement:default")
-val dependencyManagementConf: Configuration = configurations.create("dependencyManagement.default") {
-    isCanBeConsumed = false
-    isCanBeResolved = false
-    isVisible = false
-}
+val dependencyManagementConf: Configuration = configurations.dependencyScope("dependencyManagement.default").get()
 
 val includedConfigurations = setOf(
     "checkerFramework",
@@ -38,12 +34,12 @@ fun shouldIncluded(c: Configuration): Boolean {
 }
 
 afterEvaluate {
-    configurations.configureEach {
-        if ((isCanBeResolved && !isCanBeConsumed && isClasspathLike) || shouldIncluded(this)) {
+    configurations
+        .matching { (it.isCanBeResolved && !it.isCanBeConsumed && it.isClasspathLike) || shouldIncluded(it) }
+        .configureEach {
             logger.info("Applying dependencyManagement to ${name}")
             extendsFrom(dependencyManagementConf)
         }
-    }
 }
 
 dependencies {

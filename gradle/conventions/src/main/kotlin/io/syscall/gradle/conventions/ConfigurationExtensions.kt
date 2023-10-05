@@ -9,23 +9,23 @@ import java.util.Locale
 // 전체 Configuration 목록들은 $ ./gradlew ${project.path}:resolvableConfigurations 로 확인 가능
 
 internal val Configuration.isClasspathLike: Boolean
-    get() = isCompileClasspath || isAnnotationProcessorClasspath || isRuntimeClasspath ||
-        name == "kapt"
+    get() = isCompileClasspath || isAnnotationProcessorClasspath || isRuntimeClasspath
+        || name == "kapt"
 
 // 참고: main 소스셋의 경우 그냥 "compileClasspath", 그 외 소스셋은 ${sourceSet.name}CompileClasspath
 // ex) testCompileClasspath, productionRuntimeClasspath (spring boot plugin)
 internal val Configuration.isCompileClasspath: Boolean
-    get() = name == COMPILE_CLASSPATH_CONFIGURATION_NAME ||
-        name.endsWith(COMPILE_CLASSPATH_CONFIGURATION_NAME.capitalized())
+    get() = name == COMPILE_CLASSPATH_CONFIGURATION_NAME
+        || name.endsWith(COMPILE_CLASSPATH_CONFIGURATION_NAME.capitalized())
 
 internal val Configuration.isAnnotationProcessorClasspath: Boolean
-    get() = name == ANNOTATION_PROCESSOR_CONFIGURATION_NAME ||
-        name.endsWith(ANNOTATION_PROCESSOR_CONFIGURATION_NAME.capitalized())
+    get() = name == ANNOTATION_PROCESSOR_CONFIGURATION_NAME
+        || name.endsWith(ANNOTATION_PROCESSOR_CONFIGURATION_NAME.capitalized())
 
 // 소스셋별 규칙은 상동
 internal val Configuration.isRuntimeClasspath: Boolean
-    get() = name == RUNTIME_CLASSPATH_CONFIGURATION_NAME ||
-        name.endsWith(RUNTIME_CLASSPATH_CONFIGURATION_NAME.capitalized())
+    get() = name == RUNTIME_CLASSPATH_CONFIGURATION_NAME
+        || name.endsWith(RUNTIME_CLASSPATH_CONFIGURATION_NAME.capitalized())
 
 internal fun CharSequence.capitalized(): String = when {
     isEmpty() -> ""
