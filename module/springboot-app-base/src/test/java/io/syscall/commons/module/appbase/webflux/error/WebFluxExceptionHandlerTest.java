@@ -1,21 +1,17 @@
 package io.syscall.commons.module.appbase.webflux.error;
 
-import io.syscall.commons.module.appbase.test.AbstractAppBaseTest;
+import io.syscall.commons.module.appbase.webflux.AbstractWebFluxAppBaseTest;
 import java.nio.ByteBuffer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
 /**
  * {@link LoopbackErrorWebExceptionHandler} Tests
  */
-class WebExceptionHandlerTest extends AbstractAppBaseTest {
-
-    @Autowired
-    WebTestClient webClient;
+class WebFluxExceptionHandlerTest extends AbstractWebFluxAppBaseTest {
 
     @Autowired
     LoopbackErrorWebExceptionHandler loopbackErrorWebExceptionHandler;
@@ -38,7 +34,7 @@ class WebExceptionHandlerTest extends AbstractAppBaseTest {
                 .exchange()
                 .expectAll(spec -> {
                     spec.expectStatus().isEqualTo(HttpStatus.I_AM_A_TEAPOT);
-                    spec.expectBody(String.class).isEqualTo(ErrorTestControllerAdvice.ERROR_HANDLED_BODY);
+                    spec.expectBody(String.class).isEqualTo(WebFluxErrorTestControllerAdvice.ERROR_HANDLED_BODY);
                 });
     }
 
@@ -51,7 +47,7 @@ class WebExceptionHandlerTest extends AbstractAppBaseTest {
                 .exchange()
                 .expectAll(spec -> {
                     spec.expectStatus().isEqualTo(HttpStatus.I_AM_A_TEAPOT);
-                    spec.expectBody(String.class).isEqualTo(ErrorTestControllerAdvice.ERROR_HANDLED_BODY);
+                    spec.expectBody(String.class).isEqualTo(WebFluxErrorTestControllerAdvice.ERROR_HANDLED_BODY);
                 });
     }
 

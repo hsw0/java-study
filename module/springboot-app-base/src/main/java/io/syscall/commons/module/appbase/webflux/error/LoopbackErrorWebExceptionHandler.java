@@ -23,6 +23,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.reactive.HandlerResult;
 import org.springframework.web.reactive.HandlerResultHandler;
 import org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerAdapter;
@@ -30,9 +32,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * {@link org.springframework.stereotype.Controller @Controller} 바깥에서 예외가 발생하여
- * {@link org.springframework.web.bind.annotation.ExceptionHandler @ExceptionHandler}로 전달되지 못한 경우 다시 ExceptionHandler로
- * 전달을 유도
+ * {@link Controller} 바깥에서 예외가 발생하여 {@link ExceptionHandler}로 전달되지 못한 경우 다시 ExceptionHandler로 처리를 유도
  */
 public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandler, InitializingBean {
 

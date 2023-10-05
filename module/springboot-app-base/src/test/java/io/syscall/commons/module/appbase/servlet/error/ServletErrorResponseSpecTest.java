@@ -1,23 +1,18 @@
-package io.syscall.commons.module.appbase.webflux.error;
+package io.syscall.commons.module.appbase.servlet.error;
 
-import io.syscall.commons.module.appbase.test.AbstractAppBaseTest;
+import io.syscall.commons.module.appbase.servlet.AbstractServletAppBaseTest;
 import java.util.function.Consumer;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
-class ErrorResponseSpecTest extends AbstractAppBaseTest {
-
-    @Autowired
-    WebTestClient webClient;
+class ServletErrorResponseSpecTest extends AbstractServletAppBaseTest {
 
     @DisplayName("Handler not found")
     @Test

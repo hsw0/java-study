@@ -1,14 +1,9 @@
-package io.syscall.commons.module.appbase.controller;
+package io.syscall.commons.module.appbase.common.controller;
 
-import io.syscall.commons.module.appbase.test.AbstractAppBaseTest;
+import io.syscall.commons.module.appbase.webflux.AbstractWebFluxAppBaseTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
-class HealthControllerTest extends AbstractAppBaseTest {
-
-    @Autowired
-    WebTestClient webClient;
+class HealthControllerTest extends AbstractWebFluxAppBaseTest {
 
     @Test
     void testLivenessProbe() {

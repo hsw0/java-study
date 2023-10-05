@@ -10,11 +10,11 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @ControllerAdvice
-public class ErrorTestControllerAdvice {
+class WebFluxErrorTestControllerAdvice {
 
-    static final String ERROR_HANDLED_BODY = "You did!";
+    public static final String ERROR_HANDLED_BODY = "You did!";
 
-    private static final Logger log = LoggerFactory.getLogger(ErrorTestControllerAdvice.class);
+    private static final Logger log = LoggerFactory.getLogger(WebFluxErrorTestControllerAdvice.class);
 
     @ExceptionHandler
     public Mono<ResponseEntity<String>> handleException(CatchMeCheckedException ex, ServerWebExchange exchange) {
