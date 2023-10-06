@@ -17,12 +17,29 @@ public fun interface EntityIdFactory<T, E : EntityId<T>> {
                 throw UnsupportedEntityIdImplementationException("Unsupported EntityId type: $type", it)
             }
 
-            if (type.companionObjectInstance is EntityIdFactory<*, *>) {
-                @Suppress("UNCHECKED_CAST")
-                val factory = type.companionObjectInstance as EntityIdFactory<T, E>
-                return factory::create
+            val impl: KFunction<E>? = usingFactory(type);
+            if (impl != null) {
+                return impl
             }
 
+            return usingConstructor(type, dummyValue)
+        }
+
+        private fun <T, E : EntityId<T>> usingFactory(type: KClass<E>): KFunction<E>? {
+            try {
+                if (type.companionObjectInstance is EntityIdFactory<*, *>) {
+                    @Suppress("UNCHECKED_CAST")
+                    val factory = type.companionObjectInstance as EntityIdFactory<T, E>
+                    return factory::create
+                }
+            } catch (e: ExceptionInInitializerError) {
+                throw UnsupportedEntityIdImplementationException("Unsupported EntityId implementation: $type", e)
+            }
+
+            return null
+        }
+
+        private fun <T, E : EntityId<T>> usingConstructor(type: KClass<E>, dummyValue: T): KFunction<E> {
             val ctor: KFunction<E>
             try {
                 ctor = type.primaryConstructor!!
