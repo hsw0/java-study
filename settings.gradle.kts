@@ -55,6 +55,7 @@ include(
 include(":analysis-example") // errorprone, checker 등
 
 include(
+    ":ksink",
     ":dummy:lib",
     ":dummy:app",
 )
