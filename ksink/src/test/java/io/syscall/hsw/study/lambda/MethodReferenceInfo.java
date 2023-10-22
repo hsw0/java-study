@@ -1,34 +1,36 @@
 package io.syscall.hsw.study.lambda;
 
 import jakarta.annotation.Nullable;
-import java.lang.invoke.MethodType;
-import java.lang.reflect.Method;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandleInfo;
 import java.util.Objects;
 
 public final class MethodReferenceInfo {
 
     private final RefKind kind;
-    private final Method method;
+    private final MethodHandleInfo mhi;
+    private final MethodHandle mh;
 
     private final @Nullable Object receiver;
 
-    public MethodReferenceInfo(RefKind kind, Method method, @Nullable Object receiver) {
+    public MethodReferenceInfo(RefKind kind, @Nullable Object receiver, MethodHandleInfo mhi, MethodHandle mh) {
         this.kind = kind;
-        this.method = method;
         this.receiver = receiver;
+        this.mhi = mhi;
+        this.mh = mh;
     }
 
     public RefKind getKind() {
         return kind;
     }
 
-    public Method getMethod() {
-        return method;
-    }
-
     @Nullable
     public Object getReceiver() {
         return receiver;
+    }
+
+    public MethodHandleInfo getMethodHandleInfo() {
+        return mhi;
     }
 
     @Override
@@ -40,34 +42,31 @@ public final class MethodReferenceInfo {
             return false;
         }
         var that = (MethodReferenceInfo) o;
-        return Objects.equals(this.method, that.receiver);
+        return Objects.equals(this.mhi, that.receiver);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(method, receiver);
+        return Objects.hash(mhi, receiver);
     }
 
     @Override
     public String toString() {
         if (kind == RefKind.LAMBDA) {
-            if (method.isSynthetic()) {
-                return "Lambda: " + prettyMethod(method);
-            }
-            return "Lambda: " + prettyMethod(method);
+            return "Lambda: " + prettyMethod();
         }
         if (kind == RefKind.BOUND_METHOD) {
             var receiverClassName = receiver.getClass().getName();
-            return "Bound method: " + prettyMethod(method).replace(receiverClassName + ".", "") + " to " + receiver;
+            return "Bound method: " + prettyMethod().replace(receiverClassName + ".", "") + " to " + receiver;
         }
 
-        return prettyMethod(method);
+        return prettyMethod();
     }
 
-    private static String prettyMethod(Method method) {
-        if (method.isSynthetic()) {
-            return MethodType.methodType(method.getReturnType(), method.getParameterTypes()).toString();
-        }
-        return method.toGenericString().replaceAll("java\\.(lang|util\\.function)\\.", "");
+    private String prettyMethod() {
+        return mhi.getDeclaringClass().getSimpleName()
+                + "::"
+                + mhi.getName()
+                + mhi.getMethodType().toString().replace(")", "): ");
     }
 }

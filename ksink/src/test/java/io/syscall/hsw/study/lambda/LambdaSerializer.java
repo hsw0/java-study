@@ -3,11 +3,24 @@ package io.syscall.hsw.study.lambda;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.UncheckedIOException;
 import java.lang.invoke.SerializedLambda;
 
 class LambdaSerializer extends ObjectOutputStream {
 
-    public LambdaSerializer() throws IOException {
+    public static SerializedLambda apply(SerializableProcedure fn) {
+        try (var serializer = new LambdaSerializer()) {
+            serializer.writeObject(fn);
+        } catch (YieldException e) {
+            return e.value;
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+
+        throw new IllegalArgumentException("Failed to serialize lambda");
+    }
+
+    private LambdaSerializer() throws IOException {
         super(NullOutputStream.INSTANCE);
         enableReplaceObject(true);
     }

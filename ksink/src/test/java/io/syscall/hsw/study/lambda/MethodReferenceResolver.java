@@ -1,10 +1,8 @@
 package io.syscall.hsw.study.lambda;
 
-import io.syscall.hsw.study.lambda.LambdaSerializer.YieldException;
 import io.syscall.hsw.study.lambda.SerializableProcedure.Fn2;
 import io.syscall.hsw.study.lambda.SerializableProcedure.Fn3;
-import java.io.IOException;
-import java.io.UncheckedIOException;
+import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandleInfo;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.invoke.MethodType;
@@ -28,20 +26,26 @@ public class MethodReferenceResolver {
     }
 
     protected MethodReferenceInfo doResolve(SerializableProcedure lambda) {
-        SerializedLambda serialized = getSerializedLambda(lambda);
+        SerializedLambda serialized = LambdaSerializer.apply(lambda);
 
         Class<?> implClass;
         Method implMethod;
+        MethodHandle implMH;
+        MethodHandleInfo implMHI;
 
         MethodType implMT, instantiatedMT;
         try {
+            assert serialized != null;
             var implClassName = serialized.getImplClass().replace('/', '.');
             implClass = lookup.findClass(implClassName);
             var cl = implClass.getClassLoader();
 
-            implMT = MethodType.fromMethodDescriptorString(serialized.getImplMethodSignature(), cl);
             instantiatedMT = MethodType.fromMethodDescriptorString(serialized.getInstantiatedMethodType(), cl);
+
+            implMT = MethodType.fromMethodDescriptorString(serialized.getImplMethodSignature(), cl);
             implMethod = implClass.getDeclaredMethod(serialized.getImplMethodName(), implMT.parameterArray());
+            implMH = lookup.unreflect(implMethod);
+            implMHI = lookup.revealDirect(implMH);
         } catch (ReflectiveOperationException e) {
             throw new IllegalStateException(e);
         }
@@ -49,10 +53,10 @@ public class MethodReferenceResolver {
         RefKind kind = deduceRefKind(serialized, implMethod, instantiatedMT);
         Object receiver = null;
         if (kind == RefKind.BOUND_METHOD && serialized.getCapturedArgCount() == 1) {
-            receiver = serialized.getCapturedArg(0);
+            receiver = serialized.getCapturedArg(0); // aka "this"
         }
 
-        return new MethodReferenceInfo(kind, implMethod, receiver);
+        return new MethodReferenceInfo(kind, receiver, implMHI, implMH);
     }
 
     static RefKind deduceRefKind(SerializedLambda serialized, Method method, MethodType instantiatedMT) {
@@ -74,17 +78,5 @@ public class MethodReferenceResolver {
         }
 
         return kind;
-    }
-
-    private SerializedLambda getSerializedLambda(SerializableProcedure fn) {
-        try (var serializer = new LambdaSerializer()) {
-            serializer.writeObject(fn);
-        } catch (YieldException e) {
-            return e.value;
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-
-        return null;
     }
 }
