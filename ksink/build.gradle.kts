@@ -1,6 +1,6 @@
 plugins {
     id("conventions.project.kotlin")
-    id("conventions.project.spring-boot-app")
+    id("conventions.project.spring-boot")
 }
 
 group = "io.syscall.hsw.study"
