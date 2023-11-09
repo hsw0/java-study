@@ -31,10 +31,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          check-latest: true
-          java-version: |
-            21-ea
-            17
+          java-version: 21
 
       - name: Inspect environment
         run: |
@@ -57,9 +54,7 @@ jobs:
         with:
           distribution: 'temurin'
           check-latest: true
-          java-version: |
-            21-ea
-            17
+          java-version: 21
 
       - name: Test
         uses: gradle/gradle-build-action@v2.5.1
