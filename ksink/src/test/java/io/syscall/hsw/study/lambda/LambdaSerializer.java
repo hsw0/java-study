@@ -50,10 +50,8 @@ class LambdaSerializer extends ObjectOutputStream {
 
         static final NullOutputStream INSTANCE = new NullOutputStream();
 
-        private NullOutputStream() {
-        }
+        private NullOutputStream() {}
 
-        public void write(int b) {
-        }
+        public void write(int b) {}
     }
 }

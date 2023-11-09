@@ -10,7 +10,6 @@ import kotlin.test.Test
 private val log = KotlinLogging.logger {}
 
 class CoroutinesTest {
-
     @Test
     fun test1() {
         log.info { "Before runBlocking" }

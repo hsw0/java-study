@@ -73,8 +73,7 @@ class MethodReferenceTest {
         assertThat(r.getMethodHandleInfo().getDeclaringClass())
                 .describedAs("declaringClass")
                 .isEqualTo(Integer.class);
-        assertThat(r.getMethodHandleInfo().getName()).describedAs("Method name")
-                .isEqualTo("sum");
+        assertThat(r.getMethodHandleInfo().getName()).describedAs("Method name").isEqualTo("sum");
     }
 
     @Test
@@ -87,8 +86,7 @@ class MethodReferenceTest {
         assertThat(r.getMethodHandleInfo().getDeclaringClass())
                 .describedAs("declaringClass")
                 .isEqualTo(Adder.class);
-        assertThat(r.getMethodHandleInfo().getName()).describedAs("Method name")
-                .isEqualTo("add");
+        assertThat(r.getMethodHandleInfo().getName()).describedAs("Method name").isEqualTo("add");
     }
 
     @Test
