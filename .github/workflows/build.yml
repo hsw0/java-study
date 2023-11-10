@@ -38,7 +38,7 @@ jobs:
           env
 
       - name: Build
-        uses: gradle/gradle-build-action@v2.5.1
+        uses: gradle/gradle-build-action@v2.9.0
         with:
           arguments: assemble testClasses --exclude-task bootJar
 
@@ -57,6 +57,6 @@ jobs:
           java-version: 21
 
       - name: Test
-        uses: gradle/gradle-build-action@v2.5.1
+        uses: gradle/gradle-build-action@v2.9.0
         with:
           arguments: test --continue
