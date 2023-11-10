@@ -11,10 +11,6 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
-tasks.withType<JavaCompile>().configureEach {
-    options.release.set(21)
-}
-
 tasks.withType<BootRun>().configureEach {
     optimizedLaunch.set(false)
     jvmArguments.add("-Dspring.aot.enabled=true")

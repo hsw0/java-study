@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("conventions.project.java")
     id("conventions.project.kotlin")
@@ -15,10 +12,6 @@ ext["publishing.artifactId"] = "entityid-hibernate"
 
 tasks.withType<JavaCompile>().configureEach {
     options.release.set(17)
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
 }
 
 dependencies {
