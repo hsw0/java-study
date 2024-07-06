@@ -33,7 +33,7 @@ Workaround
           - jreRuntimeElements
 */
 
-(configurations.matching { it.name.startsWith("spotless-") }).whenObjectAdded {
+(configurations.named { it.startsWith("spotless-") }).whenObjectAdded {
     val configuration = this
     configuration.dependencies.matching { it.group == "com.palantir.javaformat" }.whenObjectAdded {
         require(this is ExternalModuleDependency)

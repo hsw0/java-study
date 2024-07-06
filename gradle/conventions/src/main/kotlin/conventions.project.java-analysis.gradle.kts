@@ -1,5 +1,5 @@
-import io.syscall.gradle.conventions.isClasspathLike
 import io.syscall.gradle.conventions.libs
+import io.syscall.gradle.conventions.nameIsCompileClasspath
 import io.syscall.gradle.conventions.versionCatalog
 import net.ltgt.gradle.errorprone.errorprone
 import org.checkerframework.gradle.plugin.CheckerFrameworkExtension
@@ -100,7 +100,7 @@ dependencies {
     add("checkerFrameworkAnnotatedJDK", "org.checkerframework:jdk8:3.3.0")
 }
 
-configurations.matching { it.isClasspathLike || it.name.startsWith("checkerFramework") }.configureEach {
+configurations.named { it.startsWith("checkerFramework") || it.nameIsCompileClasspath }.configureEach {
     resolutionStrategy {
         dependencySubstitution {
             substitute(module("org.checkerframework:checker"))
