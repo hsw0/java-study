@@ -11,7 +11,7 @@ version = "1.0-SNAPSHOT"
 ext["publishing.artifactId"] = "entityid-hibernate"
 
 tasks.withType<JavaCompile>().configureEach {
-    options.release.set(17)
+    options.release = 17
 }
 
 dependencies {

@@ -8,11 +8,11 @@ plugins {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
 
 tasks.withType<BootRun>().configureEach {
-    optimizedLaunch.set(false)
+    optimizedLaunch = false
     jvmArguments.add("-Dspring.aot.enabled=true")
 }
 

@@ -15,5 +15,5 @@ dependencies {
 }
 
 mapstruct {
-    verbose.set(true)
+    verbose = true
 }

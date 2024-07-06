@@ -21,5 +21,5 @@ dependencies {
 }
 
 mapstruct {
-    defaultComponentModel.set("jakarta")
+    defaultComponentModel = "jakarta"
 }

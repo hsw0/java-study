@@ -53,7 +53,7 @@ dependencies {
 val defaultCheckTask = tasks.getByName(LifecycleBasePlugin.CHECK_TASK_NAME)
 
 reporting.reports.create<AggregateTestReport>("testReport") {
-    testType.set(TestSuiteType.UNIT_TEST)
+    testType = TestSuiteType.UNIT_TEST
     reportTask {
         group = LifecycleBasePlugin.VERIFICATION_GROUP
         defaultCheckTask.dependsOn(this)
@@ -61,15 +61,15 @@ reporting.reports.create<AggregateTestReport>("testReport") {
 }
 
 val jacocoTestReport by reporting.reports.creating(JacocoCoverageReport::class) {
-    testType.set(TestSuiteType.UNIT_TEST)
+    testType = TestSuiteType.UNIT_TEST
 
     reportTask {
         group = LifecycleBasePlugin.VERIFICATION_GROUP
         defaultCheckTask.dependsOn(this)
 
         reports {
-            html.required.set(true)
-            xml.required.set(true)
+            html.required = true
+            xml.required = true
         }
     }
 }

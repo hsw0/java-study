@@ -37,8 +37,8 @@ pluginManager.withPlugin("java") {
 
     tasks.withType<JavaCompile>().configureEach {
         options.errorprone {
-            disableWarningsInGeneratedCode.set(true)
-            allDisabledChecksAsWarnings.set(true)
+            disableWarningsInGeneratedCode.convention(true)
+            allDisabledChecksAsWarnings.convention(true)
 
             warn("CollectionIncompatibleType")
 

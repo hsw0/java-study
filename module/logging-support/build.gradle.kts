@@ -7,7 +7,7 @@ plugins {
 version = "1.0-SNAPSHOT"
 
 tasks.withType<JavaCompile>().configureEach {
-    options.release.set(11)
+    options.release = 11
 }
 
 dependencies {

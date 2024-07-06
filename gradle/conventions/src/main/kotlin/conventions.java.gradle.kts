@@ -69,11 +69,11 @@ afterEvaluate {
 
     val javaToolchains = project.extensions.getByType<JavaToolchainService>()
     val launcher = javaToolchains.launcherFor {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion = configuredToolchainVersion
     }
 
     tasks.withType<JavaExec>().configureEach {
         logger.info("${this.path}: Using toolchain version $configuredToolchainVersion")
-        this.javaLauncher.set(launcher)
+        this.javaLauncher = launcher
     }
 }

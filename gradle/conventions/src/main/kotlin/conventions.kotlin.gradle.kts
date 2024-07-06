@@ -33,8 +33,8 @@ configure<KotlinProjectExtension> {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions.javaParameters.set(true)
-    compilerOptions.freeCompilerArgs.addAll("-Xjsr305=strict")
+    compilerOptions.javaParameters.convention(true)
+    compilerOptions.freeCompilerArgs.convention(listOf("-Xjsr305=strict"))
 }
 
 val implementationDependencies = listOf(
