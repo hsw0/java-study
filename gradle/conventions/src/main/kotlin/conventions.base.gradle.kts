@@ -9,10 +9,10 @@ private object Comments
 
 // Reproducible build
 tasks.withType<AbstractArchiveTask>().configureEach {
-        isPreserveFileTimestamps = false
-        isReproducibleFileOrder = true
-        dirMode = Integer.parseInt("0755", 8)
-        fileMode = Integer.parseInt("0644", 8)
+    isPreserveFileTimestamps = false
+    isReproducibleFileOrder = true
+    filePermissions { unix("rw-r--r--") }
+    dirPermissions { unix("rwxr-xr-x") }
 }
 
 tasks.withType<AbstractArchiveTask>().configureEach {
