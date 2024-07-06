@@ -1,4 +1,3 @@
-
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.gradle.spotless.SpotlessExtensionPredeclare
 
@@ -41,7 +40,7 @@ Workaround
         exclude("com.google.guava", "guava")
     }
 
-    val guavaDep = project.dependencies.create("com.google.guava:guava:32.1.2-jre") as ExternalModuleDependency
+    val guavaDep = project.dependencies.create("com.google.guava:guava:33.0.0-jre") as ExternalModuleDependency
     guavaDep.isTransitive = false
     guavaDep.attributes {
         attribute(
@@ -58,7 +57,7 @@ configure<SpotlessExtension> {
 
 configure<SpotlessExtensionPredeclare> {
     java {
-        palantirJavaFormat("2.38.0")
+        palantirJavaFormat("2.47.0")
     }
     kotlin {
         ktlint()
