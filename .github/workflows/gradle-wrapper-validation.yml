@@ -1,0 +1,16 @@
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+
+name: "Validate Gradle Wrapper"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  # https://github.com/gradle/wrapper-validation-action
+  # https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/6f09cf79b1a18850e88897a54c1e39ef167b803a/.github/workflows/build-common.yml#L49C1-L55C54
+  gradle-wrapper-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: gradle/actions/wrapper-validation@dbbdc275be76ac10734476cc723d82dfe7ec6eda # v3.4.2
