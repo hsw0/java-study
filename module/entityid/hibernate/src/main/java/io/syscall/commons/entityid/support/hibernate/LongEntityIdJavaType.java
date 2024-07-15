@@ -11,7 +11,7 @@ import org.hibernate.type.descriptor.jdbc.JdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcTypeIndicators;
 
 // Sonar: java:S119: Type parameter names should comply with a naming convention
-@SuppressWarnings({"serial", "java:S119"})
+@SuppressWarnings({"java:S119"})
 public class LongEntityIdJavaType extends AbstractEntityIdJavaType<LongEntityId> {
 
     private final transient LongEntityIdFactory<LongEntityId> factory;
@@ -61,6 +61,9 @@ public class LongEntityIdJavaType extends AbstractEntityIdJavaType<LongEntityId>
             return null;
         }
 
+        if (value instanceof LongEntityId eid) {
+            return eid;
+        }
         if (value instanceof Long boxedLong) {
             return factory.create(boxedLong);
         }
