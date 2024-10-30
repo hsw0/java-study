@@ -1,3 +1,5 @@
+import io.syscall.gradle.task.DownloadDependenciesTask
+
 /**
  * Gradle `base` plugin config
  *
@@ -18,3 +20,5 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 tasks.withType<AbstractArchiveTask>().configureEach {
     duplicatesStrategy = DuplicatesStrategy.FAIL
 }
+
+tasks.register<DownloadDependenciesTask>("downloadDependencies")
