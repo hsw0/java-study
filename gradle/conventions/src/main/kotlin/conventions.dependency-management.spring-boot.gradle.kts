@@ -19,7 +19,10 @@ evaluationDependsOn(":dependencyManagement:spring-boot")
 val dependencyManagementConf: Configuration = configurations.dependencyScope("dependencyManagement.spring-boot").get()
 
 val includedConfigurations = setOf(
+    /*${configuration.name}*/"DependenciesMetadata",
     "devRuntimeOnly",
+
+    // Spring Boot
     "developmentOnly",
     "productionRuntimeOnly",
 

@@ -14,7 +14,7 @@ plugins {
 }
 
 dependencies {
-    implementation("org.slf4j:slf4j-api:[2.0,)") // Who doesn't?
+    implementation("org.slf4j:slf4j-api") // Who doesn't?
 
     // Test framework의 의존성은 아니지만 공통으로 사용
     testImplementation("org.assertj:assertj-core")

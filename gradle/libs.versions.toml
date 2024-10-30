@@ -3,7 +3,7 @@
 format.version = "1.1"
 
 [versions]
-kotlin = "1.9.21"
+kotlin = "1.9.24"
 logback = "1.4.11"
 junit = "5.10.0"
 spring-boot = "3.3.1"
@@ -31,7 +31,7 @@ gradlePlugin-detekt = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plug
 gradlePlugin-errorprone = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version = "4.0.1" }
 gradlePlugin-checkerframework = { module = "org.checkerframework:checkerframework-gradle-plugin", version = "0.6.42" }
 
-bom-slf4j = { module = "org.slf4j:slf4j-bom", version = "2.0.9" }
+bom-slf4j = { module = "org.slf4j:slf4j-bom", version = "2.0.16" }
 bom-junit = { module = "org.junit:junit-bom", version.ref = "junit" }
 bom-kotest = { module = "io.kotest:kotest-bom", version = "5.7.2" }
 bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }

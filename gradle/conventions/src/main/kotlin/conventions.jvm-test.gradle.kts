@@ -12,18 +12,17 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
  * @see <a href="https://docs.gradle.org/current/userguide/jvm_test_suite_plugin.html">JVM Test Suite Plugin</a>
  * @see <a href="https://docs.gradle.org/current/userguide/jacoco_plugin.html">JaCoCo Plugin</a>
  */
-private object Comments
 
 plugins {
     java
     jacoco
 }
 
-jacoco {
-    toolVersion = versionCatalog.versions["jacoco"].toString()
-}
-
 afterEvaluate {
+    jacoco {
+        toolVersion = versionCatalog.versions["jacoco"].toString()
+    }
+
     testing {
         val jUnitVersion = versionCatalog.versions["junit"].toString()
 

@@ -14,3 +14,9 @@
 * ["Herding Elephants: Wrangling a 3,500-module Gradle project", Square](https://developer.squareup.com/blog/herding-elephants/)
 * [Example of how to idiomatically structure a large build with Gradle 7.2+](https://github.com/jjohannes/idiomatic-gradle)
 * [opentelemetry-java-instrumentation: conventions/](https://github.com/open-telemetry/opentelemetry-java-instrumentation/tree/v1.27.0/conventions/src/main/kotlin)
+
+https://gradle.github.io/webinar-dep-mgmt-part-1/#/elements-configurations
+
+7.9. Elements configurations
+7.10 Configurations https://gradle.github.io/webinar-dep-mgmt-part-1/#/configurations
+7.12 Resolvable configurations https://gradle.github.io/webinar-dep-mgmt-part-1/#/resolvable-configurations

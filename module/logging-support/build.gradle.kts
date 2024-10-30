@@ -13,7 +13,7 @@ tasks.withType<JavaCompile>().configureEach {
 dependencies {
     compileOnly(project(":module:annotations"))
 
-    api("org.slf4j:slf4j-api:[2.0,)")
+    api("org.slf4j:slf4j-api")
 
     implementation("ch.qos.logback:logback-core")
     implementation("ch.qos.logback:logback-classic")

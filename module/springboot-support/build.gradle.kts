@@ -4,10 +4,6 @@ plugins {
     `java-library`
 }
 
-tasks.withType<JavaCompile>().configureEach {
-    options.release.set(17)
-}
-
 dependencies {
     compileOnly(project(":module:annotations"))
     testRuntimeOnly(testFixtures(project(":module:logging-support")))

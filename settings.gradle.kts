@@ -64,3 +64,14 @@ include(
     ":auth-server",
     ":spring-webflux-api",
 )
+
+///////////////////////////////////////////////////////////////////////////////
+
+gradle.lifecycle.beforeProject {
+    // IntelliJ
+    tasks.withType<Task>().configureEach {
+        if (name in setOf("DownloadSources", "DependenciesReport")) {
+            notCompatibleWithConfigurationCache("Incompatible")
+        }
+    }
+}
