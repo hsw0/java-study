@@ -47,8 +47,8 @@ management:
     heapdump.enabled: false
     threaddump.enabled: false
 
-spring.jmx.enabled: true
-spring.application.admin.enabled: true
+#spring.jmx.enabled: true
+#spring.application.admin.enabled: true
 
 management.tracing:
   propagation.consume: [ W3C ]
