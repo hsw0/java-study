@@ -40,7 +40,7 @@ Workaround
         exclude("com.google.guava", "guava")
     }
 
-    val guavaDep = project.dependencies.create("com.google.guava:guava:33.0.0-jre") as ExternalModuleDependency
+    val guavaDep = project.dependencies.create("com.google.guava:guava:33.3.1-jre") as ExternalModuleDependency
     guavaDep.isTransitive = false
     guavaDep.attributes {
         attribute(
