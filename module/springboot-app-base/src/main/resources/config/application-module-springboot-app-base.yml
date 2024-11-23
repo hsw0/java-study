@@ -42,10 +42,10 @@ management:
       configprops: /actuator/configprops
       mappings: /actuator/mappings
   endpoint:
-    prometheus.enabled: true
     # Explicitly Disabled
-    heapdump.enabled: false
-    threaddump.enabled: false
+    heapdump.access: NONE
+    threaddump.access: NONE
+    prometheus.access: NONE
 
 #spring.jmx.enabled: true
 #spring.application.admin.enabled: true
@@ -74,6 +74,8 @@ spring.autoconfigure.exclude:
   - org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration
   - org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.integration.IntegrationGraphEndpointAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.info.InfoContributorAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.ssl.SslHealthContributorAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.management.HeapDumpWebEndpointAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.management.ThreadDumpEndpointAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.availability.AvailabilityHealthContributorAutoConfiguration
@@ -90,6 +92,11 @@ spring.autoconfigure.exclude:
   - org.springframework.boot.actuate.autoconfigure.metrics.jersey.JerseyServerMetricsAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.web.jetty.JettyMetricsAutoConfiguration
 
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.jmx.JmxMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.simple.SimpleMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.otlp.OtlpMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.prometheus.PrometheusMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.metrics.export.prometheus.PrometheusSimpleclientMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.appoptics.AppOpticsMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.atlas.AtlasMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.datadog.DatadogMetricsExportAutoConfiguration
@@ -99,23 +106,17 @@ spring.autoconfigure.exclude:
   - org.springframework.boot.actuate.autoconfigure.metrics.export.graphite.GraphiteMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.humio.HumioMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.influx.InfluxMetricsExportAutoConfiguration
-  - org.springframework.boot.actuate.autoconfigure.metrics.export.jmx.JmxMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.kairos.KairosMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.newrelic.NewRelicMetricsExportAutoConfiguration
-  - org.springframework.boot.actuate.autoconfigure.metrics.export.otlp.OtlpMetricsExportAutoConfiguration
-  - org.springframework.boot.actuate.autoconfigure.metrics.export.prometheus.PrometheusMetricsExportAutoConfiguration
-  - org.springframework.boot.actuate.autoconfigure.metrics.export.prometheus.PrometheusSimpleclientMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.signalfx.SignalFxMetricsExportAutoConfiguration
-  - org.springframework.boot.actuate.autoconfigure.metrics.export.simple.SimpleMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.stackdriver.StackdriverMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.statsd.StatsdMetricsExportAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.export.wavefront.WavefrontMetricsExportAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.wavefront.WavefrontAutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.tracing.wavefront.WavefrontTracingAutoConfiguration
 
   - org.springframework.boot.actuate.autoconfigure.tracing.BraveAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.tracing.zipkin.ZipkinAutoConfiguration
-  - org.springframework.boot.actuate.autoconfigure.tracing.wavefront.WavefrontTracingAutoConfiguration
-  - org.springframework.boot.actuate.autoconfigure.wavefront.WavefrontAutoConfiguration
-
 
   - org.springframework.boot.actuate.autoconfigure.observation.graphql.GraphQlObservationAutoConfiguration
 
@@ -170,8 +171,6 @@ spring.autoconfigure.exclude:
   - org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapAutoConfiguration
   - org.springframework.boot.autoconfigure.ldap.LdapAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.ldap.LdapHealthContributorAutoConfiguration
-  - org.springframework.boot.actuate.autoconfigure.influx.InfluxDbHealthContributorAutoConfiguration
-  - org.springframework.boot.autoconfigure.influx.InfluxDbAutoConfiguration
   - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.metrics.amqp.RabbitMetricsAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.amqp.RabbitHealthContributorAutoConfiguration
@@ -225,7 +224,9 @@ spring.autoconfigure.exclude:
 spring.config.activate.on-profile: local
 
 management.endpoint:
-  beans.enabled: true
-  mappings.enabled: true
-  configprops.enabled: true
+  beans.access: UNRESTRICTED
+  mappings.access: UNRESTRICTED
+  configprops.access: UNRESTRICTED
   configprops.show-values: ALWAYS
+  env.access: UNRESTRICTED
+  env.show-values: ALWAYS
