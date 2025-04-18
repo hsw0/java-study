@@ -13,7 +13,6 @@ private object Comments
 plugins {
     id("conventions.java-base")
     id("conventions.dependency-management")
-    id("conventions.dependency-management.spring-boot")
 
     `test-report-aggregation`
     `jacoco-report-aggregation`

@@ -52,12 +52,10 @@ class DevelopmentOnlyPlugin : Plugin<Project> {
         val developmentOnly = project.configurations.dependencyScope(CONFIGURATION_NAME).get()
         with(developmentOnly) {
             description = "Configuration for development-only dependencies such as Spring Boot's DevTools."
-            isVisible = false
         }
 
         val devClasspath = project.configurations.resolvable(DEV_RUNTIME_CLASSPATH_CONFIGURATION_NAME).get()
         with(devClasspath) {
-            isVisible = false
             extendsFrom(developmentOnly)
         }
 
@@ -80,7 +78,6 @@ class DevelopmentOnlyPlugin : Plugin<Project> {
         }
 
         with(productionRuntimeClasspath) {
-            isVisible = false
             setExtendsFrom(runtimeClasspath.extendsFrom)
         }
 

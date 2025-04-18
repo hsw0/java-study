@@ -1,5 +1,6 @@
 plugins {
     `kotlin-dsl`
+    `java-gradle-plugin`
     alias(libs.plugins.spotless)
 }
 
@@ -36,9 +37,7 @@ gradlePlugin {
             id = "io.syscall.gradle.plugin.mapstruct"
             implementationClass = "io.syscall.gradle.plugin.mapstruct.MapStructPlugin"
         }
-    }
 
-    plugins {
         create("DevelopmentOnlyPlugin") {
             id = "io.syscall.gradle.plugin.devonly"
             implementationClass = "io.syscall.gradle.plugin.devonly.DevelopmentOnlyPlugin"

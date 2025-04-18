@@ -24,7 +24,6 @@ include(":dependencyManagement:spring-boot")
 project(":dependencyManagement:spring-boot").buildFileName = "../../gradle/dependency.spring-boot.gradle.kts"
 
 include(":test-report")
-project(":test-report").buildFileName = "../gradle/test-report.gradle.kts"
 
 ///////////////////////////////////////////////////////////////////////////////
 

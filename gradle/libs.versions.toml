@@ -3,7 +3,7 @@
 format.version = "1.1"
 
 [versions]
-kotlin = "2.1.20"
+kotlin = "2.2.21"
 logback = "1.4.11"
 junit = "5.11.3"
 spring-boot = "3.4.4"
@@ -15,7 +15,7 @@ jacoco = "0.8.13"
 
 [libraries]
 bom-kotlin = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
-bom-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version = "1.9.0" }
+bom-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version = "1.10.2" }
 
 gradlePlugin-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 # https://kotlinlang.org/docs/all-open-plugin.html

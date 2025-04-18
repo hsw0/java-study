@@ -7,7 +7,6 @@ import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.get
 
 class MapStructPlugin : Plugin<Project> {
@@ -31,9 +30,9 @@ class MapStructPlugin : Plugin<Project> {
         val version: String = extension.version.get()
 
         with(project.dependencies) {
-            val mapstructDep = create(group = "org.mapstruct", name = "mapstruct", version = version)
-            val mapstructProcessorDep = create(group = "org.mapstruct", name = "mapstruct-processor", version = version)
-            val jakartaInjectDep = create(group = "jakarta.inject", name = "jakarta.inject-api", version = "2.0.1")
+            val mapstructDep = "org.mapstruct:mapstruct:$version"
+            val mapstructProcessorDep = "org.mapstruct:mapstruct-processor:$version"
+            val jakartaInjectDep = "jakarta.inject:jakarta.inject-api:2.0.1"
 
             add(mainSourceSet.compileOnlyConfigurationName, mapstructDep)
             add(mainSourceSet.annotationProcessorConfigurationName, mapstructProcessorDep)

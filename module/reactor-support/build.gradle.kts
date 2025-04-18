@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.support.serviceOf
-import org.gradle.platform.Architecture
-import org.gradle.platform.OperatingSystem
-
 plugins {
     id("conventions.project.java")
     id("conventions.project.spring-boot")
@@ -20,20 +16,20 @@ dependencies {
     compileOnly("io.projectreactor.tools:blockhound") // BlockHoundIntegration SPI
     testRuntimeOnly("io.projectreactor.tools:blockhound")
 
-    @Suppress("UnstableApiUsage")
-    if (serviceOf<BuildPlatform>().operatingSystem == OperatingSystem.MAC_OS) {
-        val classifier = when (val arch = serviceOf<BuildPlatform>().architecture) {
-            Architecture.X86_64 -> "osx-x86_64"
-            Architecture.AARCH64 -> "osx-aarch_64"
+    // macOS 개발자 머신만 별도 처리
+    if (System.getProperty("os.name") == "Mac OS X") {
+        val classifier = when (val arch = System.getProperty("os.arch")) {
+            "x86_64", "amd64" -> "osx-x86_64"
+            "aarch64" -> "osx-aarch_64"
             else -> TODO("No macOS for $arch")
         }
         // ex) netty-transport-native-kqueue-${VERSION}-osx-aarch_64.jar
-        runtimeOnly(group = "io.netty", name = "netty-transport-native-kqueue", classifier = classifier)
-        runtimeOnly(group = "io.netty", name = "netty-resolver-dns-native-macos", classifier = classifier)
+        runtimeOnly("io.netty:netty-transport-native-kqueue::$classifier")
+        runtimeOnly("io.netty:netty-resolver-dns-native-macos::$classifier")
     }
 
     // Production
     for (arch in listOf("aarch_64", "x86_64")) {
-        runtimeOnly(group = "io.netty", name = "netty-transport-native-epoll", classifier = "linux-${arch}")
+        runtimeOnly("io.netty:netty-transport-native-epoll::linux-${arch}")
     }
 }

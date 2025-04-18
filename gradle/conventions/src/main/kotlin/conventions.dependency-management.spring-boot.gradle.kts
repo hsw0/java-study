@@ -28,14 +28,18 @@ val includedConfigurations = setOf(
 
     // Spring Boot AOT
     "AotClasspath", // "processAotClasspath", "processTestAotClasspath,
+
+    "aggregateTestReportResults",
 )
 
 fun shouldIncluded(c: Configuration): Boolean {
-    return includedConfigurations.any { c.name.contains(it) }
+    return (c.isCanBeResolved && !c.isCanBeConsumed && c.isClasspathLike)
+        || includedConfigurations.any { c.name.contains(it) }
 }
+
 afterEvaluate {
     configurations
-        .matching { (it.isCanBeResolved && !it.isCanBeConsumed && it.isClasspathLike) || shouldIncluded(it) }
+        .matching { shouldIncluded(it) }
         .configureEach {
             logger.info("Applying dependencyManagement (Spring Boot) to ${name}")
             extendsFrom(dependencyManagementConf)
