@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
-
 plugins {
     id("conventions.project.java")
     id("conventions.project.kotlin")
@@ -12,17 +9,6 @@ plugins {
 group = "io.syscall.commons"
 version = "1.0-SNAPSHOT"
 
-kotlin {
-    compilerOptions {
-        jvmTarget = JvmTarget.JVM_11
-        languageVersion = KotlinVersion.KOTLIN_1_7
-        apiVersion = KotlinVersion.KOTLIN_1_7
-    }
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    options.release = 11
-}
 
 dependencies {
     compileOnly(project(":module:annotations"))

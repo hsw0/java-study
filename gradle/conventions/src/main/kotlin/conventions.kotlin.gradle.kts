@@ -20,9 +20,9 @@ plugins {
 
 configure<KotlinJvmProjectExtension> {
     compilerOptions {
-        jvmTarget.convention(JvmTarget.JVM_17)
-        languageVersion.convention(KotlinVersion.KOTLIN_1_9)
-        apiVersion.convention(KotlinVersion.KOTLIN_1_9)
+        jvmTarget.convention(JvmTarget.JVM_21)
+        languageVersion.convention(KotlinVersion.KOTLIN_2_2)
+        apiVersion.convention(KotlinVersion.KOTLIN_2_2)
     }
 }
 

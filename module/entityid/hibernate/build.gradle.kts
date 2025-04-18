@@ -10,10 +10,6 @@ version = "1.0-SNAPSHOT"
 
 ext["publishing.artifactId"] = "entityid-hibernate"
 
-tasks.withType<JavaCompile>().configureEach {
-    options.release = 17
-}
-
 dependencies {
     compileOnly(project(":module:annotations"))
     testRuntimeOnly(testFixtures(project(":module:logging-support")))
