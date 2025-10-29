@@ -8,6 +8,7 @@ import org.hibernate.type.descriptor.jdbc.JdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcTypeIndicators;
 import org.jspecify.annotations.Nullable;
 
+@SuppressWarnings("serial")
 public abstract class AbstractEntityIdJavaType<T extends EntityId<?>> extends AbstractClassJavaType<T> {
 
     protected AbstractEntityIdJavaType(Class<? extends T> clazz) {

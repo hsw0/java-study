@@ -11,7 +11,7 @@ import org.hibernate.type.descriptor.jdbc.JdbcTypeIndicators;
 import org.jspecify.annotations.Nullable;
 
 // Sonar: java:S119: Type parameter names should comply with a naming convention
-@SuppressWarnings({"java:S119"})
+@SuppressWarnings({"serial", "java:S119"})
 public class LongEntityIdJavaType extends AbstractEntityIdJavaType<LongEntityId> {
 
     private final transient LongEntityIdFactory<LongEntityId> factory;

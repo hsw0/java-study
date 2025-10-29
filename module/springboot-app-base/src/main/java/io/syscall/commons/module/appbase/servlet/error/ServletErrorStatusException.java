@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 /**
  * 예외 객체를 찾을수 없으나 다른 예외 속성이 있는 경우
  */
+@SuppressWarnings("serial")
 public class ServletErrorStatusException extends ResponseStatusException {
 
     private final String requestUri;
