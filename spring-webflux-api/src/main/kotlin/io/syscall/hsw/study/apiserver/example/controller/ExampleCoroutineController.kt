@@ -13,11 +13,10 @@ public class ExampleCoroutineController {
     @PostMapping("/example/coroutine")
     public suspend fun sample(
         @RequestBody req: ExampleReq,
-    ): ExampleRes {
-        return ExampleRes(
+    ): ExampleRes =
+        ExampleRes(
             id = 123,
             name = req.name,
             timestamp = Instant.now(),
         )
-    }
 }

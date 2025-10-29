@@ -19,32 +19,35 @@ private val log = KotlinLogging.logger {}
 internal class WebServerConfig {
 
     @Bean
-    internal fun nettyServerCustomizer(properties: NettyWebServerProperties) = NettyServerCustomizer {
-        log.info { "NettyServer: Applying customization. $properties" }
-        it.configuration()
+    internal fun nettyServerCustomizer(properties: NettyWebServerProperties) =
+        NettyServerCustomizer {
+            log.info { "NettyServer: Applying customization. $properties" }
+            it.configuration()
 
-        return@NettyServerCustomizer it
-            .accessLog(properties.accessLog)
-    }
+            return@NettyServerCustomizer it
+                .accessLog(properties.accessLog)
+        }
 
     @Bean
-    internal fun virtualThreadCustomizer(properties: NettyWebServerProperties) = NettyServerCustomizer {
-        if (!properties.useVirtualThread) {
-            return@NettyServerCustomizer it
+    internal fun virtualThreadCustomizer(properties: NettyWebServerProperties) =
+        NettyServerCustomizer {
+            if (!properties.useVirtualThread) {
+                return@NettyServerCustomizer it
+            }
+            log.info { "NettyServer: Using virtual thread" }
+
+            val nThreads = LoopResources.DEFAULT_IO_WORKER_COUNT
+            val threadFactory = Thread.ofVirtual().name("nettyserver-nio-v").factory()
+            val executor = Executors.newThreadPerTaskExecutor(threadFactory)
+
+            val loopResources =
+                OverrideServerEventLoopGroup(
+                    delegate = it.configuration().loopResources(),
+                    nThreads,
+                    executor,
+                )
+            return@NettyServerCustomizer it.runOn(loopResources)
         }
-        log.info { "NettyServer: Using virtual thread" }
-
-        val nThreads = LoopResources.DEFAULT_IO_WORKER_COUNT
-        val threadFactory = Thread.ofVirtual().name("nettyserver-nio-v").factory()
-        val executor = Executors.newThreadPerTaskExecutor(threadFactory)
-
-        val loopResources = OverrideServerEventLoopGroup(
-            delegate = it.configuration().loopResources(),
-            nThreads,
-            executor,
-        )
-        return@NettyServerCustomizer it.runOn(loopResources)
-    }
 
     internal class OverrideServerEventLoopGroup(
         delegate: LoopResources,
@@ -52,8 +55,6 @@ internal class WebServerConfig {
         private val executor: Executor,
     ) : DelegatingLoopResources(delegate) {
 
-        override fun onServer(useNative: Boolean): EventLoopGroup {
-            return NioEventLoopGroup(nThreads, executor)
-        }
+        override fun onServer(useNative: Boolean): EventLoopGroup = NioEventLoopGroup(nThreads, executor)
     }
 }

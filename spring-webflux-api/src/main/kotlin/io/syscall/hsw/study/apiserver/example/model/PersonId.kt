@@ -6,7 +6,10 @@ import java.io.Serial
 import java.io.Serializable
 
 @JvmInline
-public value class PersonId private constructor(override val value: Long) : LongEntityId, Serializable {
+public value class PersonId private constructor(
+    override val value: Long,
+) : LongEntityId,
+    Serializable {
 
     public companion object : LongEntityIdFactoryWithString<PersonId> {
 
@@ -18,9 +21,7 @@ public value class PersonId private constructor(override val value: Long) : Long
             return PersonId(value)
         }
 
-        public override fun create(value: String): PersonId {
-            return create(value.toLong())
-        }
+        public override fun create(value: String): PersonId = create(value.toLong())
 
         @Serial
         private const val serialVersionUID: Long = 0x1L

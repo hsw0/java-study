@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-public class PersonController(private val service: PersonService) {
+public class PersonController(
+    private val service: PersonService,
+) {
 
     @GetMapping("/v1/persons/{id}")
     public fun get(

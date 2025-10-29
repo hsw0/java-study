@@ -10,7 +10,6 @@ import java.util.concurrent.Executors
 internal class ReactorSchedulerConfig {
 
     @Bean
-    internal fun virtualThreadPerTask(): Scheduler {
-        return Schedulers.fromExecutorService(Executors.newVirtualThreadPerTaskExecutor(), ::virtualThreadPerTask.name)
-    }
+    internal fun virtualThreadPerTask(): Scheduler =
+        Schedulers.fromExecutorService(Executors.newVirtualThreadPerTaskExecutor(), ::virtualThreadPerTask.name)
 }

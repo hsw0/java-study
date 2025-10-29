@@ -34,13 +34,17 @@ internal class ExampleUtilController {
         }
 
         return when (strategy ?: SleepStrategy.MONO_DELAY) {
-            SleepStrategy.MONO_DELAY -> Mono.delay(Duration.ofMillis(millis))
-                .map { buildResponse() }
+            SleepStrategy.MONO_DELAY ->
+                Mono
+                    .delay(Duration.ofMillis(millis))
+                    .map { buildResponse() }
 
-            SleepStrategy.THREAD_SLEEP_ON_SCHEDULER -> Mono.fromSupplier {
-                runCatching { Thread.sleep(millis) }
-                buildResponse()
-            }.subscribeOn(virtualThreadPerTaskScheduler)
+            SleepStrategy.THREAD_SLEEP_ON_SCHEDULER ->
+                Mono
+                    .fromSupplier {
+                        runCatching { Thread.sleep(millis) }
+                        buildResponse()
+                    }.subscribeOn(virtualThreadPerTaskScheduler)
 
             SleepStrategy.THREAD_SLEEP_CURRENT -> {
                 runCatching { Thread.sleep(millis) }

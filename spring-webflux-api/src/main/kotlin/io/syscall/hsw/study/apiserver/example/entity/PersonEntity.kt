@@ -29,7 +29,5 @@ public class PersonEntity(
         return id == (other as PersonEntity).id
     }
 
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
+    override fun hashCode(): Int = id?.hashCode() ?: 0
 }

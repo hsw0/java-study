@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-public class PersonService(private val repository: PersonRepository) {
+public class PersonService(
+    private val repository: PersonRepository,
+) {
 
     @Transactional(readOnly = true)
     public fun get(id: PersonId): Person {
