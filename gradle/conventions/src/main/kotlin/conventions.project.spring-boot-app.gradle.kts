@@ -1,6 +1,3 @@
-import org.springframework.boot.gradle.tasks.aot.ProcessAot
-import org.springframework.boot.gradle.tasks.bundling.BootJar
-
 /**
  * Spring Boot Application convention
  *
@@ -20,15 +17,6 @@ dependencies {
 
     developmentOnly("io.projectreactor:reactor-tools")
     developmentOnly("io.projectreactor.tools:blockhound")
-}
-
-tasks.withType<BootJar>().configureEach {
-    // > Execution of task ':${PROJECT}:bootJar' caused invocation of 'Task.project' by task ':${PROJECT}:resolveMainClassName' at execution time which is unsupported.
-    notCompatibleWithConfigurationCache("UNSUPPORTED")
-}
-
-tasks.withType<ProcessAot>().configureEach {
-    notCompatibleWithConfigurationCache("Invokes other task: resolveMainClassName")
 }
 
 tasks.withType<JavaCompile>().named { it.contains("Aot") }.configureEach {

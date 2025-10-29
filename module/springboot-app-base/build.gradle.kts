@@ -10,7 +10,6 @@ group = "dummy"
 dependencies {
     compileOnly(project(":module:annotations"))
     implementation(project(":module:logging-support"))
-    testRuntimeOnly(testFixtures(project(":module:logging-support")))
     implementation(project(":module:springboot-support"))
     implementation(project(":module:reactor-support"))
 

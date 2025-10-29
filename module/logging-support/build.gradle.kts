@@ -1,10 +1,10 @@
 plugins {
-    id("conventions.project.java")
     `java-library`
     `java-test-fixtures`
-}
 
-version = "1.0-SNAPSHOT"
+    id("conventions.base")
+    id("conventions.dependency-management")
+}
 
 tasks.withType<JavaCompile>().configureEach {
     options.release = 17
@@ -18,7 +18,6 @@ dependencies {
     implementation("ch.qos.logback:logback-core")
     implementation("ch.qos.logback:logback-classic")
 
-    runtimeOnly("org.slf4j:log4j-over-slf4j")
     runtimeOnly("org.slf4j:jcl-over-slf4j")
     runtimeOnly("org.slf4j:jul-to-slf4j")
 }

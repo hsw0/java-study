@@ -7,9 +7,6 @@ plugins {
 group = "dummy"
 
 dependencies {
-    compileOnly(project(":module:annotations"))
-    testRuntimeOnly(testFixtures(project(":module:logging-support")))
-
     implementation(project(":module:protocol"))
     implementation(project(":module:springboot-app-base"))
 

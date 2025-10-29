@@ -14,6 +14,9 @@ dependencies {
 
     implementation("org.springframework.data:spring-data-commons")
     implementation("org.springframework:spring-web")
+
+    compileOnly("org.postgresql:postgresql")
+    compileOnly("org.postgresql:r2dbc-postgresql:1.0.5.RELEASE")
 }
 
 configurations.compileClasspath {

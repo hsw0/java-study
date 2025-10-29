@@ -65,6 +65,7 @@ public class EntityIdTypeAutoContributor implements TypeContributor {
         final var entityIdBaseClass = tmpClassLoader.classForName(EntityId.class.getName());
 
         // final var entityIdBaseClass = EntityId.class; // NOSONAR
+        @SuppressWarnings("argument.type.incompatible")
         var classLoader = requireNonNull(bootstrapContext.getServiceRegistry().getService(ClassLoaderService.class));
 
         // Spring Data JPA @EntityScan 이나 spring-context-index에 의해 탐지된 엔티티와 기타등등

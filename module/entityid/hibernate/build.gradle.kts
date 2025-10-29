@@ -8,12 +8,9 @@ plugins {
 group = "io.syscall.commons"
 version = "1.0-SNAPSHOT"
 
-ext["publishing.artifactId"] = "entityid-hibernate"
+extra["publishing.artifactId"] = "entityid-hibernate"
 
 dependencies {
-    compileOnly(project(":module:annotations"))
-    testRuntimeOnly(testFixtures(project(":module:logging-support")))
-
     api(project(":module:entityid"))
 
     implementation("org.hibernate.orm:hibernate-core:[6.2,)")

@@ -11,9 +11,6 @@ version = "1.0-SNAPSHOT"
 
 
 dependencies {
-    compileOnly(project(":module:annotations"))
-    testRuntimeOnly(testFixtures(project(":module:logging-support")))
-
     implementation(kotlin("reflect"))
 
     testImplementation("io.github.oshai:kotlin-logging-jvm")

@@ -3,7 +3,6 @@ import io.syscall.gradle.conventions.nameIsCompileClasspath
 import io.syscall.gradle.conventions.versionCatalog
 import net.ltgt.gradle.errorprone.errorprone
 import org.checkerframework.gradle.plugin.CheckerFrameworkExtension
-import org.checkerframework.gradle.plugin.CreateManifestTask
 
 /**
  * Java static analyzers
@@ -52,8 +51,6 @@ pluginManager.withPlugin("java") {
             disable("ReturnMissingNullable")
             disable("VoidMissingNullable")
 
-            disable("AndroidJdkLibsChecker")
-            disable("Java7ApiChecker")
             disable("Java8ApiChecker")
 
             // If you don't intend to mutate a member collection prefer using Immutable types.
@@ -86,10 +83,6 @@ pluginManager.withPlugin("java") {
         extraJavacArgs.add("-AsuppressWarnings=type.checking.not.run")
     }
 
-    tasks.withType<CreateManifestTask>().configureEach {
-        // Task `:${PROJECT}:createCheckerFrameworkManifest` of type `org.checkerframework.gradle.plugin.CreateManifestTask`: invocation of 'Task.project' at execution time is unsupported.
-        notCompatibleWithConfigurationCache("UNSUPPORTED")
-    }
 }
 
 

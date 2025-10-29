@@ -14,10 +14,19 @@ plugins {
 }
 
 dependencies {
+    compileOnly(project(":module:annotations"))
+
     implementation("org.slf4j:slf4j-api") // Who doesn't?
 
-    // Test framework의 의존성은 아니지만 공통으로 사용
-    testImplementation("org.assertj:assertj-core")
+    // 실제 Test fixture는 아니고 테스트 전용 logback-test.xml 설정을 위함
+    testRuntimeOnly(testFixtures(project(":module:logging-support")))
+}
+
+@Suppress("UnstableApiUsage")
+testing.suites.withType<JvmTestSuite>().configureEach {
+    dependencies {
+        implementation("org.assertj:assertj-core")
+    }
 }
 
 // region Dependency substitution 적용
@@ -30,10 +39,13 @@ configurations.configureEach {
         exclude("org.jboss.logging", "jboss-logging")
     } else if (isRuntimeClasspath) {
         resolutionStrategy.dependencySubstitution {
-            substitute(module("org.apache.logging.log4j:log4j-api"))
-                .using(module("org.slf4j:log4j-over-slf4j:2.+"))
-            substitute(module("org.apache.logging.log4j:log4j-to-slf4j"))
-                .using(module("org.slf4j:log4j-over-slf4j:2.+"))
+            substitute(module("org.apache.logging.log4j:log4j-core"))
+                .using(module("org.apache.logging.log4j:log4j-to-slf4j:2.24.3"))
+                .because("Use slf4j")
+
+            substitute(module("log4j:log4j"))
+                .using(module("org.slf4j:log4j-over-slf4j:2.0.17"))
+                .because("Use slf4j")
         }
     }
 }

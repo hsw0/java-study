@@ -13,7 +13,7 @@ class KotestJunit {
                 listOf("반동분자").shouldBeEmpty()
             }
         thrown.message
-            .shouldContain("Collection should be empty")
+            .shouldContain("List should be empty")
             .shouldContain("반동분자")
     }
 }
