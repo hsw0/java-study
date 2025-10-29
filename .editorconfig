@@ -273,8 +273,11 @@ ij_java_wrap_long_lines = false
 [*.{kt,kts}]
 ktlint_code_style = ktlint_official
 ktlint_standard = enabled
-
 ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL
+
+ktlint_standard_no-trailing-spaces = disabled
+ktlint_standard_no-blank-line-in-list = disabled
+ktlint_standard_no-empty-first-line-in-class-body = disabled
 
 ij_kotlin_continuation_indent_size = 4
 

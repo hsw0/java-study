@@ -26,6 +26,7 @@ configure<SpotlessExtension> {
     if (pluginManager.hasPlugin("org.jetbrains.kotlin.jvm")) {
         kotlin {
             with(ktlint()) {
+                setEditorConfigPath(project.rootDir.resolve("./.editorconfig"))
                 editorConfigOverride(mapOf())
             }
         }
