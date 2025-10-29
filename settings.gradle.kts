@@ -58,7 +58,6 @@ include(
 )
 
 include(
-    ":auth-server",
     ":spring-webflux-api",
 )
 
