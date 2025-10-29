@@ -1,6 +1,5 @@
-
-import io.gitlab.arturbosch.detekt.Detekt
-import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import dev.detekt.gradle.Detekt
+import dev.detekt.gradle.extensions.DetektExtension
 import io.syscall.gradle.conventions.kotlin
 
 /**
@@ -14,7 +13,7 @@ plugins {
     id("conventions.dependency-management")
     kotlin("jvm")
 
-    id("io.gitlab.arturbosch.detekt")
+    id("dev.detekt")
 }
 
 configure<DetektExtension> {
