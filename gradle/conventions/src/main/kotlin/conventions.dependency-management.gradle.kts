@@ -3,6 +3,9 @@ import io.syscall.gradle.conventions.isClasspathLike
 /**
  * 프로젝트 전체에 의존성 버전 관리
  *
+ * [Spring Boot: Dependency Versions](https://docs.spring.io/spring-boot/docs/3.1.0/reference/html/dependency-versions.html)
+ * [Maven central](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-dependencies)
+ * [소스](https://github.com/spring-projects/spring-boot/blob/v3.1.0/spring-boot-project/spring-boot-dependencies/build.gradle)
  */
 private object Comments
 
@@ -13,11 +16,10 @@ plugins {
 // region Dependency management 적용
 // opentelemetry-java-instrumentation의 [otel.java-conventions](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/cd13fd40189d7297e953e68a8d2a4be1c68f56d9/conventions/src/main/kotlin/otel.java-conventions.gradle.kts) 를 참고함.
 
-evaluationDependsOn(":dependencyManagement:default")
-val dependencyManagementConf: Configuration = configurations.dependencyScope("dependencyManagement.default").get()
+evaluationDependsOn(":dependencyManagement")
+val dependencyManagementConf: Configuration = configurations.dependencyScope("dependencyManagement").get()
 
 val includedConfigurations = setOf(
-    "checkerFramework",
     /*${configuration.name}*/"DependenciesMetadata",
     "devRuntimeOnly",
 
@@ -40,13 +42,13 @@ afterEvaluate {
     configurations
         .matching { shouldIncluded(it) }
         .configureEach {
-            logger.info("Applying dependencyManagement to ${name}")
+            logger.info("Applying dependencyManagement (Spring Boot) to ${name}")
             extendsFrom(dependencyManagementConf)
         }
 }
 
 dependencies {
-    add(dependencyManagementConf.name, platform(project(":dependencyManagement:default")))
+    add(dependencyManagementConf.name, platform(project(":dependencyManagement")))
 }
 
 // endregion

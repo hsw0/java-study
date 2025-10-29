@@ -17,11 +17,9 @@ dependencyResolutionManagement {
     }
 }
 
-include(":dependencyManagement:default")
-project(":dependencyManagement:default").buildFileName = "../../gradle/dependency.gradle.kts"
+include(":dependencyManagement")
+project(":dependencyManagement").projectDir = file("./gradle/dependencyManagement")
 
-include(":dependencyManagement:spring-boot")
-project(":dependencyManagement:spring-boot").buildFileName = "../../gradle/dependency.spring-boot.gradle.kts"
 
 include(":test-report")
 
@@ -68,8 +66,8 @@ include(
 
 gradle.lifecycle.beforeProject {
     // IntelliJ
-    tasks.withType<Task>().configureEach {
-        if (name in setOf("DownloadSources", "DependenciesReport")) {
+    listOf("DownloadSources", "DependenciesReport").forEach { tn ->
+        tasks.matching { it.name == tn }.configureEach {
             notCompatibleWithConfigurationCache("Incompatible")
         }
     }

@@ -29,7 +29,7 @@ pluginManager.withPlugin("java") {
         add("errorprone", "com.google.errorprone:error_prone_core")
         compileOnly("com.google.errorprone:error_prone_annotations")
 
-        add("checkerFramework", platform(project(":dependencyManagement:default")))
+        add("checkerFramework", platform(project(":dependencyManagement")))
         add("checkerFramework", "org.checkerframework:checker")
         compileOnly("org.checkerframework:checker-qual")
         testCompileOnly("org.checkerframework:checker-qual")

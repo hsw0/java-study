@@ -9,7 +9,7 @@ private object Comments
 
 plugins {
     id("conventions.project.jvm")
-    id("conventions.dependency-management.spring-boot")
+    id("conventions.dependency-management")
 }
 
 if (pluginManager.hasPlugin("org.jetbrains.kotlin.jvm")) {
