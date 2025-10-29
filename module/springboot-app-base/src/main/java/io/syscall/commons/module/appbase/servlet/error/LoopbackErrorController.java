@@ -6,7 +6,7 @@ import jakarta.annotation.security.PermitAll;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,10 +54,9 @@ public class LoopbackErrorController implements ErrorController {
     }
 
     @RequestMapping(ERROR_PATH_PLACEHOLDER)
-    @Nullable
     // S3516: Refactor this method to not always return the same value.
     @SuppressWarnings("java:S3516")
-    public ResponseEntity<Object> error(HttpServletRequest request, HttpServletResponse response) {
+    public @Nullable ResponseEntity<Object> error(HttpServletRequest request, HttpServletResponse response) {
         boolean alreadyProcessed = request.getAttribute(ALREADY_EXECUTED_ATTRIBUTE) != null
                 || request.getAttribute(DispatcherServlet.EXCEPTION_ATTRIBUTE) != null
                 || response.isCommitted();

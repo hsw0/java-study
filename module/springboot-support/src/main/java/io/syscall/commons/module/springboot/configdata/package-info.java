@@ -33,7 +33,7 @@
  * @see org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor
  * @see io.syscall.commons.module.springboot.configdata.AutoConfigDataFile
  */
-@NonNullApi
+@NullMarked
 package io.syscall.commons.module.springboot.configdata;
 
-import io.syscall.annotations.NonNullApi;
+import org.jspecify.annotations.NullMarked;

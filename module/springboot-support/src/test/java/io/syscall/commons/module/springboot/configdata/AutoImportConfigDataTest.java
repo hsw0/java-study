@@ -3,7 +3,7 @@ package io.syscall.commons.module.springboot.configdata;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.syscall.commons.module.springboot.test.TestApplication;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;

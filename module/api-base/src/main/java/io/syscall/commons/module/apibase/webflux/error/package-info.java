@@ -1,4 +1,4 @@
-@NonNullApi
+@NullMarked
 package io.syscall.commons.module.apibase.webflux.error;
 
-import io.syscall.annotations.NonNullApi;
+import org.jspecify.annotations.NullMarked;

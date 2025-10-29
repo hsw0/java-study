@@ -1,4 +1,4 @@
-@NonNullApi
+@NullMarked
 package io.syscall.commons.module.springboot.autoconfigure.disable;
 
-import io.syscall.annotations.NonNullApi;
+import org.jspecify.annotations.NullMarked;

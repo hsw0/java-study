@@ -2,7 +2,7 @@ package io.syscall.hsw.study.checkerframework;
 
 import java.util.HashSet;
 import java.util.Set;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jspecify.annotations.NonNull;
 
 public class CheckerExample {
 

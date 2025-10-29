@@ -3,7 +3,7 @@ package io.syscall.commons.module.appbase.webflux.netty;
 import java.net.SocketAddress;
 import java.time.Duration;
 import java.util.function.Supplier;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import reactor.netty.channel.ChannelMetricsRecorder;
 import reactor.netty.http.server.HttpServer;

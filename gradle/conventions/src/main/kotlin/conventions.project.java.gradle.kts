@@ -16,3 +16,8 @@ tasks.withType<Javadoc> {
         is CoreJavadocOptions -> it.addStringOption("Xdoclint:none", "-quiet")
     }
 }
+
+dependencies {
+    compileOnly("org.jspecify:jspecify:1.0.0")
+    testCompileOnly("org.jspecify:jspecify:1.0.0")
+}

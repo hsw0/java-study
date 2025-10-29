@@ -4,11 +4,11 @@ import io.syscall.commons.entityid.EntityId;
 import io.syscall.commons.entityid.StringEntityId;
 import io.syscall.commons.entityid.StringEntityIdFactory;
 import io.syscall.commons.entityid.StringEntityIdSupport;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.type.descriptor.WrapperOptions;
 import org.hibernate.type.descriptor.jdbc.JdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcTypeIndicators;
 import org.hibernate.type.descriptor.jdbc.VarcharJdbcType;
+import org.jspecify.annotations.Nullable;
 
 // Sonar: java:S119: Type parameter names should comply with a naming convention
 @SuppressWarnings({"serial", "java:S119"})
@@ -34,9 +34,9 @@ public class StringEntityIdJavaType extends AbstractEntityIdJavaType<StringEntit
         return VarcharJdbcType.INSTANCE;
     }
 
-    @SuppressWarnings("override.return.invalid")
     @Override
-    public <DB> @Nullable DB unwrap(@Nullable StringEntityId value, Class<DB> dbType, WrapperOptions options) {
+    public <DB extends @Nullable Object> @Nullable DB unwrap(
+            @Nullable StringEntityId value, Class<DB> dbType, WrapperOptions options) {
         if (value == null) {
             return null;
         }

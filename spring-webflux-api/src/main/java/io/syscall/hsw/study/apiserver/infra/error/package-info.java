@@ -1,4 +1,4 @@
-@NonNullApi
+@NullMarked
 package io.syscall.hsw.study.apiserver.infra.error;
 
-import io.syscall.annotations.NonNullApi;
+import org.jspecify.annotations.NullMarked;

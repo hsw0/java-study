@@ -2,11 +2,11 @@ package io.syscall.commons.entityid.support.hibernate;
 
 import io.syscall.commons.entityid.EntityId;
 import java.lang.reflect.Modifier;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.hibernate.type.descriptor.java.AbstractClassJavaType;
 import org.hibernate.type.descriptor.java.ImmutableMutabilityPlan;
 import org.hibernate.type.descriptor.jdbc.JdbcType;
 import org.hibernate.type.descriptor.jdbc.JdbcTypeIndicators;
+import org.jspecify.annotations.Nullable;
 
 public abstract class AbstractEntityIdJavaType<T extends EntityId<?>> extends AbstractClassJavaType<T> {
 
