@@ -60,14 +60,3 @@ include(
 include(
     ":spring-webflux-api",
 )
-
-///////////////////////////////////////////////////////////////////////////////
-
-gradle.lifecycle.beforeProject {
-    // IntelliJ
-    listOf("DownloadSources", "DependenciesReport").forEach { tn ->
-        tasks.matching { it.name == tn }.configureEach {
-            notCompatibleWithConfigurationCache("Incompatible")
-        }
-    }
-}
