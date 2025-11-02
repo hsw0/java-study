@@ -1,5 +1,6 @@
 plugins {
     id("conventions.project.java")
+    id("conventions.project.java-analysis")
     id("conventions.project.spring-boot")
     `java-library`
 }

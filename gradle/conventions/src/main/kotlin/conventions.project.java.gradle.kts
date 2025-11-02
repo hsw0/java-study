@@ -8,7 +8,6 @@ plugins {
     id("conventions.project.jvm")
 
     id("conventions.project.spotless")
-    id("conventions.project.java-analysis")
 }
 
 tasks.withType<Javadoc> {
