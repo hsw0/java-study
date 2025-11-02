@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmDefaultMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
@@ -23,6 +24,9 @@ configure<KotlinJvmProjectExtension> {
         jvmTarget.convention(JvmTarget.JVM_21)
         languageVersion.convention(KotlinVersion.KOTLIN_2_2)
         apiVersion.convention(KotlinVersion.KOTLIN_2_2)
+
+        // https://kotlinlang.org/docs/whatsnew22.html#changes-to-default-method-generation-for-interface-functions
+        jvmDefault = JvmDefaultMode.NO_COMPATIBILITY
     }
 }
 
