@@ -1,3 +1,5 @@
+import Constants.DEPENDENCY_MANAGEMENT_CONFIG_NAME
+import Constants.DEPENDENCY_MANAGEMENT_PROJECT_NAME
 import io.syscall.gradle.conventions.isClasspathLike
 
 /**
@@ -6,6 +8,7 @@ import io.syscall.gradle.conventions.isClasspathLike
  * [Spring Boot: Dependency Versions](https://docs.spring.io/spring-boot/docs/3.1.0/reference/html/dependency-versions.html)
  * [Maven central](https://central.sonatype.com/artifact/org.springframework.boot/spring-boot-dependencies)
  * [소스](https://github.com/spring-projects/spring-boot/blob/v3.1.0/spring-boot-project/spring-boot-dependencies/build.gradle)
+ * opentelemetry-java-instrumentation의 [otel.java-conventions](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/3731b24a3252c94f66c62b414454342ec6c799e6/conventions/src/main/kotlin/otel.java-conventions.gradle.kts) 를 참고함.
  */
 private object Comments
 
@@ -14,41 +17,53 @@ plugins {
 }
 
 // region Dependency management 적용
-// opentelemetry-java-instrumentation의 [otel.java-conventions](https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/cd13fd40189d7297e953e68a8d2a4be1c68f56d9/conventions/src/main/kotlin/otel.java-conventions.gradle.kts) 를 참고함.
 
-evaluationDependsOn(":dependencyManagement")
-val dependencyManagementConf: Configuration = configurations.dependencyScope("dependencyManagement").get()
-
-val includedConfigurations = setOf(
-    /*${configuration.name}*/"DependenciesMetadata",
-    "devRuntimeOnly",
-
-    // Spring Boot
-    "developmentOnly",
-    "productionRuntimeOnly",
-
-    // Spring Boot AOT
-    "AotClasspath", // "processAotClasspath", "processTestAotClasspath,
-
-    "aggregateTestReportResults",
-)
-
-fun shouldIncluded(c: Configuration): Boolean {
-    return (c.isCanBeResolved && !c.isCanBeConsumed && c.isClasspathLike)
-        || includedConfigurations.any { c.name.contains(it) }
+private object Constants {
+    const val DEPENDENCY_MANAGEMENT_CONFIG_NAME = "dependencyManagement"
+    const val DEPENDENCY_MANAGEMENT_PROJECT_NAME = ":$DEPENDENCY_MANAGEMENT_CONFIG_NAME"
 }
 
+evaluationDependsOn(DEPENDENCY_MANAGEMENT_PROJECT_NAME)
+val dependencyManagementConf =
+    configurations.create(DEPENDENCY_MANAGEMENT_CONFIG_NAME) {
+        isCanBeConsumed = false
+        isCanBeResolved = false
+    }
+
+val includedConfigurations =
+    setOf(
+        // "${configuration.name}DependenciesMetadata",
+        "DependenciesMetadata",
+
+        // DevelopmentOnlyPlugin
+        "devRuntimeOnly",
+
+        // Spring Boot
+        "developmentOnly",
+        "productionRuntimeOnly",
+
+        // Spring Boot AOT: "processAotClasspath", "processTestAotClasspath,
+        "AotClasspath",
+
+        "aggregateTestReportResults",
+    )
+
+fun shouldIncluded(c: Configuration): Boolean =
+    (c.isCanBeResolved && !c.isCanBeConsumed && c.isClasspathLike) ||
+        includedConfigurations.any { c.name.contains(it) }
+
 afterEvaluate {
+    // 필요함
     configurations
         .matching { shouldIncluded(it) }
         .configureEach {
-            logger.info("Applying dependencyManagement (Spring Boot) to ${name}")
+            logger.info("Applying Dependency Management to {}", name)
             extendsFrom(dependencyManagementConf)
         }
 }
 
 dependencies {
-    add(dependencyManagementConf.name, platform(project(":dependencyManagement")))
+    add(dependencyManagementConf.name, platform(project(DEPENDENCY_MANAGEMENT_PROJECT_NAME)))
 }
 
 // endregion

@@ -18,19 +18,15 @@ plugins {
     jacoco
 }
 
-afterEvaluate {
-    jacoco {
-        toolVersion = versionCatalog.versions["jacoco"].toString()
-    }
+val jacocoVersion = versionCatalog.versions["jacoco"].toString()
+val jUnitVersion = versionCatalog.versions["junit"].toString()
 
-    testing {
-        val jUnitVersion = versionCatalog.versions["junit"].toString()
+jacoco {
+    toolVersion = jacocoVersion
+}
 
-        suites.withType<JvmTestSuite>().configureEach {
-            // Test framework 및 junit-jupiter 의존성 추가
-            useJUnitJupiter(jUnitVersion)
-        }
-    }
+testing.suites.withType<JvmTestSuite>().configureEach {
+    useJUnitJupiter(jUnitVersion)
 }
 
 tasks.withType<Test>().configureEach {
