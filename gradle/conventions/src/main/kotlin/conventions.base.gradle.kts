@@ -9,16 +9,23 @@ import io.syscall.gradle.task.DownloadDependenciesTask
  */
 private object Comments
 
-// Reproducible build
+// region Reproducible build
 tasks.withType<AbstractArchiveTask>().configureEach {
     isPreserveFileTimestamps = false
     isReproducibleFileOrder = true
     filePermissions { unix("rw-r--r--") }
     dirPermissions { unix("rwxr-xr-x") }
+
+    duplicatesStrategy = DuplicatesStrategy.FAIL
 }
 
-tasks.withType<AbstractArchiveTask>().configureEach {
-    duplicatesStrategy = DuplicatesStrategy.FAIL
+// endregion
+
+afterEvaluate {
+    tasks.withType<AbstractArchiveTask>().configureEach {
+        // 프로젝트 구조가 ':mother:child', 'father:child' 가 일 때 child.jar 와 같은 이름 충돌 방지를 위해 full prefix 활용
+        archiveBaseName.convention(project.path.replace(":", "-").trimStart('-'))
+    }
 }
 
 tasks.register<DownloadDependenciesTask>("downloadDependencies")
