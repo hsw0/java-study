@@ -17,6 +17,9 @@ dependencies {
 
     developmentOnly("io.projectreactor:reactor-tools")
     developmentOnly("io.projectreactor.tools:blockhound")
+
+    implementation(project(":module:springboot-app-base"))
+    testImplementation(testFixtures(project(":module:springboot-app-base")))
 }
 
 tasks.withType<JavaCompile>().named { it.contains("Aot") }.configureEach {

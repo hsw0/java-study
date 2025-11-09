@@ -1,5 +1,4 @@
 plugins {
-    id("conventions.project.java")
     id("conventions.project.kotlin")
     id("conventions.publishing")
     `java-library`

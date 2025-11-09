@@ -10,7 +10,6 @@ group = "io.syscall.hsw.study"
 version = "1.0-SNAPSHOT"
 
 dependencies {
-    implementation("io.github.oshai:kotlin-logging-jvm")
     testImplementation("io.github.oshai:kotlin-logging-jvm")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")

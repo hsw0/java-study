@@ -3,13 +3,9 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 plugins {
     id("conventions.project.kotlin")
     id("conventions.project.spring-boot-app")
-    id("io.syscall.gradle.plugin.devonly")
     id("conventions.jpa-entity")
 }
 
-java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
-}
 
 tasks.withType<BootRun>().configureEach {
     optimizedLaunch = false
@@ -17,25 +13,18 @@ tasks.withType<BootRun>().configureEach {
 }
 
 dependencies {
-    compileOnly(project(":module:annotations"))
     implementation(project(":module:entityid"))
     implementation(project(":module:entityid:hibernate"))
-
-    implementation(project(":module:springboot-app-base"))
-    testImplementation(testFixtures(project(":module:springboot-app-base")))
 
     implementation(project(":module:api-base"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
     implementation("com.google.guava:guava")
 
-    implementation("io.github.oshai:kotlin-logging-jvm")
-
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
-    devRuntimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
     testRuntimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")

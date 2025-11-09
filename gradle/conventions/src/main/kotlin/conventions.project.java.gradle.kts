@@ -19,4 +19,6 @@ tasks.withType<Javadoc> {
 dependencies {
     compileOnly("org.jspecify:jspecify:1.0.0")
     testCompileOnly("org.jspecify:jspecify:1.0.0")
+
+    implementation("org.slf4j:slf4j-api") // Who doesn't?
 }

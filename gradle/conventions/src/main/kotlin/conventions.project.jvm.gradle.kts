@@ -16,8 +16,6 @@ plugins {
 dependencies {
     compileOnly(project(":module:annotations"))
 
-    implementation("org.slf4j:slf4j-api") // Who doesn't?
-
     // 실제 Test fixture는 아니고 테스트 전용 logback-test.xml 설정을 위함
     testRuntimeOnly(testFixtures(project(":module:logging-support")))
 }

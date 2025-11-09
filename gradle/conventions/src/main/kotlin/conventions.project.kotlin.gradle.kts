@@ -11,6 +11,10 @@ plugins {
     id("conventions.project.kotlin-analysis")
 }
 
+dependencies {
+    implementation("io.github.oshai:kotlin-logging-jvm")
+}
+
 @Suppress("UnstableApiUsage")
 testing.suites.withType<JvmTestSuite>().configureEach {
     dependencies {

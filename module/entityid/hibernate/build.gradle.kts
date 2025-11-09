@@ -14,7 +14,5 @@ extra["publishing.artifactId"] = "entityid-hibernate"
 dependencies {
     api(project(":module:entityid"))
 
-    implementation("org.hibernate.orm:hibernate-core:[6.2,)")
-
-    testImplementation("io.github.oshai:kotlin-logging-jvm")
+    implementation("org.hibernate.orm:hibernate-core")
 }
