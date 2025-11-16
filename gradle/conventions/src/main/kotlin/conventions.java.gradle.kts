@@ -32,9 +32,7 @@ java {
 
 tasks.withType<JavaCompile>().configureEach {
     options.release.convention(defaultJvmTarget.asInt())
-}
 
-tasks.withType<JavaCompile>().configureEach {
     with(options) {
         compilerArgs.add("-parameters")
         compilerArgs.addAll(customJavaExt.buildCompilerArgs())

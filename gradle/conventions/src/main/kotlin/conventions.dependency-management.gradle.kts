@@ -52,8 +52,8 @@ fun shouldIncluded(c: Configuration): Boolean =
     (c.isCanBeResolved && !c.isCanBeConsumed && c.isClasspathLike) ||
         includedConfigurations.any { c.name.contains(it) }
 
+// afterEvaluate 필요함
 afterEvaluate {
-    // 필요함
     configurations
         .matching { shouldIncluded(it) }
         .configureEach {
