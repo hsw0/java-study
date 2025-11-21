@@ -61,10 +61,9 @@ public class EntityIdTypeAutoContributor implements TypeContributor {
 
     private Set<Class<? extends EntityId<?>>> scanClasses(BootstrapContext bootstrapContext) {
         // Hibernate에서 아무 클래스나 줏어먹지 말라고 해서 얘를 만들어둔거 같은데 이렇게까지 해야 되나..?
-        var tmpClassLoader = bootstrapContext.getClassLoaderAccess();
+        var tmpClassLoader = bootstrapContext.getClassLoaderService();
         final var entityIdBaseClass = tmpClassLoader.classForName(EntityId.class.getName());
 
-        // final var entityIdBaseClass = EntityId.class; // NOSONAR
         @SuppressWarnings("argument.type.incompatible")
         var classLoader = requireNonNull(bootstrapContext.getServiceRegistry().getService(ClassLoaderService.class));
 

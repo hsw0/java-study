@@ -17,7 +17,7 @@ dependencies {
     testRuntimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 
-    testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    testImplementation("tools.jackson.module:jackson-module-kotlin")
 }
 
 mapstruct {

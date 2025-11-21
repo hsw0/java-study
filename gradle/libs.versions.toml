@@ -4,9 +4,9 @@ format.version = "1.1"
 
 [versions]
 kotlin = "2.2.21"
-logback = "1.5.20"
-junit = "5.12.2"
-spring-boot = "3.5.7"
+logback = "1.5.21"
+junit = "6.0.1"
+spring-boot = "4.0.0"
 spotless = "8.0.0"
 errorprone = "2.43.0"
 checkerframework = "3.49.3-eisop1"
@@ -35,7 +35,7 @@ bom-junit = { module = "org.junit:junit-bom", version.ref = "junit" }
 bom-assertj = { module = "org.assertj:assertj-bom", version = "3.27.6" }
 bom-kotest = { module = "io.kotest:kotest-bom", version = "6.0.4" }
 bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
-bom-springCloud-commons = { module = "org.springframework.cloud:spring-cloud-commons-dependencies", version = "4.3.0" }
+bom-springCloud-commons = { module = "org.springframework.cloud:spring-cloud-commons-dependencies", version = "5.0.0-RC1" }
 
 logback-core = { module = "ch.qos.logback:logback-core", version.ref = "logback" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }

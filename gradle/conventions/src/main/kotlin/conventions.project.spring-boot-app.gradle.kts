@@ -12,7 +12,7 @@ plugins {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-aspectj")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
     developmentOnly("io.projectreactor:reactor-tools")

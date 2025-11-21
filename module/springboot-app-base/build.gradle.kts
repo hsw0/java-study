@@ -16,7 +16,7 @@ dependencies {
 
     // conventions.project.spring-boot-app 과 중복
     implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-aspectj")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     runtimeOnly("org.springframework.boot:spring-boot-starter-json")
 
@@ -27,16 +27,17 @@ dependencies {
     // 모든 프로젝트는 일단 모니터링용으로 HTTP를 사용한다
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
-    compileOnly("org.springframework:spring-webmvc")
+    compileOnly("org.springframework.boot:spring-boot-webmvc")
     compileOnly("jakarta.servlet:jakarta.servlet-api")
     testImplementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-webtestclient")
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("io.micrometer:micrometer-core")
     runtimeOnly("io.micrometer:micrometer-tracing")
 
-    runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("tools.jackson.module:jackson-module-kotlin")
 
     testFixturesApi("org.springframework.boot:spring-boot-starter-test")
     testFixturesApi("org.springframework.boot:spring-boot-starter-webflux")

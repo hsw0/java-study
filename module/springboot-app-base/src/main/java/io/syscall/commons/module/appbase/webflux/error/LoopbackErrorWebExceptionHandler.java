@@ -1,7 +1,5 @@
 package io.syscall.commons.module.appbase.webflux.error;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.syscall.annotations.VisibleForTesting;
 import java.nio.ByteBuffer;
 import java.time.Instant;
@@ -16,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.boot.webflux.error.ErrorWebExceptionHandler;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpHeaders;
@@ -30,6 +28,7 @@ import org.springframework.web.reactive.HandlerResultHandler;
 import org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * {@link Controller} 바깥에서 예외가 발생하여 {@link ExceptionHandler}로 전달되지 못한 경우 다시 ExceptionHandler로 처리를 유도
@@ -60,7 +59,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
         this.objectMapper = objectMapper;
     }
 
-    @SuppressWarnings("MemberName")
+    @SuppressWarnings({"MemberName", "type.argument.type.incompatible", "type.arguments.not.inferred"})
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable t) {
         return requestMappingHandlerAdapter
@@ -74,9 +73,8 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
      * Copied from Spring's
      *
      * @see org.springframework.web.reactive.DispatcherHandler#handleResult
-     * @see org.springframework.web.reactive.DispatcherHandler#doHandleResult
      */
-    @SuppressWarnings("JavadocReference")
+    @SuppressWarnings({"JavadocReference", "type.argument.type.incompatible", "type.arguments.not.inferred"})
     private Mono<Void> handleResult(ServerWebExchange exchange, HandlerResult result) {
         Mono<Void> resultMono = doHandleResult(exchange, result, "Handler " + result.getHandler());
         var eh = result.getExceptionHandler();
@@ -84,18 +82,16 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
             return resultMono;
         }
         return resultMono.onErrorResume(ex -> eh.handleError(exchange, ex)
-                .flatMap(result2 -> doHandleResult(
-                        exchange,
-                        result2,
+                .flatMap(result2 -> doHandleResult(exchange, result2,
                         "Exception handler " + result2.getHandler() + ", error=\"" + ex.getMessage() + "\"")));
     }
 
     /**
      * Copied from Spring's
      *
-     * @see org.springframework.web.reactive.DispatcherHandler#doHandleResult
+     * @see org.springframework.web.reactive.DispatcherHandler#handleResult
      */
-    @SuppressWarnings("JavadocReference")
+    @SuppressWarnings({"JavadocReference", "type.argument.type.incompatible", "type.arguments.not.inferred"})
     private Mono<Void> doHandleResult(ServerWebExchange exchange, HandlerResult handlerResult, String description) {
         for (var resultHandler : this.resultHandlers) {
             if (resultHandler.supports(handlerResult)) {
@@ -106,7 +102,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
         return Mono.error(new IllegalStateException("No HandlerResultHandler for " + handlerResult.getReturnValue()));
     }
 
-    @SuppressWarnings("dereference.of.nullable")
+    @SuppressWarnings({"dereference.of.nullable", "type.argument.type.incompatible", "type.arguments.not.inferred"})
     private Mono<Void> handleUncaught(ServerWebExchange exchange, Throwable t) {
         if (exchange.getResponse().isCommitted() || isDisconnectedClientError(t)) {
             return Mono.error(t);
@@ -141,12 +137,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
         var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PROBLEM_JSON);
 
-        byte[] responseContent;
-        try {
-            responseContent = objectMapper.writeValueAsBytes(detail);
-        } catch (JsonProcessingException e) {
-            throw new AssertionError("Failed to serialize ProblemDetail", e);
-        }
+        byte[] responseContent = objectMapper.writeValueAsBytes(detail);
 
         var bb = ByteBuffer.wrap(responseContent).asReadOnlyBuffer();
 
@@ -167,7 +158,7 @@ public class LoopbackErrorWebExceptionHandler implements ErrorWebExceptionHandle
     private boolean isDisconnectedClientError(Throwable ex) {
         return DISCONNECTED_CLIENT_EXCEPTIONS.contains(ex.getClass().getSimpleName())
                 || isDisconnectedClientErrorMessage(
-                        NestedExceptionUtils.getMostSpecificCause(ex).getMessage());
+                NestedExceptionUtils.getMostSpecificCause(ex).getMessage());
     }
 
     /**

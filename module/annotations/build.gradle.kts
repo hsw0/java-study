@@ -13,5 +13,5 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 dependencies {
-    compileOnlyApi("jakarta.annotation:jakarta.annotation-api:2.1.1")
+    compileOnlyApi("jakarta.annotation:jakarta.annotation-api:3.0.0")
 }

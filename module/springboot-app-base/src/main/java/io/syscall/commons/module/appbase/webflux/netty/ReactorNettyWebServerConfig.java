@@ -5,7 +5,7 @@ import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.web.embedded.netty.NettyServerCustomizer;
+import org.springframework.boot.reactor.netty.NettyServerCustomizer;
 import org.springframework.context.annotation.Bean;
 import reactor.netty.http.server.HttpServer;
 import reactor.netty.http.server.HttpServerMetricsRecorder;

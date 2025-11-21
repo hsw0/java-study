@@ -1,14 +1,14 @@
 package io.syscall.commons.module.appbase.webflux.error;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.web.reactive.error.ErrorWebFluxAutoConfiguration;
+import org.springframework.boot.webflux.autoconfigure.error.ErrorWebFluxAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.reactive.HandlerResultHandler;
 import org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerAdapter;
+import tools.jackson.databind.ObjectMapper;
 
 @Configuration(proxyBeanMethods = false)
 @AutoConfiguration(before = ErrorWebFluxAutoConfiguration.class)

@@ -5,7 +5,7 @@ import io.netty.channel.EventLoopGroup
 import io.netty.channel.nio.NioEventLoopGroup
 import io.syscall.hsw.study.apiserver.infra.reactor.netty.DelegatingLoopResources
 import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.boot.web.embedded.netty.NettyServerCustomizer
+import org.springframework.boot.reactor.netty.NettyServerCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import reactor.netty.resources.LoopResources

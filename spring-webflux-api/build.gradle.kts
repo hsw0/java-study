@@ -18,6 +18,7 @@ dependencies {
 
     implementation(project(":module:api-base"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    testImplementation("org.springframework.boot:spring-boot-webtestclient")
 
     implementation("com.google.guava:guava")
 

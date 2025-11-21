@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.error.ErrorAttributes;
-import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.boot.webmvc.error.ErrorAttributes;
+import org.springframework.boot.webmvc.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
@@ -29,7 +29,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
  * {@link Controller} 바깥에서 예외가 발생하여 {@link ExceptionHandler}로 전달되지 못한 경우 다시 ExceptionHandler로 처리를 유도
  *
  * @see io.syscall.commons.module.appbase.webflux.error.LoopbackErrorWebExceptionHandler
- * @see org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+ * @see org.springframework.boot.webmvc.autoconfigure.error.ErrorMvcAutoConfiguration
  */
 @Controller
 @PermitAll

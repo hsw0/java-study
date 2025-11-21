@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigurationImportFilter;
@@ -32,7 +33,8 @@ public class ExcludeAutoConfigurationImportFilter implements AutoConfigurationIm
     private Set<String> exclusions = Set.of();
 
     @Override
-    public boolean[] match(String[] autoConfigurationClasses, AutoConfigurationMetadata autoConfigurationMetadata) {
+    public boolean[] match(@Nullable String[] autoConfigurationClasses,
+            AutoConfigurationMetadata autoConfigurationMetadata) {
         boolean[] matches = new boolean[autoConfigurationClasses.length];
         for (int i = 0; i < autoConfigurationClasses.length; i++) {
             var autoConfigurationClass = autoConfigurationClasses[i];
@@ -55,7 +57,7 @@ public class ExcludeAutoConfigurationImportFilter implements AutoConfigurationIm
     /**
      * {@link AutoConfigurationImportSelector#getExcludeAutoConfigurationsProperty()} 와 같으나 중복 선언되더라도 모든 값을 머지
      */
-    @SuppressWarnings("JavadocReference")
+    @SuppressWarnings({"JavadocReference", "argument.type.incompatible"})
     private Set<String> getAllExcludeAutoConfigurationsProperty(Environment environment) {
         var allPropertySources = ConfigurationPropertySources.get(environment);
 

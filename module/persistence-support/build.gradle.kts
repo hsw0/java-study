@@ -9,6 +9,7 @@ plugins {
 dependencies {
     compileOnly(project(":module:annotations"))
 
+    implementation("org.springframework.boot:spring-boot-jdbc")
     implementation("org.springframework.data:spring-data-jpa")
     implementation("org.hibernate.orm:hibernate-core")
     testRuntimeOnly("com.h2database:h2")
@@ -17,7 +18,6 @@ dependencies {
     implementation("org.springframework:spring-web")
 
     compileOnly("org.postgresql:postgresql")
-    compileOnly("org.postgresql:r2dbc-postgresql:1.0.5.RELEASE")
 }
 
 configurations.compileClasspath {
