@@ -11,15 +11,14 @@ plugins {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-aspectj")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation(project(":module:springboot-app-base"))
+    testImplementation(testFixtures(project(":module:springboot-app-base")))
+
+    implementation("org.springframework.boot:spring-boot")
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
 
     developmentOnly("io.projectreactor:reactor-tools")
     developmentOnly("io.projectreactor.tools:blockhound")
-
-    implementation(project(":module:springboot-app-base"))
-    testImplementation(testFixtures(project(":module:springboot-app-base")))
 }
 
 tasks.withType<JavaCompile>().named { it.contains("Aot") }.configureEach {

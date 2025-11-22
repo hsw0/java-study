@@ -13,17 +13,20 @@ dependencies {
     implementation(project(":module:springboot-support"))
     implementation(project(":module:reactor-support"))
 
-    // conventions.project.spring-boot-app 과 중복
+    // conventions.project.spring-boot-app 과 약간 겹치는 선언
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-aspectj")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    runtimeOnly("org.springframework.boot:spring-boot-starter-json")
+    implementation("org.springframework.boot:spring-boot-validation")
+
+    runtimeOnly("org.springframework.boot:spring-boot-jackson")
+    runtimeOnly("tools.jackson.module:jackson-module-kotlin")
 
     implementation("org.springframework.cloud:spring-cloud-context") {
         exclude(group = "org.springframework.security", module = "spring-security-crypto")
     }
 
     // 모든 프로젝트는 일단 모니터링용으로 HTTP를 사용한다
+    implementation("org.springframework.boot:spring-boot-web-server")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
     compileOnly("org.springframework.boot:spring-boot-webmvc")
@@ -31,12 +34,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-webtestclient")
 
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("io.micrometer:micrometer-registry-prometheus")
-    runtimeOnly("io.micrometer:micrometer-core")
-    runtimeOnly("io.micrometer:micrometer-tracing")
-
-    implementation("tools.jackson.module:jackson-module-kotlin")
+    // spring-boot-starter-actuator:
+    implementation("org.springframework.boot:spring-boot-actuator-autoconfigure")
+    implementation("org.springframework.boot:spring-boot-micrometer-metrics")
+    runtimeOnly("org.springframework.boot:spring-boot-health")
 
     testFixturesApi("org.springframework.boot:spring-boot-starter-test")
     testFixturesApi("org.springframework.boot:spring-boot-starter-webflux")
