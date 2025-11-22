@@ -6,8 +6,6 @@ plugins {
 }
 
 dependencies {
-    compileOnly(project(":module:annotations"))
-
     implementation("org.springframework.boot:spring-boot")
     implementation("org.springframework.boot:spring-boot-autoconfigure")
 }

@@ -9,8 +9,6 @@ plugins {
 group = "dummy"
 
 dependencies {
-    compileOnly(project(":module:annotations"))
-
     testFixturesApi("io.projectreactor:reactor-test")
     testRuntimeOnly("io.projectreactor:reactor-tools")
     compileOnly("io.projectreactor.tools:blockhound") // BlockHoundIntegration SPI
@@ -30,6 +28,6 @@ dependencies {
 
     // Production
     for (arch in listOf("aarch_64", "x86_64")) {
-        runtimeOnly("io.netty:netty-transport-native-epoll::linux-${arch}")
+        runtimeOnly("io.netty:netty-transport-native-epoll::linux-$arch")
     }
 }

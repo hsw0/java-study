@@ -7,8 +7,6 @@ plugins {
 }
 
 dependencies {
-    compileOnly(project(":module:annotations"))
-
     implementation("org.springframework.boot:spring-boot-jdbc")
     implementation("org.springframework.data:spring-data-jpa")
     implementation("org.hibernate.orm:hibernate-core")
