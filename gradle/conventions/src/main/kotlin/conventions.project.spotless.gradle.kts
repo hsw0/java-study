@@ -17,7 +17,7 @@ configure<SpotlessExtension> {
     if (pluginManager.hasPlugin("java")) {
         java {
             target("src/**/*.java")
-            palantirJavaFormat("2.81.0")
+            palantirJavaFormat("2.82.0")
 
             toggleOffOn()
         }
