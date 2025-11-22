@@ -1,6 +1,5 @@
 import Constants.DEPENDENCY_MANAGEMENT_CONFIG_NAME
 import Constants.DEPENDENCY_MANAGEMENT_PROJECT_NAME
-import io.syscall.gradle.conventions.isClasspathLike
 
 /**
  * 프로젝트 전체에 의존성 버전 관리
@@ -49,8 +48,8 @@ val includedConfigurations =
     )
 
 fun shouldIncluded(c: Configuration): Boolean =
-    (c.isCanBeResolved && !c.isCanBeConsumed && c.isClasspathLike) ||
-        includedConfigurations.any { c.name.contains(it) }
+    includedConfigurations.any { c.name.contains(it) } ||
+        (c.isCanBeResolved && !c.isCanBeConsumed) && !c.name.contains("detekt")
 
 // afterEvaluate 필요함
 afterEvaluate {
