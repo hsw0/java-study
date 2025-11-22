@@ -28,6 +28,9 @@ val defaultJvmTarget = JavaLanguageVersion.of(21)
 java {
     toolchain.languageVersion.convention(defaultJvmTarget)
     disableAutoTargetJvm()
+    consistentResolution {
+        useCompileClasspathVersions()
+    }
 }
 
 tasks.withType<JavaCompile>().configureEach {
