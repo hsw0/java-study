@@ -38,11 +38,11 @@ configurations.configureEach {
     } else if (isRuntimeClasspath) {
         resolutionStrategy.dependencySubstitution {
             substitute(module("org.apache.logging.log4j:log4j-core"))
-                .using(module("org.apache.logging.log4j:log4j-to-slf4j:2.24.3"))
+                .using(module("org.apache.logging.log4j:log4j-to-slf4j:0"))
                 .because("Use slf4j")
 
             substitute(module("log4j:log4j"))
-                .using(module("org.slf4j:log4j-over-slf4j:2.0.17"))
+                .using(module("org.slf4j:log4j-over-slf4j:0"))
                 .because("Use slf4j")
         }
     }
