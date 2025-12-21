@@ -23,7 +23,7 @@ tasks.withType<AbstractCompile>().configureEach {
 
 val customJavaExt = extensions.create<CustomJavaExtension>("customJava")
 
-val defaultJvmTarget = JavaLanguageVersion.of(21)
+val defaultJvmTarget = JavaLanguageVersion.of(25)
 
 java {
     toolchain.languageVersion.convention(defaultJvmTarget)

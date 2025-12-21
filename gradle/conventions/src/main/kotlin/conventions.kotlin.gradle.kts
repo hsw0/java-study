@@ -21,9 +21,9 @@ plugins {
 
 configure<KotlinJvmProjectExtension> {
     compilerOptions {
-        jvmTarget.convention(JvmTarget.JVM_21)
-        languageVersion.convention(KotlinVersion.KOTLIN_2_2)
-        apiVersion.convention(KotlinVersion.KOTLIN_2_2)
+        jvmTarget.convention(JvmTarget.JVM_25)
+        languageVersion.convention(KotlinVersion.KOTLIN_2_3)
+        apiVersion.convention(KotlinVersion.KOTLIN_2_3)
 
         // https://kotlinlang.org/docs/whatsnew22.html#changes-to-default-method-generation-for-interface-functions
         jvmDefault = JvmDefaultMode.NO_COMPATIBILITY
