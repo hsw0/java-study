@@ -37,6 +37,7 @@ jobs:
 
       - name: Download dependencies
         run: |
+          ./gradlew buildEnvironment
           ./gradlew --no-configuration-cache downloadDependencies
           ./gradlew --no-configuration-cache build --dry-run
 
@@ -59,6 +60,12 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 # v5.0.0
+
+      - name: Download dependencies
+        run: |
+          ./gradlew buildEnvironment
+          ./gradlew --no-configuration-cache downloadDependencies
+          ./gradlew --no-configuration-cache test --dry-run
 
       - name: Test
         run: ./gradlew --offline --continue test :test-report:{testReport,jacocoMergeExecution}
