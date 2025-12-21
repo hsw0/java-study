@@ -11,8 +11,9 @@ import org.jspecify.annotations.Nullable;
 @SuppressWarnings("serial")
 public abstract class AbstractEntityIdJavaType<T extends EntityId<?>> extends AbstractClassJavaType<T> {
 
+    @SuppressWarnings("unchecked")
     protected AbstractEntityIdJavaType(Class<? extends T> clazz) {
-        super(clazz, ImmutableMutabilityPlan.instance());
+        super((Class<T>) clazz, ImmutableMutabilityPlan.instance());
         verifyType(clazz);
     }
 
