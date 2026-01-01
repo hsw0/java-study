@@ -1,1 +1,8 @@
 ---
+
+spring.autoconfigure.exclude:
+  - org.springframework.boot.jdbc.autoconfigure.XADataSourceAutoConfiguration
+  - org.springframework.boot.jdbc.autoconfigure.JndiDataSourceAutoConfiguration
+  - org.springframework.boot.transaction.jta.autoconfigure.JtaAutoConfiguration
+  - org.springframework.boot.jdbc.autoconfigure.health.DataSourceHealthContributorAutoConfiguration
+  - org.springframework.boot.jdbc.autoconfigure.metrics.DataSourcePoolMetricsAutoConfiguration  # Use otel instrumentation

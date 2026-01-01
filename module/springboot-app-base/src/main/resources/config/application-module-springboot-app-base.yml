@@ -5,12 +5,17 @@ spring.main:
 
 server:
   shutdown: GRACEFUL
-  forward-headers-strategy: NONE
+  #forward-headers-strategy: NONE
 
   # Based on AWS ALB's
   # https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html
   netty.max-initial-line-length: 16KB
   max-http-request-header-size: 64KB # The maximum length of all headers.
+
+  # Prevent usage by default
+  reactive.session:
+    max-sessions: 1
+    timeout: 1ms
 
 
 logging.config: classpath:logback-main.xml
@@ -38,22 +43,28 @@ logging.level:
   "org.springframework.web.reactive.result.method.annotation.ControllerMethodResolver": DEBUG
 
 spring.jmx.enabled: true
+spring.application.admin.enabled: true
 
-management:
-  endpoints.access.default: NONE
-  endpoints.jmx:
+management.endpoints:
+  access.default: NONE
+  jmx:
     exposure.include: "*"
-  endpoints.web:
+  web:
     base-path: /internal
     discovery.enabled: false
-    exposure.include: "*"
-    path-mapping:
-      prometheus: metrics
-  endpoint:
-    # Explicitly Disabled
-    heapdump.access: NONE
-    threaddump.access: NONE
-    shutdown.access: NONE
+    exposure.include: []
+    exposure.exclude: "*"
+management.endpoint:
+  # Explicitly Disabled
+  heapdump.access: NONE
+  threaddump.access: NONE
+  shutdown.access: NONE
+  beans.access: UNRESTRICTED
+  mappings.access: UNRESTRICTED
+  configprops.access: UNRESTRICTED
+  configprops.show-values: ALWAYS
+  env.access: UNRESTRICTED
+  env.show-values: ALWAYS
 
 management.server:
   add-application-context-header: true
@@ -71,8 +82,18 @@ spring.autoconfigure.exclude:
   - org.springframework.boot.actuate.autoconfigure.audit.AuditEventsEndpointAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.logging.LogFileWebEndpointAutoConfiguration
   - org.springframework.boot.actuate.autoconfigure.logging.LoggersEndpointAutoConfiguration
+  - org.springframework.cloud.autoconfigure.WritableEnvironmentEndpointAutoConfiguration
 
-  #- org.springframework.boot.micrometer.metrics.autoconfigure.export.otlp.OtlpMetricsExportAutoConfiguration
+  - org.springframework.boot.health.autoconfigure.actuate.endpoint.HealthEndpointAutoConfiguration
+  - org.springframework.boot.health.autoconfigure.contributor.HealthContributorAutoConfiguration
+  - org.springframework.boot.health.autoconfigure.registry.HealthContributorRegistryAutoConfiguration
+  - org.springframework.boot.health.autoconfigure.application.AvailabilityHealthContributorAutoConfiguration
+  - org.springframework.boot.health.autoconfigure.application.DiskSpaceHealthContributorAutoConfiguration
+  - org.springframework.boot.health.autoconfigure.application.SslHealthContributorAutoConfiguration
+
+  - org.springframework.boot.micrometer.metrics.autoconfigure.export.otlp.OtlpMetricsExportAutoConfiguration
+  - org.springframework.boot.micrometer.metrics.autoconfigure.export.simple.SimpleMetricsExportAutoConfiguration
+  - org.springframework.boot.micrometer.metrics.autoconfigure.export.prometheus.PrometheusMetricsExportAutoConfiguration
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.appoptics.AppOpticsMetricsExportAutoConfiguration
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.atlas.AtlasMetricsExportAutoConfiguration
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.datadog.DatadogMetricsExportAutoConfiguration
@@ -84,24 +105,5 @@ spring.autoconfigure.exclude:
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.influx.InfluxMetricsExportAutoConfiguration
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.kairos.KairosMetricsExportAutoConfiguration
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.newrelic.NewRelicMetricsExportAutoConfiguration
-  - org.springframework.boot.micrometer.metrics.autoconfigure.export.prometheus.PrometheusMetricsExportAutoConfiguration
-  - org.springframework.boot.micrometer.metrics.autoconfigure.export.simple.SimpleMetricsExportAutoConfiguration
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.stackdriver.StackdriverMetricsExportAutoConfiguration
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.statsd.StatsdMetricsExportAutoConfiguration
-  - org.springframework.boot.micrometer.metrics.autoconfigure.logging.log4j2.Log4J2MetricsAutoConfiguration
-
-  - org.springframework.boot.jdbc.autoconfigure.XADataSourceAutoConfiguration
-  - org.springframework.boot.jdbc.autoconfigure.JndiDataSourceAutoConfiguration
-  - org.springframework.boot.transaction.jta.autoconfigure.JtaAutoConfiguration
-
-
----
-spring.config.activate.on-profile: local
-
-management.endpoint:
-  beans.access: UNRESTRICTED
-  mappings.access: UNRESTRICTED
-  configprops.access: UNRESTRICTED
-  configprops.show-values: ALWAYS
-  env.access: UNRESTRICTED
-  env.show-values: ALWAYS
