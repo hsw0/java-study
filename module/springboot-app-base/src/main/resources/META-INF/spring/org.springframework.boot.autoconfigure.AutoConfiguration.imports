@@ -1,3 +1,1 @@
 io.syscall.commons.module.appbase.common.CommonAppBaseAutoConfiguration
-io.syscall.commons.module.appbase.webflux.WebFluxAppBaseAutoConfiguration
-io.syscall.commons.module.appbase.servlet.ServletAppBaseAutoConfiguration

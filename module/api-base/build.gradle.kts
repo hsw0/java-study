@@ -7,10 +7,9 @@ plugins {
 
 group = "dummy"
 
+// Empty placeholder module for future API-related utilities
+// WebFlux error handlers have been moved to :module:springboot-app-base (webflux variant)
 dependencies {
     implementation(project(":module:protocol"))
     implementation(project(":module:springboot-app-base"))
-
-    implementation("org.springframework:spring-web")
-    implementation("org.springframework:spring-webflux")
 }

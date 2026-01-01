@@ -16,6 +16,13 @@ dependencies {
     implementation(project(":module:entityid"))
     implementation(project(":module:entityid:hibernate"))
 
+    // Explicitly select WebFlux variant of springboot-app-base
+    implementation(project(":module:springboot-app-base")) {
+        capabilities {
+            requireCapability("dummy:springboot-app-base-webflux")
+        }
+    }
+
     implementation(project(":module:api-base"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     testImplementation("org.springframework.boot:spring-boot-webtestclient")
@@ -31,6 +38,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.h2database:h2")
     implementation(project(":module:persistence-support"))
+
+    implementation("io.opentelemetry:opentelemetry-sdk")
+    implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi")
 }
 
 configurations.compileClasspath {

@@ -4,6 +4,15 @@ import io.syscall.gradle.conventions.versions
 /**
  * Spring Boot Application convention
  *
+ * Applications using this convention MUST explicitly declare which springboot-app-base variant they need:
+ * - For WebFlux apps:
+ *     implementation(project(":module:springboot-app-base")) {
+ *         capabilities { requireCapability("dummy:springboot-app-base-webflux") }
+ *     }
+ * - For Servlet apps:
+ *     implementation(project(":module:springboot-app-base")) {
+ *         capabilities { requireCapability("dummy:springboot-app-base-servlet") }
+ *     }
  */
 private object Comments
 
@@ -22,7 +31,8 @@ val javaAgent: Configuration by configurations.creating {
 }
 
 dependencies {
-    implementation(project(":module:springboot-app-base"))
+    // Applications must explicitly declare which springboot-app-base variant they need
+    // See KDoc above for usage examples
     testImplementation(testFixtures(project(":module:springboot-app-base")))
 
     implementation("org.springframework.boot:spring-boot")
