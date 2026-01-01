@@ -17,6 +17,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-aspectj")
     implementation("org.springframework.boot:spring-boot-validation")
+    runtimeOnly("io.micrometer:context-propagation")
+    runtimeOnly("io.opentelemetry:opentelemetry-context")
 
     runtimeOnly("org.springframework.boot:spring-boot-jackson")
     runtimeOnly("tools.jackson.module:jackson-module-kotlin")

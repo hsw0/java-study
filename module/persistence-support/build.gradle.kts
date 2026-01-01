@@ -7,6 +7,8 @@ plugins {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-persistence")
+    implementation("org.springframework.boot:spring-boot-transaction")
     implementation("org.springframework.boot:spring-boot-jdbc")
     implementation("org.springframework.data:spring-data-jpa")
     implementation("org.hibernate.orm:hibernate-core")
