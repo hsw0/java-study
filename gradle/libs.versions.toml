@@ -11,6 +11,7 @@ spotless = "8.1.0"
 errorprone = "2.43.0"
 checkerframework = "3.49.3-eisop1"
 jacoco = "0.8.14"
+opentelemetry-javaagent = "2.23.0"
 
 [libraries]
 bom-kotlin = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
@@ -66,7 +67,7 @@ dependencies = [
   "kotlin-logging",
   "reactor-blockhound",
   "errorprone-core", "errorprone-annotations",
-  "checkerframework", "checkerframework-qual", "checkerframework-annotatedJdk"
+  "checkerframework", "checkerframework-qual", "checkerframework-annotatedJdk",
 ]
 
 [plugins]
