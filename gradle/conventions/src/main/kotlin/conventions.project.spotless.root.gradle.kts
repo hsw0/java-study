@@ -22,7 +22,7 @@ configure<SpotlessExtension> {
 
 configure<SpotlessExtensionPredeclare> {
     java {
-        palantirJavaFormat("2.81.0")
+        palantirJavaFormat("2.82.0")
     }
     kotlin {
         ktlint()
