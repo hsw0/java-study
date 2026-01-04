@@ -2,6 +2,7 @@ package io.syscall.commons.module.persistence.jpa.multidatasource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aot.AotDetector;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -30,6 +31,12 @@ public class MultiDataSourceJpaBeanFactoryPostProcessor
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        // Skip during AOT runtime - bean definitions are already pre-generated
+        if (AotDetector.useGeneratedArtifacts()) {
+            log.debug("Running in AOT runtime mode, skipping dynamic JPA bean registration");
+            return;
+        }
+
         // Now we can get actual bean instances
         var definitions = beanFactory.getBeansOfType(JpaDataSourceDefinition.class);
 

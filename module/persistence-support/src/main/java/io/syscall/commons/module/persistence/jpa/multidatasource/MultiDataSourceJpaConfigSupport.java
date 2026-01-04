@@ -1,8 +1,6 @@
 package io.syscall.commons.module.persistence.jpa.multidatasource;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,15 +86,14 @@ public final class MultiDataSourceJpaConfigSupport {
 
     private static void registerJpaProperties(BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
         var bd = new GenericBeanDefinition();
-        bd.setBeanClass(JpaProperties.class);
-        bd.setInstanceSupplier(() -> {
-            var props = new JpaProperties();
-            Map<String, String> properties = new HashMap<>(definition.jpaProperties());
-            // Merge hibernate properties into jpa properties
-            definition.hibernateProperties().forEach((k, v) -> properties.put("hibernate." + k, v));
-            props.setProperties(properties);
-            return props;
-        });
+        bd.setBeanClass(JpaPropertiesFactoryBean.class);
+
+        // Use FactoryBean with constructor args for AOT compatibility
+        var ctorArgs = new ConstructorArgumentValues();
+        ctorArgs.addIndexedArgumentValue(0, definition.jpaProperties());
+        ctorArgs.addIndexedArgumentValue(1, definition.hibernateProperties());
+        bd.setConstructorArgumentValues(ctorArgs);
+
         bd.setPrimary(definition.primary());
         bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 
@@ -106,16 +103,14 @@ public final class MultiDataSourceJpaConfigSupport {
     private static void registerHibernateProperties(
             BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
         var bd = new GenericBeanDefinition();
-        bd.setBeanClass(HibernateProperties.class);
-        bd.setInstanceSupplier(() -> {
-            var props = new HibernateProperties();
-            // Set ddl-auto if provided
-            String ddlAuto = definition.hibernateProperties().get("ddl-auto");
-            if (ddlAuto != null) {
-                props.setDdlAuto(ddlAuto);
-            }
-            return props;
-        });
+        bd.setBeanClass(HibernatePropertiesFactoryBean.class);
+
+        // Use FactoryBean with constructor args for AOT compatibility
+        var ctorArgs = new ConstructorArgumentValues();
+        String ddlAuto = definition.hibernateProperties().get("ddl-auto");
+        ctorArgs.addIndexedArgumentValue(0, ddlAuto);
+        bd.setConstructorArgumentValues(ctorArgs);
+
         bd.setPrimary(definition.primary());
         bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 
