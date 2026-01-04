@@ -26,20 +26,32 @@ private val log = KotlinLogging.logger {}
 class EntityIdFactoryTest {
 
     @JvmInline
-    internal value class DummyLongId(override val value: Long) : LongEntityId
+    internal value class DummyLongId(
+        override val value: Long,
+    ) : LongEntityId
 
     @JvmInline
-    internal value class DummyStringId(override val value: String) : StringEntityId
+    internal value class DummyStringId(
+        override val value: String,
+    ) : StringEntityId
 
     @JvmInline
-    private value class Inaccessible(override val value: Long) : LongEntityId
+    private value class Inaccessible(
+        override val value: Long,
+    ) : LongEntityId
 
-    internal data class AsDataClass(override val value: Long) : LongEntityId
+    internal data class AsDataClass(
+        override val value: Long,
+    ) : LongEntityId
 
-    internal class AsPlainClass(override val value: Long) : LongEntityId
+    internal class AsPlainClass(
+        override val value: Long,
+    ) : LongEntityId
 
     @JvmInline
-    internal value class Failing(override val value: Long) : LongEntityId {
+    internal value class Failing(
+        override val value: Long,
+    ) : LongEntityId {
         companion object {
             init {
                 throw ExceptionInInitializerError("Something went wrong")
@@ -120,9 +132,9 @@ class EntityIdFactoryTest {
     fun asString() {
         val alice = PersonId.create("ALICE")
         val randomPerson = PersonId.create("5234123")
-        log.info { "\"ALICE\": value=${alice.value} asString=${alice.asString()} toString=${alice}" }
+        log.info { "\"ALICE\": value=${alice.value} asString=${alice.asString()} toString=$alice" }
         log.info {
-            "\"5234123\": value=${randomPerson.value} asString=${randomPerson.asString()} toString=${randomPerson}"
+            "\"5234123\": value=${randomPerson.value} asString=${randomPerson.asString()} toString=$randomPerson"
         }
     }
 
@@ -150,15 +162,13 @@ class EntityIdFactoryTest {
         objectOutputStream.close()
 
         val b64Encoder = Base64.getEncoder()
-        val toBase64 = fun(bytes: ByteArray): String {
-            return String(b64Encoder.encode(bytes), StandardCharsets.ISO_8859_1)
-        }
+        val toBase64 = fun(bytes: ByteArray): String = String(b64Encoder.encode(bytes), StandardCharsets.ISO_8859_1)
 
         log.info { "serialized=${toBase64(baos.toByteArray())}" }
 
         val objectInputStream = ObjectInputStream(ByteArrayInputStream(baos.toByteArray()))
         val deserialized = objectInputStream.readObject()
-        log.info { "deserialized=${deserialized}" }
+        log.info { "deserialized=$deserialized" }
 
         assertThat(deserialized).describedAs("deserialized").isEqualTo(personId)
     }

@@ -6,7 +6,10 @@ import java.io.Serial
 import java.io.Serializable
 
 @JvmInline
-value class ISBN private constructor(override val value: String) : StringEntityId, Serializable {
+value class ISBN private constructor(
+    override val value: String,
+) : StringEntityId,
+    Serializable {
 
     companion object : StringEntityIdFactory<ISBN> {
 

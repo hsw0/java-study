@@ -7,7 +7,9 @@ import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 import kotlin.test.Test
 
 @JvmInline
-private value class DummyId(override val value: Long) : LongEntityId
+private value class DummyId(
+    override val value: Long,
+) : LongEntityId
 
 class WellKnownValueSupportTest {
 

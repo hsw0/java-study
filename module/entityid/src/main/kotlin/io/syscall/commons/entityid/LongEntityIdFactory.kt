@@ -13,13 +13,9 @@ public object LongEntityIdSupport {
 
         if (fromStringCtor != null) {
             return object : LongEntityIdFactoryWithString<E> {
-                override fun create(value: Long): E {
-                    return EntityIdFactory.invokeConstructor(ctor, value)
-                }
+                override fun create(value: Long): E = EntityIdFactory.invokeConstructor(ctor, value)
 
-                override fun create(value: String): E {
-                    return EntityIdFactory.invokeConstructor(fromStringCtor, value)
-                }
+                override fun create(value: String): E = EntityIdFactory.invokeConstructor(fromStringCtor, value)
             }
         }
 
@@ -33,5 +29,4 @@ public object LongEntityIdSupport {
 
     @JvmStatic
     public fun <E : LongEntityId> factory(type: Class<E>): LongEntityIdFactory<E> = LongEntityId.factory(type.kotlin)
-
 }

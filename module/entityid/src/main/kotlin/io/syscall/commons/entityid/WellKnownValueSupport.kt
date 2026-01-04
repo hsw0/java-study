@@ -14,18 +14,22 @@ public class WellKnownValueSupport<T, E : EntityId<T>>(
     private val nameToInstance: MutableMap<String, E> = ConcurrentHashMap()
     private val instanceToName: MutableMap<E, String> = ConcurrentHashMap()
 
-    public fun declare(name: String, value: T): E {
+    public fun declare(
+        name: String,
+        value: T,
+    ): E {
         require(name.isNotBlank())
 
-        val added = nameToInstance.compute(name) { key, existingValue ->
-            require(existingValue == null) {
-                "${key}: Already mapped to ${existingValue!!.value}"
-            }
-            return@compute ctor(value)
-        }!!
+        val added =
+            nameToInstance.compute(name) { key, existingValue ->
+                require(existingValue == null) {
+                    "$key: Already mapped to ${existingValue!!.value}"
+                }
+                return@compute ctor(value)
+            }!!
         instanceToName.compute(added) { me, existingName ->
             require(existingName == null) {
-                "${name}: Duplicate value ${me.value} under ${existingName!!}"
+                "$name: Duplicate value ${me.value} under ${existingName!!}"
             }
             return@compute name
         }
@@ -43,5 +47,4 @@ public class WellKnownValueSupport<T, E : EntityId<T>>(
     public operator fun get(name: String): E? = nameToInstance[name]
 
     public operator fun get(instance: E): String? = instanceToName[instance]
-
 }

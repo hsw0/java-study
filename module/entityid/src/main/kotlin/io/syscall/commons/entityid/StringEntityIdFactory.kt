@@ -20,5 +20,4 @@ public object StringEntityIdSupport {
     @JvmStatic
     public fun <E : StringEntityId> factory(type: Class<E>): StringEntityIdFactory<E> =
         StringEntityId.factory(type.kotlin)
-
 }

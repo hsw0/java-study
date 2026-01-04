@@ -4,6 +4,3 @@ public interface LongEntityId : EntityId<Long> {
 
     public companion object
 }
-
-
-
