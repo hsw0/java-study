@@ -3,7 +3,6 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 plugins {
     id("conventions.project.kotlin")
     id("conventions.project.spring-boot-app")
-    id("conventions.jpa-entity")
 }
 
 
@@ -35,9 +34,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
     testRuntimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-debug")
 
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("com.h2database:h2")
-    implementation(project(":module:persistence-support"))
+    // Sample domain
+    implementation(project(":domain:sample-domain:business"))
 
     implementation("io.opentelemetry:opentelemetry-sdk")
     implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi")

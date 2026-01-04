@@ -1,12 +1,15 @@
 plugins {
     id("conventions.project.java")
     id("conventions.project.java-analysis")
+    id("conventions.project.kotlin")
     id("conventions.project.spring-boot")
     `java-library`
     `java-test-fixtures`
 }
 
 dependencies {
+    implementation(project(":module:springboot-support"))
+
     implementation("org.springframework.boot:spring-boot-persistence")
     implementation("org.springframework.boot:spring-boot-transaction")
     implementation("org.springframework.boot:spring-boot-jdbc")

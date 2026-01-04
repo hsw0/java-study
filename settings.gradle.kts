@@ -58,5 +58,9 @@ include(
 )
 
 include(
+    ":domain:sample-domain:model",
+    ":domain:sample-domain:datasource",
+    ":domain:sample-domain:persistence",
+    ":domain:sample-domain:business",
     ":spring-webflux-api",
 )

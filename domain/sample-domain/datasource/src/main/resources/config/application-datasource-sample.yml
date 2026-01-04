@@ -1,0 +1,12 @@
+---
+
+# https://docs.spring.io/spring-boot/how-to/data-access.html#howto.data-access.configure-two-datasources 방법을 사용하도록 할 것
+project.datasource.sample:
+  url: jdbc:h2:mem:sampledb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+  driver-class-name: org.h2.Driver
+  username: sa
+  password: ""
+  hikaricp:
+
+
+

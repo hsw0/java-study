@@ -12,12 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /** Test configuration for multi-datasource JPA tests. */
-@SpringBootApplication(
-        excludeName = {
-            "org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration",
-            "org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration",
-            "org.springframework.boot.data.jpa.autoconfigure.DataJpaRepositoriesAutoConfiguration",
-        })
+@SpringBootApplication
 @EnableMultiDataSourceJpa
 @Configuration(proxyBeanMethods = false)
 public class MultiDataSourceTestConfig {
