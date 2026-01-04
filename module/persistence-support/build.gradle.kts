@@ -10,14 +10,21 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-persistence")
     implementation("org.springframework.boot:spring-boot-transaction")
     implementation("org.springframework.boot:spring-boot-jdbc")
+    implementation("org.springframework.boot:spring-boot-hibernate")
+    implementation("org.springframework.boot:spring-boot-jpa")
     implementation("org.springframework.data:spring-data-jpa")
     implementation("org.hibernate.orm:hibernate-core")
-    testRuntimeOnly("com.h2database:h2")
 
     implementation("org.springframework.data:spring-data-commons")
     implementation("org.springframework:spring-web")
 
     compileOnly("org.postgresql:postgresql")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    testRuntimeOnly("com.h2database:h2")
+
+    compileOnly("com.google.errorprone:error_prone_annotation:2.45.0")
 }
 
 configurations.compileClasspath {
