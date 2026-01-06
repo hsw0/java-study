@@ -1,5 +1,7 @@
 import io.syscall.gradle.conventions.versionCatalog
 import io.syscall.gradle.conventions.versions
+import org.gradle.api.artifacts.component.ModuleComponentIdentifier
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 /**
  * Spring Boot Application convention
@@ -52,10 +54,23 @@ tasks.withType<JavaCompile>().named { it.contains("Aot") }.configureEach {
 }
 
 // Embed OpenTelemetry Java agent into the Spring Boot fat jar
-tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+tasks.named<BootJar>("bootJar") {
     // Copy the agent JAR file into the javaagent/ directory in the fat jar
+    // To make configuration cache compatible - pre-compute rename mapping
+    val renameMap: Provider<Map<String, String>> =
+        javaAgent.incoming.artifacts.resolvedArtifacts.map { artifacts ->
+            artifacts.associate { artifact ->
+                val originalName = artifact.file.name
+                val componentId = artifact.id.componentIdentifier as? ModuleComponentIdentifier
+                val baseName = componentId?.module ?: originalName.substringBeforeLast('.').substringBeforeLast('-')
+                originalName to "$baseName.jar"
+            }
+        }
+
     from(javaAgent) {
         into("javaagent")
-        rename { "opentelemetry-javaagent.jar" }
+        eachFile {
+            renameMap.get()[name]?.let { newName -> name = newName }
+        }
     }
 }
