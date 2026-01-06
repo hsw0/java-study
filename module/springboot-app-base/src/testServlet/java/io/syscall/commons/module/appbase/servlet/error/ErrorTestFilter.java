@@ -31,13 +31,13 @@ class ErrorTestFilter extends OncePerRequestFilter {
     /**
      * @see com.fasterxml.jackson.databind.util.ExceptionUtil#throwSneaky
      */
-    @SuppressWarnings("UnusedReturnValue")
+    @SuppressWarnings({"UnusedReturnValue", "TypeParameterUnusedInFormals"})
     public static <T> T throwSneaky(Throwable e) {
         _sneaky(e);
         return null; // never gets here, needed for compiler tho
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "IdentifierName"})
     private static <E extends Throwable> void _sneaky(Throwable e) throws E {
         throw (E) e;
     }

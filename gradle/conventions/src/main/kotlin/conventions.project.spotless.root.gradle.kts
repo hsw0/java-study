@@ -15,7 +15,6 @@ if (project != rootProject) {
     throw UnsupportedOperationException("Root project only!")
 }
 
-
 configure<SpotlessExtension> {
     predeclareDeps()
 }

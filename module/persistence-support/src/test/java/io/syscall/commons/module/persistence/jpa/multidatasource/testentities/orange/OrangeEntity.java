@@ -1,5 +1,6 @@
 package io.syscall.commons.module.persistence.jpa.multidatasource.testentities.orange;
 
+import io.syscall.commons.module.persistence.jpa.EntityExtensions;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +9,9 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 
-/** Test entity for the orange datasource. */
+/**
+ * Test entity for the orange datasource.
+ */
 @Entity
 @Table(name = "orange_entity")
 public class OrangeEntity {
@@ -43,15 +46,22 @@ public class OrangeEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrangeEntity that = (OrangeEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (EntityExtensions.getEffectiveClass(this) != EntityExtensions.getEffectiveClass(o)) {
+            return false;
+        }
+        var that = (OrangeEntity) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return getClass().hashCode();
     }
 
     @Override

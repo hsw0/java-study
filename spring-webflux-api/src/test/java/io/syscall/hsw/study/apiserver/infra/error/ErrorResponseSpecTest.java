@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.syscall.hsw.study.apiserver.infra.ApiInfraLayerTest;
 import java.util.function.Consumer;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +30,15 @@ class ErrorResponseSpecTest extends ApiInfraLayerTest {
         });
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void test(HttpMethod requestMethod, String uri, Consumer<EntityExchangeResult<ProblemDetail>> validation) {
         webClient.method(requestMethod).uri(uri).exchange().expectAll(responseSpec -> {
-            responseSpec.expectStatus().value(Matchers.not(HttpStatus.OK.value()));
+            responseSpec.expectStatus().value(value -> assertThat(value).isNotEqualTo((HttpStatus.OK.value())));
             responseSpec.expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON);
             responseSpec.expectBody(ProblemDetail.class).consumeWith(result -> {
                 var pd = result.getResponseBody();
-                assertThat(pd.getStatus())
+                assertThat(pd)
+                        .extracting(ProblemDetail::getStatus)
                         .describedAs("ProblemDetail.status")
                         .isEqualTo(result.getStatus().value());
                 validation.accept(result);

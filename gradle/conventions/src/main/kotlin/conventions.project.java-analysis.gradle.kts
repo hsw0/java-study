@@ -27,8 +27,6 @@ dependencies {
     add("checkerFramework", "org.checkerframework:checker")
     compileOnly("org.checkerframework:checker-qual")
     testCompileOnly("org.checkerframework:checker-qual")
-
-    compileOnly("com.google.code.findbugs:jsr305:3.0.2")
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -81,7 +79,6 @@ configure<CheckerFrameworkExtension> {
     // error: [type.checking.not.run] ${NAME}Checker did not run because of a previous error issued by javac
     extraJavacArgs.add("-AsuppressWarnings=type.checking.not.run")
 }
-
 
 val checkerFrameworkDep = versionCatalog.libs["checkerframework"].toString()
 val checkerQualDep = versionCatalog.libs["checkerframework-qual"].toString()

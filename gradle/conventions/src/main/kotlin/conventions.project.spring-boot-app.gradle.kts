@@ -43,7 +43,7 @@ dependencies {
 
     // Add OpenTelemetry Java agent to custom configuration
     val otelAgentVersion = versionCatalog.versions["opentelemetry-javaagent"].toString()
-    javaAgent("io.opentelemetry.javaagent:opentelemetry-javaagent:${otelAgentVersion}")
+    javaAgent("io.opentelemetry.javaagent:opentelemetry-javaagent:$otelAgentVersion")
 }
 
 tasks.withType<JavaCompile>().named { it.contains("Aot") }.configureEach {

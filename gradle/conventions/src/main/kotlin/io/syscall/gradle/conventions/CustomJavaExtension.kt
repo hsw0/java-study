@@ -20,12 +20,13 @@ abstract class CustomJavaExtension {
                 } else {
                     "-"
                 }
-                ) + it.key
+            ) + it.key
         }
     }
 
     init {
-        lintOptions += mapOf(
+        lintOptions +=
+            mapOf(
             "all" to true,
             "try" to false,
             "processing" to false,

@@ -30,6 +30,5 @@ configure<SpotlessExtension> {
                 editorConfigOverride(mapOf())
             }
         }
-
     }
 }

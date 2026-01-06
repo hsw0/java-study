@@ -19,12 +19,16 @@ plugins {
 configure<DetektExtension> {
     // Default: src/{main,test}/{java,kotlin}
     // src/{main,test}/kotlin
-    val allKotlinSourceDirs = project.sourceSets.map {
-        it.extensions["kotlin"] as SourceDirectorySet
-    }
+    val allKotlinSourceDirs =
+        project.sourceSets.map {
+            it.extensions["kotlin"] as SourceDirectorySet
+        }
     source.setFrom(allKotlinSourceDirs)
 }
 
 tasks.withType<Detekt>().configureEach {
-    jvmTarget = kotlin.compilerOptions.jvmTarget.get().target
+    jvmTarget =
+        kotlin.compilerOptions.jvmTarget
+            .get()
+            .target
 }

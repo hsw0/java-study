@@ -25,13 +25,14 @@ val useKotlinApt = pluginManager.hasPlugin("org.jetbrains.kotlin.kapt")
 val applyAptToSourceSets = listOf("main", "test")
 
 dependencies {
-    //implementation(platform("org.springframework.boot:spring-boot-dependencies"))
+    // implementation(platform("org.springframework.boot:spring-boot-dependencies"))
 
-    val aptConfigurations: List<String> = if (useKotlinApt) {
-        applyAptToSourceSets.map(::getKaptConfigurationName)
-    } else {
-        applyAptToSourceSets.map { sourceSets[it].annotationProcessorConfigurationName }
-    }
+    val aptConfigurations: List<String> =
+        if (useKotlinApt) {
+            applyAptToSourceSets.map(::getKaptConfigurationName)
+        } else {
+            applyAptToSourceSets.map { sourceSets[it].annotationProcessorConfigurationName }
+        }
     for (configurationName in aptConfigurations) {
         add(configurationName, "org.springframework:spring-context-indexer")
         add(configurationName, "org.springframework.boot:spring-boot-configuration-processor")

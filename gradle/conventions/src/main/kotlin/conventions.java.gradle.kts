@@ -23,11 +23,12 @@ tasks.withType<AbstractCompile>().configureEach {
 
 val customJavaExt = extensions.create<CustomJavaExtension>("customJava")
 
-val defaultJvmTarget = JavaLanguageVersion.of(25)
+val defaultJvmTarget = JavaLanguageVersion.of(25)!!
 
 java {
     toolchain.languageVersion.convention(defaultJvmTarget)
     disableAutoTargetJvm()
+    @Suppress("UnstableApiUsage")
     consistentResolution {
         useCompileClasspathVersions()
     }
@@ -69,9 +70,10 @@ afterEvaluate {
     val configuredToolchainVersion = java.toolchain.languageVersion.orNull ?: return@afterEvaluate
 
     val javaToolchains = project.extensions.getByType<JavaToolchainService>()
-    val launcher = javaToolchains.launcherFor {
-        languageVersion = configuredToolchainVersion
-    }
+    val launcher =
+        javaToolchains.launcherFor {
+            languageVersion = configuredToolchainVersion
+        }
 
     tasks.withType<JavaExec>().configureEach {
         logger.info("${this.path}: Using toolchain version $configuredToolchainVersion")

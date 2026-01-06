@@ -41,9 +41,10 @@ tasks.withType<KotlinCompile>().configureEach {
     compilerOptions.freeCompilerArgs.convention(listOf("-Xjsr305=strict"))
 }
 
-val implementationDependencies = listOf(
-    dependencies.kotlin("stdlib"),
-)
+val implementationDependencies =
+    listOf(
+        dependencies.kotlin("stdlib"),
+    )
 
 dependencies {
     for (dep in implementationDependencies) {

@@ -3,7 +3,6 @@ package io.syscall.commons.module.persistence.jpa.multidatasource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aot.AotDetector;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
@@ -23,14 +22,14 @@ public class MultiDataSourceJpaBeanFactoryPostProcessor
     private static final Logger log = LoggerFactory.getLogger(MultiDataSourceJpaBeanFactoryPostProcessor.class);
 
     @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) {
         // At this point, bean definitions are registered but beans aren't instantiated yet.
         // We cannot get actual JpaDataSourceDefinition instances here.
         // Registration will happen in postProcessBeanFactory instead.
     }
 
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
         // Skip during AOT runtime - bean definitions are already pre-generated
         if (AotDetector.useGeneratedArtifacts()) {
             log.debug("Running in AOT runtime mode, skipping dynamic JPA bean registration");

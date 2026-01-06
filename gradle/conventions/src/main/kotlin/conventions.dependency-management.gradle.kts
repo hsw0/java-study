@@ -27,7 +27,7 @@ val dependencyManagementConf =
     configurations.create(DEPENDENCY_MANAGEMENT_CONFIG_NAME) {
         isCanBeConsumed = false
         isCanBeResolved = false
-    }
+    }!!
 
 val includedConfigurations =
     setOf(

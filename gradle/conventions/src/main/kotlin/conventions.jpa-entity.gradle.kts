@@ -36,14 +36,15 @@ val useKotlinApt = pluginManager.hasPlugin("org.jetbrains.kotlin.kapt")
 val applyAptToSourceSets = listOf("main")
 
 dependencies {
-    val aptConfigurations: List<String> = if (useKotlinApt) {
-        applyAptToSourceSets.map(::getKaptConfigurationName)
-    } else {
-        applyAptToSourceSets.map { sourceSets[it].annotationProcessorConfigurationName }
-    }
+    val aptConfigurations: List<String> =
+        if (useKotlinApt) {
+            applyAptToSourceSets.map(::getKaptConfigurationName)
+        } else {
+            applyAptToSourceSets.map { sourceSets[it].annotationProcessorConfigurationName }
+        }
     for (configurationName in aptConfigurations) {
         // META-INF/spring.components 에 @Entity, @Table 추가
-        // ex) <FQCN of Entity class>=jakarta.persistence.Entity,jakarta.persistence.Table
+        // ex: <FQCN of Entity class>=jakarta.persistence.Entity,jakarta.persistence.Table
         add(configurationName, "org.springframework:spring-context-indexer")
     }
 }
