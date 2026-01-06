@@ -50,13 +50,10 @@ dependencies {
     }
 }
 
-val defaultCheckTask = tasks.getByName(LifecycleBasePlugin.CHECK_TASK_NAME)
-
-reporting.reports.register<AggregateTestReport>("testReport") {
+val testReport by reporting.reports.registering(AggregateTestReport::class) {
     testSuiteName = "test"
     reportTask {
         group = LifecycleBasePlugin.VERIFICATION_GROUP
-        defaultCheckTask.dependsOn(this)
     }
 }
 
@@ -65,7 +62,6 @@ val jacocoTestReport by reporting.reports.registering(JacocoCoverageReport::clas
 
     reportTask {
         group = LifecycleBasePlugin.VERIFICATION_GROUP
-        defaultCheckTask.dependsOn(this)
 
         reports {
             html.required = true
@@ -76,9 +72,12 @@ val jacocoTestReport by reporting.reports.registering(JacocoCoverageReport::clas
 
 val jacocoMergeExecution by tasks.registering(JacocoMergeTask::class) {
     group = LifecycleBasePlugin.VERIFICATION_GROUP
-    defaultCheckTask.dependsOn(this)
 
     dependsOn(jacocoTestReport.get().reportTask)
     executionData.from(jacocoTestReport.get().reportTask.map { it.executionData })
     jacocoClasspath = configurations[JacocoPlugin.ANT_CONFIGURATION_NAME]
+}
+
+tasks.check {
+    dependsOn(testReport.name, jacocoTestReport.name, jacocoMergeExecution.name)
 }
