@@ -1,6 +1,7 @@
 import io.syscall.gradle.conventions.versionCatalog
 import io.syscall.gradle.conventions.versions
 import org.gradle.api.artifacts.component.ModuleComponentIdentifier
+import org.springframework.boot.gradle.tasks.aot.ProcessTestAot
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 /**
@@ -51,6 +52,10 @@ dependencies {
 tasks.withType<JavaCompile>().named { it.contains("Aot") }.configureEach {
     options.compilerArgs.removeIf { it.startsWith("-Xlint:") }
     options.compilerArgs.add("-Xlint:none")
+}
+
+tasks.withType<ProcessTestAot>().configureEach {
+    enabled = false
 }
 
 // Embed OpenTelemetry Java agent into the Spring Boot fat jar
