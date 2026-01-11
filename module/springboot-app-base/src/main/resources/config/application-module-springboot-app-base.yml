@@ -23,10 +23,12 @@ logging.level:
   ROOT: INFO
   io.syscall: DEBUG
 
-  "io.netty.buffer.ByteBufUtil": DEBUG
+  #"io.netty.buffer.ByteBufUtil": DEBUG
 
   # Default Epoll support : false
-  "reactor.netty.resources": DEBUG
+  #"reactor.netty.resources": DEBUG
+
+  "_org.springframework.web.reactive.HandlerMapping.Mappings": DEBUG
 
   ## Using candidate component class from index: ${BEAN FQCN}
   #"org.springframework.context.annotation.ClassPathBeanDefinitionScanner": DEBUG
