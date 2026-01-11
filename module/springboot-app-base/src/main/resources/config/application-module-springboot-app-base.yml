@@ -109,3 +109,6 @@ spring.autoconfigure.exclude:
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.newrelic.NewRelicMetricsExportAutoConfiguration
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.stackdriver.StackdriverMetricsExportAutoConfiguration
   - org.springframework.boot.micrometer.metrics.autoconfigure.export.statsd.StatsdMetricsExportAutoConfiguration
+
+  - org.springframework.boot.jackson2.autoconfigure.Jackson2AutoConfiguration
+  - org.springframework.boot.actuate.autoconfigure.endpoint.jackson.Jackson2EndpointAutoConfiguration
