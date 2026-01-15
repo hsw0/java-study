@@ -12,9 +12,6 @@ import java.time.Duration
 @RestController
 internal class ExampleUtilController {
 
-    @Autowired
-    lateinit var virtualThreadPerTaskScheduler: Scheduler
-
     @GetMapping("/util/current-thread")
     internal fun getCurrentThreadName(): String {
         val thread = Thread.currentThread()
@@ -34,17 +31,11 @@ internal class ExampleUtilController {
         }
 
         return when (strategy ?: SleepStrategy.MONO_DELAY) {
-            SleepStrategy.MONO_DELAY ->
+            SleepStrategy.MONO_DELAY -> {
                 Mono
                     .delay(Duration.ofMillis(millis))
                     .map { buildResponse() }
-
-            SleepStrategy.THREAD_SLEEP_ON_SCHEDULER ->
-                Mono
-                    .fromSupplier {
-                        runCatching { Thread.sleep(millis) }
-                        buildResponse()
-                    }.subscribeOn(virtualThreadPerTaskScheduler)
+            }
 
             SleepStrategy.THREAD_SLEEP_CURRENT -> {
                 runCatching { Thread.sleep(millis) }
@@ -53,5 +44,5 @@ internal class ExampleUtilController {
         }
     }
 
-    enum class SleepStrategy { MONO_DELAY, THREAD_SLEEP_ON_SCHEDULER, THREAD_SLEEP_CURRENT }
+    enum class SleepStrategy { MONO_DELAY, THREAD_SLEEP_CURRENT }
 }
