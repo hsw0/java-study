@@ -28,6 +28,7 @@ logging.level:
   # Default Epoll support : false
   #"reactor.netty.resources": DEBUG
 
+  # org.springframework.web.reactive.handler.AbstractHandlerMapping.mappingsLogger
   "_org.springframework.web.reactive.HandlerMapping.Mappings": DEBUG
 
   ## Using candidate component class from index: ${BEAN FQCN}
