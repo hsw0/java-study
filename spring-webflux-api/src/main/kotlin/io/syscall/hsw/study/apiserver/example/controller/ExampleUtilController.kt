@@ -1,13 +1,12 @@
 package io.syscall.hsw.study.apiserver.example.controller
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
-import reactor.core.scheduler.Scheduler
 import java.time.Duration
+import kotlin.time.TimeSource
 
 @RestController
 internal class ExampleUtilController {
@@ -23,11 +22,12 @@ internal class ExampleUtilController {
         @PathVariable millis: Long,
         @RequestParam(required = false) strategy: SleepStrategy?,
     ): Mono<String> {
-        val start = System.nanoTime()
+        val startedThread = Thread.currentThread().name
+        val start = TimeSource.Monotonic.markNow()
         val buildResponse = fun(): String {
-            @Suppress("MagicNumber")
-            val elapsed = (System.nanoTime() - start) / 1_000_000
-            return "${elapsed}ms elapsed @ ${Thread.currentThread()}"
+            val elapsed = start.elapsedNow()
+            val currentThread = Thread.currentThread().name
+            return "$startedThread -> $elapsed elapsed @ $currentThread"
         }
 
         return when (strategy ?: SleepStrategy.MONO_DELAY) {
