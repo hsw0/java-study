@@ -5,7 +5,7 @@ main() {
 
   local -r SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-  local -r otel_javaagent_path=$(ls "$HOME"/.gradle/caches/modules-2/files-2.1/io.opentelemetry.javaagent/opentelemetry-javaagent/2.23.0/*/opentelemetry-javaagent-2.23.0.jar)
+  local -r otel_javaagent_path=$(ls "$HOME"/.gradle/caches/modules-2/files-2.1/io.opentelemetry.javaagent/opentelemetry-javaagent/2.24.0/*/opentelemetry-javaagent-*.jar)
 
   mkdir -p "$TMPDIR"/hsperfdata
 
