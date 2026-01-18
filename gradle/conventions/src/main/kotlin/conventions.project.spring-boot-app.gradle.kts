@@ -45,7 +45,7 @@ dependencies {
     developmentOnly("io.projectreactor.tools:blockhound")
 
     // Add OpenTelemetry Java agent to custom configuration
-    val otelAgentVersion = versionCatalog.versions["opentelemetry-javaagent"].toString()
+    val otelAgentVersion = versionCatalog.versions["opentelemetry-instrumentation"].toString()
     javaAgent("io.opentelemetry.javaagent:opentelemetry-javaagent:$otelAgentVersion")
 }
 

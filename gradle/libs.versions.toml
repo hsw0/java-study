@@ -11,7 +11,7 @@ spotless = "8.1.0"
 errorprone = "2.43.0"
 checkerframework = "3.49.3-eisop1"
 jacoco = "0.8.14"
-opentelemetry-javaagent = "2.24.0"
+opentelemetry-instrumentation = "2.24.0"
 
 [libraries]
 bom-kotlin = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
@@ -37,6 +37,7 @@ bom-assertj = { module = "org.assertj:assertj-bom", version = "3.27.6" }
 bom-kotest = { module = "io.kotest:kotest-bom", version = "6.0.4" }
 bom-springBoot = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 bom-springCloud-commons = { module = "org.springframework.cloud:spring-cloud-commons-dependencies", version = "5.0.0" }
+bom-opentelemetry-instrumentation = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom", version.ref = "opentelemetry-instrumentation" }
 
 logback-core = { module = "ch.qos.logback:logback-core", version.ref = "logback" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
@@ -59,6 +60,7 @@ bomDependencies = [
   "bom-junit",
   "bom-assertj",
   "bom-kotest",
+  "bom-opentelemetry-instrumentation",
 ]
 
 dependencies = [
