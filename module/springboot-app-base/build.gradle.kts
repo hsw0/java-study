@@ -13,22 +13,24 @@ group = "dummy"
 val variants = listOf("webflux", "servlet")
 
 // Create variant source sets
-val variantSourceSets = variants.associateWith { name ->
-    sourceSets.create(name) {
-        compileClasspath += sourceSets.main.get().output
-        runtimeClasspath += sourceSets.main.get().output
+val variantSourceSets =
+    variants.associateWith { name ->
+        sourceSets.create(name) {
+            compileClasspath += sourceSets.main.get().output
+            runtimeClasspath += sourceSets.main.get().output
+        }
     }
-}
 
 // Create test source sets for each variant
-val testSourceSets = variants.associateWith { name ->
-    sourceSets.create("test${name.replaceFirstChar { it.uppercase() }}") {
-        compileClasspath +=
-            sourceSets.main.get().output + variantSourceSets[name]!!.output + sourceSets.testFixtures.get().output
-        runtimeClasspath +=
-            sourceSets.main.get().output + variantSourceSets[name]!!.output + sourceSets.testFixtures.get().output
+val testSourceSets =
+    variants.associateWith { name ->
+        sourceSets.create("test${name.replaceFirstChar { it.uppercase() }}") {
+            compileClasspath +=
+                sourceSets.main.get().output + variantSourceSets[name]!!.output + sourceSets.testFixtures.get().output
+            runtimeClasspath +=
+                sourceSets.main.get().output + variantSourceSets[name]!!.output + sourceSets.testFixtures.get().output
+        }
     }
-}
 
 // Configure variant configurations to extend from main
 configurations {
@@ -67,7 +69,6 @@ java {
 //region Dependencies
 
 dependencies {
-    // Common dependencies
     implementation(project(":module:logging-support"))
     implementation(project(":module:springboot-support"))
     implementation(project(":module:reactor-support"))
@@ -77,19 +78,23 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-aspectj")
     implementation("org.springframework.boot:spring-boot-validation")
     implementation("org.springframework.boot:spring-boot-jackson")
+    runtimeOnly("tools.jackson.module:jackson-module-kotlin")
     implementation("org.springframework.boot:spring-boot-web-server")
+    runtimeOnly("org.springframework.boot:spring-boot-health")
     implementation("org.springframework.boot:spring-boot-reactor")
     implementation("org.springframework.boot:spring-boot-actuator-autoconfigure")
-    implementation("org.springframework.boot:spring-boot-micrometer-metrics")
+
     implementation("org.springframework.cloud:spring-cloud-context") {
         exclude(group = "org.springframework.security", module = "spring-security-crypto")
     }
 
+    testFixturesApi("org.springframework.boot:spring-boot-starter-test")
+    testFixturesApi("org.springframework.boot:spring-boot-webtestclient")
+    testFixturesAnnotationProcessor("org.springframework:spring-context-indexer")
+
+    implementation("org.springframework.boot:spring-boot-micrometer-metrics")
     runtimeOnly("io.micrometer:context-propagation")
     runtimeOnly("io.opentelemetry:opentelemetry-context")
-    runtimeOnly("org.springframework.boot:spring-boot-jackson")
-    runtimeOnly("org.springframework.boot:spring-boot-health")
-    runtimeOnly("tools.jackson.module:jackson-module-kotlin")
 
     val webfluxImplementation by configurations
     val servletImplementation by configurations
@@ -102,11 +107,6 @@ dependencies {
     servletImplementation("jakarta.servlet:jakarta.servlet-api")
     servletImplementation("org.springframework.boot:spring-boot-webmvc")
     servletImplementation("org.springframework:spring-web")
-
-    // Test fixtures
-    testFixturesApi("org.springframework.boot:spring-boot-starter-test")
-    testFixturesApi("org.springframework.boot:spring-boot-webtestclient")
-    testFixturesAnnotationProcessor("org.springframework:spring-context-indexer")
 
     // Test dependencies for each variant
     for (variant in variants) {
