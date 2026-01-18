@@ -9,6 +9,12 @@ main() {
   export LC_COLLATE=C
   export LC_CTYPE=C.UTF-8
 
+  local -r src_jar_path="$SCRIPT_DIR"/build/libs/spring-webflux-api.jar
+  if [[ ! -r "$src_jar_path" ]]; then
+    echo "[-] Source spring boot fat jar not found at $src_jar_path"
+    return 1
+  fi
+
   # https://docs.oracle.com/en/java/javase/25/docs/specs/man/java.html
   # https://github.com/openjdk/jdk/blob/jdk-25%2B36/src/hotspot/share/runtime/globals.hpp
   # https://github.com/openjdk/jdk/blob/jdk-25%2B3/src/hotspot/os/linux/globals_linux.hpp
