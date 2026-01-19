@@ -47,7 +47,7 @@ main() {
   )
 
   if [[ "$OSTYPE" == *'linux'* ]]; then
-    JVM_OPTS_LOGGING+=(-Xlog:"container=info:stderr:time,level,tags")
+    JVM_OPTS_LOGGING+=(-Xlog:"os+container=info:stderr:time,level,tags")
   fi
 
   export OTEL_TRACES_EXPORTER=console
