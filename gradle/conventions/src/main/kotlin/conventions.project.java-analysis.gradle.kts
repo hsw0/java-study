@@ -82,9 +82,10 @@ configure<CheckerFrameworkExtension> {
 
 val checkerFrameworkDep = versionCatalog.libs["checkerframework"].toString()
 val checkerQualDep = versionCatalog.libs["checkerframework-qual"].toString()
+val checkerFrameworkAnnotatedJdkDep = versionCatalog.libs["checkerframework-annotatedJdk"].toString()
 
 dependencies {
-    add("checkerFrameworkAnnotatedJDK", "org.checkerframework:jdk8:3.3.0")
+    add("checkerFrameworkAnnotatedJDK", checkerFrameworkAnnotatedJdkDep)
 }
 
 configurations.named { it.startsWith("checkerFramework") || it.nameIsCompileClasspath }.configureEach {
