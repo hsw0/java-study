@@ -4,9 +4,9 @@ format.version = "1.1"
 
 [versions]
 kotlin = "2.3.0"
-logback = "1.5.22"
-junit = "6.0.1"
-spring-boot = "4.0.1"
+logback = "1.5.25"
+junit = "6.0.2"
+spring-boot = "4.0.2"
 spotless = "8.1.0"
 errorprone = "2.43.0"
 checkerframework = "3.49.3-eisop1"
@@ -45,7 +45,7 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 guava = { module = "com.google.guava:guava", version = "33.5.0-jre" }
 kotlin-logging = { module = "io.github.oshai:kotlin-logging-jvm", version = "7.0.13" }
 
-reactor-blockhound = { module = "io.projectreactor.tools:blockhound", version = "1.0.15.RELEASE" }
+reactor-blockhound = { module = "io.projectreactor.tools:blockhound", version = "1.0.16.RELEASE" }
 
 errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
 errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "errorprone" }
