@@ -7,11 +7,13 @@ kotlin = "2.3.0"
 logback = "1.5.25"
 junit = "6.0.2"
 spring-boot = "4.0.2"
-spotless = "8.1.0"
-errorprone = "2.43.0"
-checkerframework = "3.49.3-eisop1"
 jacoco = "0.8.14"
 opentelemetry-instrumentation = "2.24.0"
+
+spotless = "8.1.0"
+palantirJavaFormat = "2.82.0"
+errorprone = "2.43.0"
+checkerframework = "3.49.3-eisop1"
 
 [libraries]
 bom-kotlin = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }

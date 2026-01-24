@@ -1,5 +1,7 @@
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.gradle.spotless.SpotlessExtensionPredeclare
+import io.syscall.gradle.conventions.versionCatalog
+import io.syscall.gradle.conventions.versions
 
 /**
  * Spotless
@@ -21,7 +23,7 @@ configure<SpotlessExtension> {
 
 configure<SpotlessExtensionPredeclare> {
     java {
-        palantirJavaFormat("2.82.0")
+        palantirJavaFormat(versionCatalog.versions["palantirJavaFormat"].toString())
     }
     kotlin {
         ktlint()

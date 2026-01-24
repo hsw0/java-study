@@ -1,5 +1,7 @@
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.spotless.LineEnding
+import io.syscall.gradle.conventions.versionCatalog
+import io.syscall.gradle.conventions.versions
 
 /**
  * Spotless
@@ -17,7 +19,7 @@ configure<SpotlessExtension> {
     if (pluginManager.hasPlugin("java")) {
         java {
             target("src/**/*.java")
-            palantirJavaFormat("2.82.0")
+            palantirJavaFormat(versionCatalog.versions["palantirJavaFormat"].toString())
 
             toggleOffOn()
         }
