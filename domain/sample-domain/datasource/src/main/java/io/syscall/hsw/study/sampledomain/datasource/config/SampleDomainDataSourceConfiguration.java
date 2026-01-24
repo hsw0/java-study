@@ -21,9 +21,12 @@ public class SampleDomainDataSourceConfiguration {
     @Bean(defaultCandidate = false)
     @ConfigurationProperties("project.datasource.sample.hikaricp")
     public HikariDataSource sampleDataSource(@Qualifier("sample") DataSourceProperties dataSourceProperties) {
-        return dataSourceProperties
+        var bean = dataSourceProperties
                 .initializeDataSourceBuilder()
                 .type(HikariDataSource.class)
                 .build();
+
+        bean.setAutoCommit(false);
+        return bean;
     }
 }

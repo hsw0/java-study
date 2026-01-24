@@ -11,6 +11,4 @@ dependencies {
     api(project(":domain:sample-domain:model"))
 
     implementation("org.springframework:spring-tx")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
