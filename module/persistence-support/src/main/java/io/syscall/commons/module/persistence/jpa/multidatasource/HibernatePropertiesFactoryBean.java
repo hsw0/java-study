@@ -30,9 +30,4 @@ public class HibernatePropertiesFactoryBean implements FactoryBean<HibernateProp
     public Class<?> getObjectType() {
         return HibernateProperties.class;
     }
-
-    @Override
-    public boolean isSingleton() {
-        return true;
-    }
 }

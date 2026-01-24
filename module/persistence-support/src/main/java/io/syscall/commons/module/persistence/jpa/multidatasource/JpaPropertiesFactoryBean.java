@@ -35,9 +35,4 @@ public class JpaPropertiesFactoryBean implements FactoryBean<JpaProperties> {
     public Class<?> getObjectType() {
         return JpaProperties.class;
     }
-
-    @Override
-    public boolean isSingleton() {
-        return true;
-    }
 }
