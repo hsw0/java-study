@@ -56,7 +56,7 @@ public final class MultiDataSourceJpaConfigSupport {
      * @param definition the datasource configuration
      */
     public static void registerJpaBeans(BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
-        log.info("Registering JPA beans for datasource: {}", definition.name());
+        log.info("Registering JPA beans for datasource: {}", definition.getName());
 
         // 1. Register JpaProperties bean
         registerJpaProperties(registry, definition);
@@ -91,10 +91,10 @@ public final class MultiDataSourceJpaConfigSupport {
 
         // Use FactoryBean with constructor args for AOT compatibility
         var ctorArgs = new ConstructorArgumentValues();
-        ctorArgs.addIndexedArgumentValue(0, definition.jpaProperties());
+        ctorArgs.addIndexedArgumentValue(0, definition.getJpaProperties());
         bd.setConstructorArgumentValues(ctorArgs);
 
-        registry.registerBeanDefinition(definition.jpaPropertiesBeanName(), bd);
+        registry.registerBeanDefinition(definition.getJpaPropertiesBeanName(), bd);
     }
 
     private static void registerHibernateProperties(
@@ -108,7 +108,7 @@ public final class MultiDataSourceJpaConfigSupport {
         var ctorArgs = new ConstructorArgumentValues();
         bd.setConstructorArgumentValues(ctorArgs);
 
-        registry.registerBeanDefinition(definition.hibernatePropertiesBeanName(), bd);
+        registry.registerBeanDefinition(definition.getHibernatePropertiesBeanName(), bd);
     }
 
     private static void registerPersistenceManagedTypes(
@@ -119,11 +119,11 @@ public final class MultiDataSourceJpaConfigSupport {
         bd.setDefaultCandidate(false);
 
         var ctorArgs = new ConstructorArgumentValues();
-        ctorArgs.addIndexedArgumentValue(0, definition.entityPackages());
-        ctorArgs.addIndexedArgumentValue(1, definition.entityClasses());
+        ctorArgs.addIndexedArgumentValue(0, definition.getEntityPackages());
+        ctorArgs.addIndexedArgumentValue(1, definition.getEntityClasses());
         bd.setConstructorArgumentValues(ctorArgs);
 
-        registry.registerBeanDefinition(definition.persistenceManagedTypesBeanName(), bd);
+        registry.registerBeanDefinition(definition.getPersistenceManagedTypesBeanName(), bd);
     }
 
     private static void registerHibernateJpaConfiguration(
@@ -156,20 +156,20 @@ public final class MultiDataSourceJpaConfigSupport {
 
         // Index 0: DataSource - reference to the named bean
         ctorArgs.addGenericArgumentValue(
-                new RuntimeBeanReference(definition.dataSourceBeanName()), DataSource.class.getName());
+                new RuntimeBeanReference(definition.getDataSourceBeanName()), DataSource.class.getName());
 
         // Index 1: JpaProperties - reference to our created bean
         ctorArgs.addGenericArgumentValue(
-                new RuntimeBeanReference(definition.jpaPropertiesBeanName()), JpaProperties.class.getName());
+                new RuntimeBeanReference(definition.getJpaPropertiesBeanName()), JpaProperties.class.getName());
 
         // Index 4: HibernateProperties - reference to our created bean
         ctorArgs.addGenericArgumentValue(
-                new RuntimeBeanReference(definition.hibernatePropertiesBeanName()),
+                new RuntimeBeanReference(definition.getHibernatePropertiesBeanName()),
                 HibernateProperties.class.getName());
 
         bd.setConstructorArgumentValues(ctorArgs);
 
-        registry.registerBeanDefinition(definition.hibernateJpaConfigurationBeanName(), bd);
+        registry.registerBeanDefinition(definition.getHibernateJpaConfigurationBeanName(), bd);
     }
 
     private static void registerJpaVendorAdapter(BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
@@ -179,10 +179,10 @@ public final class MultiDataSourceJpaConfigSupport {
         bd.setDefaultCandidate(false);
 
         // Use factory method on the HibernateJpaConfiguration bean
-        bd.setFactoryBeanName(definition.hibernateJpaConfigurationBeanName());
+        bd.setFactoryBeanName(definition.getHibernateJpaConfigurationBeanName());
         bd.setFactoryMethodName("jpaVendorAdapter");
 
-        registry.registerBeanDefinition(definition.jpaVendorAdapterBeanName(), bd);
+        registry.registerBeanDefinition(definition.getJpaVendorAdapterBeanName(), bd);
     }
 
     private static void registerEntityManagerFactoryBuilder(
@@ -193,37 +193,38 @@ public final class MultiDataSourceJpaConfigSupport {
         bd.setDefaultCandidate(false);
 
         // Use factory method on the HibernateJpaConfiguration bean
-        bd.setFactoryBeanName(definition.hibernateJpaConfigurationBeanName());
+        bd.setFactoryBeanName(definition.getHibernateJpaConfigurationBeanName());
         bd.setFactoryMethodName("entityManagerFactoryBuilder");
         bd.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
 
         // entityManagerFactoryBuilder(JpaVendorAdapter, ObjectProvider, ObjectProvider)
         var ctorArgs = new ConstructorArgumentValues();
-        ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.jpaVendorAdapterBeanName()));
+        ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.getJpaVendorAdapterBeanName()));
         bd.setConstructorArgumentValues(ctorArgs);
 
-        registry.registerBeanDefinition(definition.entityManagerFactoryBuilderBeanName(), bd);
+        registry.registerBeanDefinition(definition.getEntityManagerFactoryBuilderBeanName(), bd);
     }
 
     private static void registerEntityManagerFactory(
             BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
         var bd = new RootBeanDefinition();
 
-        bd.setDependsOn(definition.entityManagerFactoryBuilderBeanName(), definition.persistenceManagedTypesBeanName());
+        bd.setDependsOn(
+                definition.getEntityManagerFactoryBuilderBeanName(), definition.getPersistenceManagedTypesBeanName());
         bd.setDefaultCandidate(false);
 
         // Use factory method on the HibernateJpaConfiguration bean
-        bd.setFactoryBeanName(definition.hibernateJpaConfigurationBeanName());
+        bd.setFactoryBeanName(definition.getHibernateJpaConfigurationBeanName());
         bd.setFactoryMethodName("entityManagerFactory");
         bd.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
 
         // entityManagerFactory(EntityManagerFactoryBuilder, PersistenceManagedTypes)
         var ctorArgs = new ConstructorArgumentValues();
-        ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.entityManagerFactoryBuilderBeanName()));
-        ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.persistenceManagedTypesBeanName()));
+        ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.getEntityManagerFactoryBuilderBeanName()));
+        ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.getPersistenceManagedTypesBeanName()));
         bd.setConstructorArgumentValues(ctorArgs);
 
-        registry.registerBeanDefinition(definition.entityManagerFactoryBeanName(), bd);
+        registry.registerBeanDefinition(definition.getEntityManagerFactoryBeanName(), bd);
     }
 
     private static void registerTransactionManager(
@@ -232,13 +233,13 @@ public final class MultiDataSourceJpaConfigSupport {
         // (factory method approach fails when multiple EMFs exist without a primary)
         var bd = new RootBeanDefinition(JpaTransactionManager.class);
 
-        bd.setDependsOn(definition.entityManagerFactoryBeanName());
+        bd.setDependsOn(definition.getEntityManagerFactoryBeanName());
         bd.setDefaultCandidate(false);
 
         var ctorArgs = new ConstructorArgumentValues();
-        ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.entityManagerFactoryBeanName()));
+        ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.getEntityManagerFactoryBeanName()));
         bd.setConstructorArgumentValues(ctorArgs);
 
-        registry.registerBeanDefinition(definition.transactionManagerBeanName(), bd);
+        registry.registerBeanDefinition(definition.getTransactionManagerBeanName(), bd);
     }
 }

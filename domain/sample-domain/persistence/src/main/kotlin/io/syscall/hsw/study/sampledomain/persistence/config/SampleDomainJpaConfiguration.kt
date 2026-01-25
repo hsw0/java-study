@@ -2,7 +2,7 @@ package io.syscall.hsw.study.sampledomain.persistence.config
 
 import io.syscall.commons.module.persistence.jpa.multidatasource.EnableMultiDataSourceJpa
 import io.syscall.commons.module.persistence.jpa.multidatasource.JpaDataSourceDefinition
-import io.syscall.commons.module.persistence.jpa.multidatasource.JpaDataSourceDefinitionBuilder
+import io.syscall.commons.module.persistence.jpa.multidatasource.jpaDataSourceDefinition
 import io.syscall.hsw.study.sampledomain.model.PersonEntity
 import io.syscall.hsw.study.sampledomain.persistence.repository.PersonRepository
 import org.hibernate.cfg.BatchSettings
@@ -24,32 +24,31 @@ import javax.sql.DataSource
 public class SampleDomainJpaConfiguration {
 
     @Bean
-    public fun sampleJpaDefinition(
+    internal fun sampleJpaDefinition(
         @Qualifier("sample") dataSource: ObjectProvider<DataSource>,
     ): JpaDataSourceDefinition =
-        JpaDataSourceDefinitionBuilder
-            .builder()
-            .name("sample")
-            .dataSourceBeanName("sampleDataSource")
-            .entityPackage(PersonEntity::class.java.packageName)
-            .jpaProperty(JdbcSettings.DIALECT, "org.hibernate.dialect.H2Dialect")
-            .jpaProperty(JdbcSettings.ALLOW_METADATA_ON_BOOT, "false")
-            .jpaProperty(JdbcSettings.CONNECTION_PROVIDER_DISABLES_AUTOCOMMIT, "true")
+        jpaDataSourceDefinition {
+            name = "sample"
+            dataSourceBeanName = "sampleDataSource"
+            entityPackage(PersonEntity::class.java.packageName)
+            jpaProperties[JdbcSettings.DIALECT] = "org.hibernate.dialect.H2Dialect"
+            jpaProperties[JdbcSettings.ALLOW_METADATA_ON_BOOT] = "false"
+            jpaProperties[JdbcSettings.CONNECTION_PROVIDER_DISABLES_AUTOCOMMIT] = "true"
             // DataSourceConnectionProvider에는 적용되지 않음
-            // .jpaProperty(JdbcSettings.AUTOCOMMIT, "false")
-            .jpaProperty(JdbcSettings.USE_GET_GENERATED_KEYS, "true")
-            // .jpaProperty(JdbcSettings.USE_SCROLLABLE_RESULTSET, "???")
-            .jpaProperty(DialectSpecificSettings.ORACLE_OSON_DISABLED, "true")
-            .jpaProperty(SchemaToolingSettings.HBM2DDL_AUTO, "update")
-            .jpaProperty(QuerySettings.IN_CLAUSE_PARAMETER_PADDING, "true")
-            .jpaProperty(QuerySettings.FAIL_ON_PAGINATION_OVER_COLLECTION_FETCH, "true")
-            .jpaProperty(JdbcSettings.STATEMENT_FETCH_SIZE, "100")
-            .jpaProperty(BatchSettings.ORDER_INSERTS, "true")
-            .jpaProperty(BatchSettings.ORDER_UPDATES, "true")
-            .jpaProperty(BatchSettings.STATEMENT_BATCH_SIZE, "1000")
-            .jpaProperty(MappingSettings.KEYWORD_AUTO_QUOTING_ENABLED, "true")
-            .jpaProperty(MappingSettings.XML_MAPPING_ENABLED, "false")
-            .build()
+            // jpaProperties[JdbcSettings.AUTOCOMMIT] = "false"
+            jpaProperties[JdbcSettings.USE_GET_GENERATED_KEYS] = "true"
+            // jpaProperties[JdbcSettings.USE_SCROLLABLE_RESULTSET] = "???"
+            jpaProperties[DialectSpecificSettings.ORACLE_OSON_DISABLED] = "true"
+            jpaProperties[SchemaToolingSettings.HBM2DDL_AUTO] = "update"
+            jpaProperties[QuerySettings.IN_CLAUSE_PARAMETER_PADDING] = "true"
+            jpaProperties[QuerySettings.FAIL_ON_PAGINATION_OVER_COLLECTION_FETCH] = "true"
+            jpaProperties[JdbcSettings.STATEMENT_FETCH_SIZE] = "100"
+            jpaProperties[BatchSettings.ORDER_INSERTS] = "true"
+            jpaProperties[BatchSettings.ORDER_UPDATES] = "true"
+            jpaProperties[BatchSettings.STATEMENT_BATCH_SIZE] = "1000"
+            jpaProperties[MappingSettings.KEYWORD_AUTO_QUOTING_ENABLED] = "true"
+            jpaProperties[MappingSettings.XML_MAPPING_ENABLED] = "false"
+        }
 
     @Configuration(proxyBeanMethods = false)
     @EnableJpaRepositories(

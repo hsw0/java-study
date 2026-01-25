@@ -2,7 +2,6 @@ package io.syscall.commons.module.persistence.jpa.multidatasource.testconfig;
 
 import io.syscall.commons.module.persistence.jpa.multidatasource.EnableMultiDataSourceJpa;
 import io.syscall.commons.module.persistence.jpa.multidatasource.JpaDataSourceDefinition;
-import io.syscall.commons.module.persistence.jpa.multidatasource.JpaDataSourceDefinitionBuilder;
 import io.syscall.commons.module.persistence.jpa.multidatasource.testentities.car.CarEntity;
 import io.syscall.commons.module.persistence.jpa.multidatasource.testentities.orange.OrangeEntity;
 import javax.sql.DataSource;
@@ -39,7 +38,7 @@ public class MultiDataSourceTestConfig {
 
     @Bean
     public JpaDataSourceDefinition orangeJpaDefinition() {
-        return JpaDataSourceDefinitionBuilder.builder()
+        return JpaDataSourceDefinition.builder()
                 .name("orange")
                 .dataSourceBeanName("orangeDataSource")
                 .entityPackage(OrangeEntity.class.getPackageName())
@@ -50,7 +49,7 @@ public class MultiDataSourceTestConfig {
 
     @Bean
     public JpaDataSourceDefinition carJpaDefinition() {
-        return JpaDataSourceDefinitionBuilder.builder()
+        return JpaDataSourceDefinition.builder()
                 .name("car")
                 .dataSourceBeanName("carDataSource")
                 .entityPackage(CarEntity.class.getPackageName())
