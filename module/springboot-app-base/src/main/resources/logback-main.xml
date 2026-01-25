@@ -20,4 +20,7 @@
     <appender-ref ref="CONSOLE"/>
   </root>
 
+  <logger name="io.opentelemetry.javaagent.extension.instrumentation.InstrumentationModule" level="DEBUG"/>
+  <logger name="io.opentelemetry.javaagent.tooling.instrumentation.InstrumentationLoader" level="INFO"/>
+
 </configuration>
