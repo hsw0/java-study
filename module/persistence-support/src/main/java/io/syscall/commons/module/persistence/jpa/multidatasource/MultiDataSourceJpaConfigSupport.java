@@ -1,6 +1,5 @@
 package io.syscall.commons.module.persistence.jpa.multidatasource;
 
-import java.util.List;
 import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +8,9 @@ import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
+import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.boot.hibernate.autoconfigure.HibernateProperties;
+import org.springframework.boot.jpa.EntityManagerFactoryBuilder;
 import org.springframework.boot.jpa.autoconfigure.JpaProperties;
 import org.springframework.orm.jpa.JpaTransactionManager;
 
@@ -35,6 +35,17 @@ public final class MultiDataSourceJpaConfigSupport {
     // Spring Boot 4.x's HibernateJpaConfiguration is package-private
     private static final String HIBERNATE_JPA_CONFIG_CLASS =
             "org.springframework.boot.hibernate.autoconfigure.HibernateJpaConfiguration";
+
+    private static final Class<?> hibernateConfigClass;
+
+    static {
+        try {
+            hibernateConfigClass = Class.forName(HIBERNATE_JPA_CONFIG_CLASS);
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(
+                    "HibernateJpaConfiguration not found. Ensure spring-boot-hibernate is on classpath", e);
+        }
+    }
 
     private MultiDataSourceJpaConfigSupport() {}
 
@@ -72,79 +83,58 @@ public final class MultiDataSourceJpaConfigSupport {
         registerTransactionManager(registry, definition);
     }
 
-    /**
-     * Registers JPA beans for multiple datasource definitions.
-     *
-     * @param registry the bean definition registry
-     * @param definitions the datasource configurations
-     */
-    public static void registerJpaBeans(BeanDefinitionRegistry registry, List<JpaDataSourceDefinition> definitions) {
-        for (JpaDataSourceDefinition definition : definitions) {
-            registerJpaBeans(registry, definition);
-        }
-    }
-
     private static void registerJpaProperties(BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
-        var bd = new GenericBeanDefinition();
-        bd.setBeanClass(JpaPropertiesFactoryBean.class);
+        var bd = new RootBeanDefinition(JpaPropertiesFactoryBean.class);
+
+        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+        bd.setDefaultCandidate(false);
 
         // Use FactoryBean with constructor args for AOT compatibility
         var ctorArgs = new ConstructorArgumentValues();
         ctorArgs.addIndexedArgumentValue(0, definition.jpaProperties());
-        ctorArgs.addIndexedArgumentValue(1, definition.hibernateProperties());
         bd.setConstructorArgumentValues(ctorArgs);
-
-        bd.setPrimary(definition.primary());
-        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 
         registry.registerBeanDefinition(definition.jpaPropertiesBeanName(), bd);
     }
 
     private static void registerHibernateProperties(
             BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
-        var bd = new GenericBeanDefinition();
-        bd.setBeanClass(HibernatePropertiesFactoryBean.class);
+        var bd = new RootBeanDefinition(HibernatePropertiesFactoryBean.class);
+
+        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+        bd.setDefaultCandidate(false);
 
         // Use FactoryBean with constructor args for AOT compatibility
         var ctorArgs = new ConstructorArgumentValues();
-        String ddlAuto = definition.hibernateProperties().get("ddl-auto");
-        ctorArgs.addIndexedArgumentValue(0, ddlAuto);
         bd.setConstructorArgumentValues(ctorArgs);
-
-        bd.setPrimary(definition.primary());
-        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 
         registry.registerBeanDefinition(definition.hibernatePropertiesBeanName(), bd);
     }
 
     private static void registerPersistenceManagedTypes(
             BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
-        var bd = new GenericBeanDefinition();
-        bd.setBeanClass(PersistenceManagedTypesFactoryBean.class);
+        var bd = new RootBeanDefinition(PersistenceManagedTypesFactoryBean.class);
+
+        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+        bd.setDefaultCandidate(false);
 
         var ctorArgs = new ConstructorArgumentValues();
         ctorArgs.addIndexedArgumentValue(0, definition.entityPackages());
         ctorArgs.addIndexedArgumentValue(1, definition.entityClasses());
         bd.setConstructorArgumentValues(ctorArgs);
 
-        bd.setPrimary(definition.primary());
-        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
-
         registry.registerBeanDefinition(definition.persistenceManagedTypesBeanName(), bd);
     }
 
     private static void registerHibernateJpaConfiguration(
             BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
-        Class<?> hibernateConfigClass;
-        try {
-            hibernateConfigClass = Class.forName(HIBERNATE_JPA_CONFIG_CLASS);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalStateException(
-                    "HibernateJpaConfiguration not found. Ensure spring-boot-hibernate is on classpath", e);
-        }
+        var bd = new RootBeanDefinition(hibernateConfigClass);
 
-        var bd = new GenericBeanDefinition();
-        bd.setBeanClass(hibernateConfigClass);
+        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+
+        // Mark as not a default candidate to avoid conflicts
+        bd.setDefaultCandidate(false);
+
         bd.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
 
         // Constructor signature (Spring Boot 4.x):
@@ -178,32 +168,29 @@ public final class MultiDataSourceJpaConfigSupport {
                 HibernateProperties.class.getName());
 
         bd.setConstructorArgumentValues(ctorArgs);
-        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
-
-        // Mark as not a default candidate to avoid conflicts
-        bd.setDefaultCandidate(false);
 
         registry.registerBeanDefinition(definition.hibernateJpaConfigurationBeanName(), bd);
     }
 
     private static void registerJpaVendorAdapter(BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
-        var bd = new GenericBeanDefinition();
+        var bd = new RootBeanDefinition();
+
+        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+        bd.setDefaultCandidate(false);
 
         // Use factory method on the HibernateJpaConfiguration bean
         bd.setFactoryBeanName(definition.hibernateJpaConfigurationBeanName());
         bd.setFactoryMethodName("jpaVendorAdapter");
-
-        bd.setPrimary(definition.primary());
-        bd.setDefaultCandidate(!definition.primary());
-        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
-        bd.setDependsOn(definition.hibernateJpaConfigurationBeanName());
 
         registry.registerBeanDefinition(definition.jpaVendorAdapterBeanName(), bd);
     }
 
     private static void registerEntityManagerFactoryBuilder(
             BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
-        var bd = new GenericBeanDefinition();
+        var bd = new RootBeanDefinition(EntityManagerFactoryBuilder.class);
+
+        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+        bd.setDefaultCandidate(false);
 
         // Use factory method on the HibernateJpaConfiguration bean
         bd.setFactoryBeanName(definition.hibernateJpaConfigurationBeanName());
@@ -215,17 +202,15 @@ public final class MultiDataSourceJpaConfigSupport {
         ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.jpaVendorAdapterBeanName()));
         bd.setConstructorArgumentValues(ctorArgs);
 
-        bd.setPrimary(definition.primary());
-        bd.setDefaultCandidate(!definition.primary());
-        bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
-        bd.setDependsOn(definition.jpaVendorAdapterBeanName());
-
         registry.registerBeanDefinition(definition.entityManagerFactoryBuilderBeanName(), bd);
     }
 
     private static void registerEntityManagerFactory(
             BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
-        var bd = new GenericBeanDefinition();
+        var bd = new RootBeanDefinition();
+
+        bd.setDependsOn(definition.entityManagerFactoryBuilderBeanName(), definition.persistenceManagedTypesBeanName());
+        bd.setDefaultCandidate(false);
 
         // Use factory method on the HibernateJpaConfiguration bean
         bd.setFactoryBeanName(definition.hibernateJpaConfigurationBeanName());
@@ -238,28 +223,21 @@ public final class MultiDataSourceJpaConfigSupport {
         ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.persistenceManagedTypesBeanName()));
         bd.setConstructorArgumentValues(ctorArgs);
 
-        bd.setPrimary(definition.primary());
-        bd.setDefaultCandidate(!definition.primary());
-        bd.setDependsOn(definition.entityManagerFactoryBuilderBeanName(), definition.persistenceManagedTypesBeanName());
-
         registry.registerBeanDefinition(definition.entityManagerFactoryBeanName(), bd);
     }
 
     private static void registerTransactionManager(
             BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
-        var bd = new GenericBeanDefinition();
-
         // Create JpaTransactionManager directly with explicit EntityManagerFactory reference
         // (factory method approach fails when multiple EMFs exist without a primary)
-        bd.setBeanClass(JpaTransactionManager.class);
+        var bd = new RootBeanDefinition(JpaTransactionManager.class);
+
+        bd.setDependsOn(definition.entityManagerFactoryBeanName());
+        bd.setDefaultCandidate(false);
 
         var ctorArgs = new ConstructorArgumentValues();
         ctorArgs.addGenericArgumentValue(new RuntimeBeanReference(definition.entityManagerFactoryBeanName()));
         bd.setConstructorArgumentValues(ctorArgs);
-
-        bd.setPrimary(definition.primary());
-        bd.setDefaultCandidate(!definition.primary());
-        bd.setDependsOn(definition.entityManagerFactoryBeanName());
 
         registry.registerBeanDefinition(definition.transactionManagerBeanName(), bd);
     }

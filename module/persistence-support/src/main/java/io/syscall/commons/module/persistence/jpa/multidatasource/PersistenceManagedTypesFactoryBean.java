@@ -62,9 +62,4 @@ public class PersistenceManagedTypesFactoryBean
     public Class<?> getObjectType() {
         return PersistenceManagedTypes.class;
     }
-
-    @Override
-    public boolean isSingleton() {
-        return true;
-    }
 }

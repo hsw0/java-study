@@ -20,11 +20,9 @@ class JpaDataSourceDefinitionBuilderTest {
 
         assertThat(definition.name()).isEqualTo("test");
         assertThat(definition.dataSourceBeanName()).isEqualTo("testDataSource");
-        assertThat(definition.primary()).isFalse();
         assertThat(definition.entityPackages()).isEmpty();
         assertThat(definition.entityClasses()).isEmpty();
         assertThat(definition.jpaProperties()).isEmpty();
-        assertThat(definition.hibernateProperties()).isEmpty();
     }
 
     @Test
@@ -38,21 +36,14 @@ class JpaDataSourceDefinitionBuilderTest {
                 .entityClasses(Integer.class, Long.class)
                 .jpaProperty("key1", "value1")
                 .jpaProperties(Map.of("key2", "value2"))
-                .hibernateProperty("hkey1", "hvalue1")
-                .hibernateProperties(Map.of("hkey2", "hvalue2"))
-                .primary(true)
                 .build();
 
         assertThat(definition.name()).isEqualTo("full");
         assertThat(definition.dataSourceBeanName()).isEqualTo("fullDataSource");
-        assertThat(definition.primary()).isTrue();
         assertThat(definition.entityPackages())
                 .containsExactly("com.example.entities", "com.example.more", "com.example.extra");
         assertThat(definition.entityClasses()).containsExactly(String.class, Integer.class, Long.class);
         assertThat(definition.jpaProperties()).containsEntry("key1", "value1").containsEntry("key2", "value2");
-        assertThat(definition.hibernateProperties())
-                .containsEntry("hkey1", "hvalue1")
-                .containsEntry("hkey2", "hvalue2");
     }
 
     @Test
@@ -122,30 +113,5 @@ class JpaDataSourceDefinitionBuilderTest {
         packages.add("com.modified");
 
         assertThat(definition.entityPackages()).containsExactly("com.example");
-    }
-
-    @Test
-    void primaryFlagMethods() {
-        var withPrimary = JpaDataSourceDefinitionBuilder.builder()
-                .name("a")
-                .dataSourceBeanName("ds")
-                .primary(true)
-                .build();
-
-        var withPrimaryTrue = JpaDataSourceDefinitionBuilder.builder()
-                .name("b")
-                .dataSourceBeanName("ds")
-                .primary(true)
-                .build();
-
-        var withPrimaryFalse = JpaDataSourceDefinitionBuilder.builder()
-                .name("c")
-                .dataSourceBeanName("ds")
-                .primary(false)
-                .build();
-
-        assertThat(withPrimary.primary()).isTrue();
-        assertThat(withPrimaryTrue.primary()).isTrue();
-        assertThat(withPrimaryFalse.primary()).isFalse();
     }
 }

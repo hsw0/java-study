@@ -1,6 +1,7 @@
 package io.syscall.commons.module.persistence.jpa.multidatasource;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.FactoryBean;
@@ -14,19 +15,15 @@ import org.springframework.boot.jpa.autoconfigure.JpaProperties;
 public class JpaPropertiesFactoryBean implements FactoryBean<JpaProperties> {
 
     private final Map<String, String> jpaProperties;
-    private final Map<String, String> hibernateProperties;
 
-    public JpaPropertiesFactoryBean(Map<String, String> jpaProperties, Map<String, String> hibernateProperties) {
-        this.jpaProperties = new HashMap<>(jpaProperties);
-        this.hibernateProperties = new HashMap<>(hibernateProperties);
+    public JpaPropertiesFactoryBean(Map<String, String> jpaProperties) {
+        this.jpaProperties = new LinkedHashMap<>(jpaProperties);
     }
 
     @Override
     public @Nullable JpaProperties getObject() {
         var props = new JpaProperties();
         Map<String, String> properties = new HashMap<>(jpaProperties);
-        // Merge hibernate properties into jpa properties with hibernate. prefix
-        hibernateProperties.forEach((k, v) -> properties.put("hibernate." + k, v));
         props.setProperties(properties);
         return props;
     }

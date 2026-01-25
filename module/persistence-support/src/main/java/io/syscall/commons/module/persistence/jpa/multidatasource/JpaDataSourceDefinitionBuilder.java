@@ -17,8 +17,6 @@ public final class JpaDataSourceDefinitionBuilder {
     private final List<String> entityPackages = new ArrayList<>();
     private final List<Class<?>> entityClasses = new ArrayList<>();
     private final Map<String, String> jpaProperties = new HashMap<>();
-    private final Map<String, String> hibernateProperties = new HashMap<>();
-    private boolean primary = false;
 
     private JpaDataSourceDefinitionBuilder() {}
 
@@ -86,24 +84,6 @@ public final class JpaDataSourceDefinitionBuilder {
         return this;
     }
 
-    @CanIgnoreReturnValue
-    public JpaDataSourceDefinitionBuilder hibernateProperty(String key, String value) {
-        this.hibernateProperties.put(key, value);
-        return this;
-    }
-
-    @CanIgnoreReturnValue
-    public JpaDataSourceDefinitionBuilder hibernateProperties(Map<String, String> properties) {
-        this.hibernateProperties.putAll(properties);
-        return this;
-    }
-
-    @CanIgnoreReturnValue
-    public JpaDataSourceDefinitionBuilder primary(boolean primary) {
-        this.primary = primary;
-        return this;
-    }
-
     public JpaDataSourceDefinition build() {
         if (name == null) {
             throw new IllegalStateException("name is required");
@@ -112,7 +92,6 @@ public final class JpaDataSourceDefinitionBuilder {
             throw new IllegalStateException("dataSourceBeanName is required");
         }
 
-        return new JpaDataSourceDefinition(
-                name, dataSourceBeanName, entityPackages, entityClasses, jpaProperties, hibernateProperties, primary);
+        return new JpaDataSourceDefinition(name, dataSourceBeanName, entityPackages, entityClasses, jpaProperties);
     }
 }

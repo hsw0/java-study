@@ -11,17 +11,13 @@ import java.util.Map;
  * @param entityPackages packages to scan for JPA entities
  * @param entityClasses explicit entity classes (alternative to package scanning)
  * @param jpaProperties additional JPA properties (spring.jpa.properties.*)
- * @param hibernateProperties additional Hibernate properties
- * @param primary whether this is the primary datasource
  */
 public record JpaDataSourceDefinition(
         String name,
         String dataSourceBeanName,
         List<String> entityPackages,
         List<Class<?>> entityClasses,
-        Map<String, String> jpaProperties,
-        Map<String, String> hibernateProperties,
-        boolean primary) {
+        Map<String, String> jpaProperties) {
 
     @SuppressWarnings("RedundantNullCheck") // Validate before defensive copy
     public JpaDataSourceDefinition {
@@ -34,7 +30,6 @@ public record JpaDataSourceDefinition(
         entityPackages = List.copyOf(entityPackages);
         entityClasses = List.copyOf(entityClasses);
         jpaProperties = Map.copyOf(jpaProperties);
-        hibernateProperties = Map.copyOf(hibernateProperties);
     }
 
     /** Bean name for JpaProperties. */

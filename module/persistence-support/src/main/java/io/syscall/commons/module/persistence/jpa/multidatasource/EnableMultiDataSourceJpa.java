@@ -29,19 +29,18 @@ import org.springframework.context.annotation.Import;
  * public class JpaConfig {
  *
  *     @Bean
- *     DataSource primaryDataSource() {
+ *     DataSource sampleDataSource() {
  *         return DataSourceBuilder.create()
- *             .url("jdbc:h2:mem:primary")
+ *             .url("jdbc:h2:mem:sample")
  *             .build();
  *     }
  *
  *     @Bean
- *     JpaDataSourceDefinition primaryJpa() {
+ *     JpaDataSourceDefinition sampleJpa() {
  *         return JpaDataSourceDefinitionBuilder.builder()
- *             .name("primary")
- *             .dataSourceBeanName("primaryDataSource")
- *             .entityPackage("com.example.primary")
- *             .primary()
+ *             .name("sample")
+ *             .dataSourceBeanName("sampleDataSource")
+ *             .entityPackage("com.example.sample")
  *             .build();
  *     }
  * }
