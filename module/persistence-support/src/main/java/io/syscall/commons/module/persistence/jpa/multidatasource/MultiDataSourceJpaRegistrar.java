@@ -1,10 +1,8 @@
 package io.syscall.commons.module.persistence.jpa.multidatasource;
 
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
-import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
-import org.springframework.core.type.AnnotationMetadata;
+import org.springframework.beans.factory.BeanRegistrar;
+import org.springframework.beans.factory.BeanRegistry;
+import org.springframework.core.env.Environment;
 
 /**
  * Registers a {@link MultiDataSourceJpaBeanFactoryPostProcessor} that discovers {@link
@@ -12,20 +10,13 @@ import org.springframework.core.type.AnnotationMetadata;
  *
  * <p>This registrar is triggered by the {@link EnableMultiDataSourceJpa} annotation.
  */
-public class MultiDataSourceJpaRegistrar implements ImportBeanDefinitionRegistrar {
+public class MultiDataSourceJpaRegistrar implements BeanRegistrar {
 
     @Override
-    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        // Register a BeanFactoryPostProcessor that will:
-        // 1. Find all JpaDataSourceDefinition beans
-        // 2. Call MultiDataSourceJpaConfigSupport.registerJpaBeans for each
-
-        if (!registry.containsBeanDefinition("multiDataSourceJpaBeanFactoryPostProcessor")) {
-            var bd = new GenericBeanDefinition();
-            bd.setBeanClass(MultiDataSourceJpaBeanFactoryPostProcessor.class);
-            bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
-
-            registry.registerBeanDefinition("multiDataSourceJpaBeanFactoryPostProcessor", bd);
-        }
+    public void register(BeanRegistry registry, Environment env) {
+        registry.registerBean(MultiDataSourceJpaBeanFactoryPostProcessor.class, spec -> {
+            spec.infrastructure();
+            spec.notAutowirable();
+        });
     }
 }

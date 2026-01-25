@@ -28,7 +28,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
  *   <li>JpaTransactionManager - transaction manager for this datasource
  * </ul>
  */
-public final class MultiDataSourceJpaConfigSupport {
+class MultiDataSourceJpaConfigSupport {
 
     private static final Logger log = LoggerFactory.getLogger(MultiDataSourceJpaConfigSupport.class);
 
@@ -36,54 +36,53 @@ public final class MultiDataSourceJpaConfigSupport {
     private static final String HIBERNATE_JPA_CONFIG_CLASS =
             "org.springframework.boot.hibernate.autoconfigure.HibernateJpaConfiguration";
 
-    private static final Class<?> hibernateConfigClass;
+    private final Class<?> hibernateConfigClass;
+    private final BeanDefinitionRegistry registry;
 
-    static {
+    public MultiDataSourceJpaConfigSupport(BeanDefinitionRegistry registry) {
         try {
             hibernateConfigClass = Class.forName(HIBERNATE_JPA_CONFIG_CLASS);
         } catch (ClassNotFoundException e) {
             throw new IllegalStateException(
                     "HibernateJpaConfiguration not found. Ensure spring-boot-hibernate is on classpath", e);
         }
+        this.registry = registry;
     }
-
-    private MultiDataSourceJpaConfigSupport() {}
 
     /**
      * Registers all JPA beans for the given datasource definition.
      *
-     * @param registry the bean definition registry
      * @param definition the datasource configuration
      */
-    public static void registerJpaBeans(BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
+    void registerJpaBeans(JpaDataSourceDefinition definition) {
         log.info("Registering JPA beans for datasource: {}", definition.getName());
 
         // 1. Register JpaProperties bean
-        registerJpaProperties(registry, definition);
+        registerJpaProperties(definition);
 
         // 2. Register HibernateProperties bean
-        registerHibernateProperties(registry, definition);
+        registerHibernateProperties(definition);
 
         // 3. Register PersistenceManagedTypes bean (entity scanning)
-        registerPersistenceManagedTypes(registry, definition);
+        registerPersistenceManagedTypes(definition);
 
         // 4. Register HibernateJpaConfiguration with custom constructor args
-        registerHibernateJpaConfiguration(registry, definition);
+        registerHibernateJpaConfiguration(definition);
 
         // 5. Register JpaVendorAdapter using factory method
-        registerJpaVendorAdapter(registry, definition);
+        registerJpaVendorAdapter(definition);
 
         // 6. Register EntityManagerFactoryBuilder using factory method
-        registerEntityManagerFactoryBuilder(registry, definition);
+        registerEntityManagerFactoryBuilder(definition);
 
         // 7. Register EntityManagerFactory using factory method
-        registerEntityManagerFactory(registry, definition);
+        registerEntityManagerFactory(definition);
 
         // 8. Register TransactionManager using factory method
-        registerTransactionManager(registry, definition);
+        registerTransactionManager(definition);
     }
 
-    private static void registerJpaProperties(BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
+    private void registerJpaProperties(JpaDataSourceDefinition definition) {
         var bd = new RootBeanDefinition(JpaPropertiesFactoryBean.class);
 
         bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
@@ -97,8 +96,7 @@ public final class MultiDataSourceJpaConfigSupport {
         registry.registerBeanDefinition(definition.getJpaPropertiesBeanName(), bd);
     }
 
-    private static void registerHibernateProperties(
-            BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
+    private void registerHibernateProperties(JpaDataSourceDefinition definition) {
         var bd = new RootBeanDefinition(HibernatePropertiesFactoryBean.class);
 
         bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
@@ -111,8 +109,7 @@ public final class MultiDataSourceJpaConfigSupport {
         registry.registerBeanDefinition(definition.getHibernatePropertiesBeanName(), bd);
     }
 
-    private static void registerPersistenceManagedTypes(
-            BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
+    private void registerPersistenceManagedTypes(JpaDataSourceDefinition definition) {
         var bd = new RootBeanDefinition(PersistenceManagedTypesFactoryBean.class);
 
         bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
@@ -126,8 +123,7 @@ public final class MultiDataSourceJpaConfigSupport {
         registry.registerBeanDefinition(definition.getPersistenceManagedTypesBeanName(), bd);
     }
 
-    private static void registerHibernateJpaConfiguration(
-            BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
+    private void registerHibernateJpaConfiguration(JpaDataSourceDefinition definition) {
         var bd = new RootBeanDefinition(hibernateConfigClass);
 
         bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
@@ -172,7 +168,7 @@ public final class MultiDataSourceJpaConfigSupport {
         registry.registerBeanDefinition(definition.getHibernateJpaConfigurationBeanName(), bd);
     }
 
-    private static void registerJpaVendorAdapter(BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
+    private void registerJpaVendorAdapter(JpaDataSourceDefinition definition) {
         var bd = new RootBeanDefinition();
 
         bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
@@ -185,8 +181,7 @@ public final class MultiDataSourceJpaConfigSupport {
         registry.registerBeanDefinition(definition.getJpaVendorAdapterBeanName(), bd);
     }
 
-    private static void registerEntityManagerFactoryBuilder(
-            BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
+    private void registerEntityManagerFactoryBuilder(JpaDataSourceDefinition definition) {
         var bd = new RootBeanDefinition(EntityManagerFactoryBuilder.class);
 
         bd.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
@@ -205,8 +200,7 @@ public final class MultiDataSourceJpaConfigSupport {
         registry.registerBeanDefinition(definition.getEntityManagerFactoryBuilderBeanName(), bd);
     }
 
-    private static void registerEntityManagerFactory(
-            BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
+    private void registerEntityManagerFactory(JpaDataSourceDefinition definition) {
         var bd = new RootBeanDefinition();
 
         bd.setDependsOn(
@@ -227,8 +221,7 @@ public final class MultiDataSourceJpaConfigSupport {
         registry.registerBeanDefinition(definition.getEntityManagerFactoryBeanName(), bd);
     }
 
-    private static void registerTransactionManager(
-            BeanDefinitionRegistry registry, JpaDataSourceDefinition definition) {
+    private void registerTransactionManager(JpaDataSourceDefinition definition) {
         // Create JpaTransactionManager directly with explicit EntityManagerFactory reference
         // (factory method approach fails when multiple EMFs exist without a primary)
         var bd = new RootBeanDefinition(JpaTransactionManager.class);
