@@ -23,6 +23,7 @@ main() {
     -XX:+AlwaysPreTouch
     -XX:+AlwaysActAsServerClassMachine
     #-XX:PerfDataSaveFile="$TMPDIR"/hsperfdata/%p  # not useful for changing path
+    -XX:+UseCompactObjectHeaders
     -XX:+UseZGC
     -XX:+UseStringDeduplication
     -XX:MinHeapSize=2g
