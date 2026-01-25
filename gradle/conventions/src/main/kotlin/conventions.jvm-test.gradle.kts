@@ -37,6 +37,9 @@ tasks.withType<Test>().configureEach {
         showStandardStreams = true
         exceptionFormat = TestExceptionFormat.FULL
     }
+    reports {
+        junitXml.required = true
+    }
 
     systemProperty("spring.main.banner-mode", "OFF")
 }

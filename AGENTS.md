@@ -14,6 +14,12 @@ Multi-module Gradle project (Kotlin DSL) for studying modern Java/Kotlin develop
 - **Quality**: Error Prone, Checker Framework, Spotless/ktlint, JaCoCo
 - **Testing**: JUnit 6, AssertJ, Kotest, Reactor Test, BlockHound
 
+## AI Assistant Instructions
+
+### Gradle Build
+- Use the `gradle-build` skill for Gradle builds and test execution (`/gradle-build` or via Skill tool)
+- Do not run `./gradlew` commands directly; use the skill to get build summaries and report paths
+
 ## Architecture
 
 ### Module Structure
