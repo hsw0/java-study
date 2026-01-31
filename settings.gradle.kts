@@ -3,11 +3,13 @@ rootProject.name = "java-study"
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
 pluginManagement {
+    // [Favor build-logic Composite Builds for Build Logic](https://docs.gradle.org/9.3.1/userguide/best_practices_structuring_builds.html#favor_composite_builds)
+    // buildSrc 사용 안함
     includeBuild("gradle/conventions") {
         name = "conventions"
     }
     // Default:
-    //repositories { gradlePluginPortal() }
+    // repositories { gradlePluginPortal() }
 }
 
 dependencyResolutionManagement {
@@ -19,7 +21,6 @@ dependencyResolutionManagement {
 
 include(":dependencyManagement")
 project(":dependencyManagement").projectDir = file("./gradle/dependencyManagement")
-
 
 include(":test-report")
 
