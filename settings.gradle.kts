@@ -46,6 +46,7 @@ include(
     ":module:springboot-support",
     ":module:api-base",
     ":module:springboot-app-base",
+    ":module:jackson-support",
 )
 
 ///////////////////////////////////////////////////////////////////////////////
