@@ -26,7 +26,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa")
     testRuntimeOnly("com.h2database:h2")
 
-    compileOnly("com.google.errorprone:error_prone_annotation:2.45.0")
+    compileOnly("com.google.errorprone:error_prone_annotations")
 }
 
 configurations.compileClasspath {
