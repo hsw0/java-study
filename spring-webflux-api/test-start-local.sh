@@ -24,12 +24,14 @@ main() {
     -XX:+AlwaysActAsServerClassMachine
     #-XX:PerfDataSaveFile="$TMPDIR"/hsperfdata/%p  # not useful for changing path
     -XX:+UseCompactObjectHeaders
+    -XX:NativeMemoryTracking=summary
     -XX:+UseZGC
     -XX:+UseStringDeduplication
     -XX:MinHeapSize=2g
     -XX:MaxHeapSize=2g
     -XX:MetaspaceSize=128m
     -XX:MaxMetaspaceSize=256m
+    -XX:MaxDirectMemorySize=1g
 
     -Dsun.net.inetaddr.ttl=2
     -Dsun.net.inetaddr.negative.ttl=5
@@ -37,9 +39,6 @@ main() {
   )
 
   java "${JVM_OPTS_BASE[@]}" -XX:+PrintFlagsFinal -version 2> /dev/null | grep -F -v ' {default}'
-
-  java -XshowSettings:properties --version > /dev/null
-  java -XshowSettings:locale --version 2>&1 > /dev/null | grep -Ev '^[ ]{8}.+'
 
   local JVM_OPTS_LOGGING=(
     -Xlog:async
@@ -68,7 +67,9 @@ main() {
     -Dspring.aot.enabled=true
   )
 
-  exec java "${JAVA_OPTS[@]}" -jar "$SCRIPT_DIR"/build/libs/spring-webflux-api.jar "$@"
+  echo
+  echo "[*] Starting application..."
+  exec java "${JAVA_OPTS[@]}" -XshowSettings -jar "$SCRIPT_DIR"/build/libs/spring-webflux-api.jar "$@"
 }
 
 main "$@"
