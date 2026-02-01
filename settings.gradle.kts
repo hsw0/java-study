@@ -14,6 +14,9 @@ pluginManagement {
 
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
+
+    @Suppress("UnstableApiUsage")
     repositories {
         mavenCentral()
     }
@@ -24,7 +27,7 @@ project(":dependencyManagement").projectDir = file("./gradle/dependencyManagemen
 
 include(":test-report")
 
-///////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////
 
 // Internal utilities
 include(
@@ -49,7 +52,7 @@ include(
     ":module:jackson-support",
 )
 
-///////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////////////////////////////
 
 include(":analysis-example") // errorprone, checker 등
 
